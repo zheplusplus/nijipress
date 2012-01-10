@@ -1,0 +1,62 @@
+.post_title {
+  font-size: 2em;
+  margin-bottom: 0px;
+  background-color: #EEE;
+  border-radius: 4px;
+}
+.post_title a {
+  color: #304030;
+  margin-left: 10px;
+}
+.post_title a:hover {
+  text-decoration: none;
+}
+
+.post_foot {
+  font-weight: bolder;
+  font-size: 0.8em;
+}
+.post_foot a {
+  padding: 5px;
+  color: #2B2B2B;
+  background-color: #E4D3A6;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.post_foot a:hover {
+  color: #506050;
+  background-color: #F4E3B6;
+}
+
+.paging {
+  text-align: center;
+}
+.paging b {
+  padding-left: 2px;
+  padding-right: 2px;
+  color: white;
+  background-color: #88A;
+  border-radius: 3px;
+}
+.paging span {
+  padding: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #2B2B2B;
+  background-color: #EEE;
+  border-radius: 3px;
+}
+.paging a {
+  padding: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: white;
+  background-color: #88A;
+  border-radius: 3px;
+  text-decoration: none;
+  font-weight: bolder;
+}
+.paging a:hover {
+  color: #2B2B2B;
+  background-color: #EEE;
+}

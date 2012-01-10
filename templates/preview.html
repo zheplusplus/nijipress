@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Preview {{ prepared_title }}</title>
+{% include 'page_meta.htmlt' %}
+<style type="text/css">
+table { border-spacing: 4px; }
+td { background: #2B2B2B; }
+</style>
+</head>
+<body>
+{{ prepared_title }}
+<hr>
+<div class='post_content'>
+{{ prepared_content }}
+</div>
+<hr>
+<table><tr>
+<th><i>Tags:</i></th>
+{% for tag in prepared_tags %}
+<td>
+{{ tag }}
+</td>
+{% endfor %}
+</tr></table>
+{% if usr.admin %}
+<form action='/c/add' method='post'>
+  <input type='submit'>
+{% if id %}
+  <input type='hidden' name='id' value='{{ id }}'>
+{% endif %}
+  <input type='hidden' name='tags' value='{{ tags }}'>
+  <input type='hidden' name='title' value='{{ title }}'>
+  <textarea name='content' style='visibility: hidden;'>{{ content }}</textarea>
+</form>
+{% else %}
+<hr>
+This is the preview. You are not logged in.
+{% endif %}

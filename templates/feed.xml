@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0"
+ xmlns:content="http://purl.org/rss/1.0/modules/content/"
+ xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+ xmlns:dc="http://purl.org/dc/elements/1.1/"
+ xmlns:atom="http://www.w3.org/2005/Atom"
+ xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+ xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+>
+<channel>
+<title>{{ title }}</title>
+<description>{{ description }}</description>
+<link>{{ site_link }}</link>
+{% for post in posts %}
+<item>
+<title>{{ post.title }}</title>
+<link>{{ post.ident }}</link>
+<guid>{{ post.ident }}</guid>
+<pubDate>{{ post.date|date:"D, d M Y H:i:s" }} +0000</pubDate>
+<content:encoded><![CDATA[{{ post.content }}]]></content:encoded>
+</item>
+{% endfor %}
+</channel>
+</rss>

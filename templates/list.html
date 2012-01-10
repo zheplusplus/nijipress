@@ -1,0 +1,20 @@
+<html>
+<head>
+<title>Posts</title>
+{% include 'page_meta.htmlt' %}
+<style type="text/css">
+table { border-spacing: 0px; }
+table tr:nth-child(even) { background: #2B2B2B; }
+a { margin-left: 24px; }
+</style>
+</head>
+<body>
+<table class='right_col'>
+{% for post in posts %}
+<tr>
+<td>{{ post.title }}</td>
+<td><a href='/c/edit?id={{ post.pid }}'>Edit</a></td>
+<td><a href='/?p={{ post.pid }}'>View</a></td>
+</tr>
+{% endfor %}
+</table>

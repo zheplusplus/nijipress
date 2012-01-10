@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>{{ post.title }} - Bit Focus iBlog</title>
+{% include 'page_meta.htmlt' %}
+<link rel='stylesheet' type='text/css' href='/static/{{ style }}/post.css'>
+<script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
+<script type='text/javascript' src='http://leaf.bitfoc.us/static/textfill.js'></script>
+<script>
+$('document').ready(function() {
+  bfplTextFill('author', 'Your name'
+             , 'email', 'Your email (wont be public)'
+             , 'url', 'Your homepage link (placed after your name)'
+             , 'content', 'Comment (REQUIRED)');
+});
+</script>
+</head>
+<body>
+{% include 'page_head.htmlt' %}
+<div style='vertical-align: middle; width: 800px; margin-left: auto; margin-right: auto;'>
+<h1 class='post_title'>{{ post.title }}</h1>
+<p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
+<div class='post_content'>{{ post.content }}</div>
+{% include 'print_tags.htmlt' %}
+</div>
+
+<div style='vertical-align: middle; width: 640px; margin-left: auto; margin-right: auto;'>
+{% if comments.count %}
+<p class='comments_hint'>Comments:</p>
+{% for comment in comments %}
+<div class='comment'>
+<p class='comment_head'>
+{% if comment.author %}
+  <b>{{ comment.author|escape }}</b>
+{% else %}
+  <i>Anonymous</i>
+{% endif %}
+{% if comment.url %}
+<script lang='javascript'>
+  document.write('<a href="{{ comment.url|escape }}">&lt;^&gt;</a>');
+</script>
+{% endif %}
+said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
+</p>
+<p class='comment_content'>{{ comment.content|escape }}</p>
+</div>
+{% endfor %}
+{% endif %}
+
+<form name='f' action='/postcomment' method='post'>
+  <p class='comments_hint' style='margin-bottom: 0;'><a name='leavecomment'>Leave a comment:</a></p>
+  <input size=40 type='hidden' name='post_id' value='{{ post.pid }}'><br>
+  <input size=40 type='text' id='author' name='author'><br>
+  <input size=40 type='text' id='email' name='email'><br>
+  <input size=40 type='text' id='url' name='url'><br>
+  <textarea id='content' name='content' rows='4' cols='64'></textarea><br>
+  <input type='submit' id='submit' value='Post it!'>
+</form>
+</div>

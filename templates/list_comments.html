@@ -1,0 +1,23 @@
+<html>
+<head>
+<title>Comments</title>
+{% include 'page_meta.htmlt' %}
+<style type="text/css">
+table { border-spacing: 6px; }
+table tr:nth-child(even) { background: #2B2B2B; }
+</style>
+</head>
+<body>
+<table class='right_col'>
+<tr><th>Author</th><th>IP</th><th>Email</th><th>URL</th><th>Content</th><th>Post ID</th></tr>
+{% for comment in comments %}
+<tr>
+<td>{{ comment.author|escape }}</td>
+<td>{{ comment.ipaddr }}</td>
+<td>{{ comment.email }}</td>
+<td>{{ comment.url|escape }}</td>
+<td>{{ comment.content|escape }}</td>
+<td>{{ comment.post_id }}</td>
+</tr>
+{% endfor %}
+</table>

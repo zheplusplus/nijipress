@@ -1,0 +1,14 @@
+<html>
+<head>
+<title>{{ title }}</title>
+{% include 'page_meta.htmlt' %}
+</head>
+<body>
+<h1>{{ title }}</h1>
+<p style='color: red;'>{{ hint }}</p>
+<form action='/c/{{ handler }}' method='post'>
+<table>
+  <tr><td>Name:</td><td><input type='text' name='name'></td></tr>
+  <tr><td>Password:</td><td><input type='password' name='passwd_origin'></td></tr>
+  <tr><td><input type='submit'></td></tr>
+</form>

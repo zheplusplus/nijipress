@@ -1,0 +1,4 @@
+{% if usr.admin %}
+<link rel='stylesheet' type='text/css' href='/static/{{ style }}/admin.css'>
+{% endif %}
+<link rel='stylesheet' type='text/css' href='/static/{{ style }}/main.css'>
