@@ -5,6 +5,8 @@ If you want deploy as your own app, modify
 * app.yaml --- application, version and url for Google web tools verification
 * static/favicon.ico
 * conf.py --- for RSS use, the site information
+* templates/analytics.htmlt --- for Google Analytics, will be added to index page and single post page
+* templates/ --- change any pages as you want
 
 To manage your site
 
