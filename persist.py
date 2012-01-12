@@ -7,16 +7,21 @@ class Post(db.Model):
     content = db.TextProperty()
     preview = db.TextProperty()
 
-    def init_tags(self, tags):
-        self.tags = tags
-        return self
-
-    def init_id(self):
+    @staticmethod
+    def new():
+        p = Post()
+        p.title = ''
+        p.tags = []
+        p.content = ''
         posts = db.GqlQuery('SELECT * FROM Post ORDER BY pid DESC')
         if posts.count() == 0:
-            self.pid = 0
+            p.pid = 0
         else:
-            self.pid = posts[0].pid + 1
+            p.pid = posts[0].pid + 1
+        return p
+
+    def init_tags(self, tags):
+        self.tags = tags
         return self
 
 POSTS_PER_PAGE = 16
@@ -40,7 +45,7 @@ def post_by_id(ident):
             raise ValueError('no such post')
     	return posts[0].init_tags(tags_by_post_id(post_id))
     except ValueError:
-        return Post().init_tags([]).init_id()
+        return Post.new()
 
 def posts_by_tag(tag, page=0, count=POSTS_PER_PAGE):
     post_ids = [r.post_id for r in
@@ -105,7 +110,10 @@ class Comment(db.Model):
     ipaddr = db.StringProperty(multiline=False)
     post_id = db.IntegerProperty()
 
-def recent_comments(page=0, count=16):
+def comments_page_count():
+    return page_count(db.GqlQuery('SELECT __key__ FROM Comment').count())
+
+def fetch_comments(page=0, count=POSTS_PER_PAGE):
     return db.GqlQuery('SELECT * FROM Comment ORDER BY date DESC').fetch(
                                 count, count * page)
 

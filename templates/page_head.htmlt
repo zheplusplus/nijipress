@@ -1,16 +1,4 @@
-{% if usr.name %}
-<div class='adminbar'>
-Logged in as <b>{{ usr.name }}.</b>
-{% if usr.admin %}
-<a href='/c/newpost'>Add new post</a>
-<a href='/c/comments'>View comments</a>
-<a href='/c/posts'>Manage posts</a>
-{% else %}
-You are not administrator.
-{% endif %}
-</div>
-<hr>
-{% endif %}
+{% include 'admin_bar.htmlt' %}
 <div id='top'>
 <h1><a href='/'>Bit Focus iBlog</a></h1>
 </div>

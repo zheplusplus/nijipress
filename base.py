@@ -1,20 +1,22 @@
+import hashlib
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
 import persist
 import admin.model as admin
+import markdown
+import markdown.inline
+import markdown.html
+import markdown.entire_doc
 
 def escape_content(content):
-    from markdown import entire_doc
-    return ''.join(entire_doc.forge(content.split('\n')))
+    return ''.join(markdown.entire_doc.forge(content.split('\n')))
 
 def escape_title(title):
-    from markdown import html
-    return html.escape(title)
+    return markdown.inline.forge(markdown.html.escape(title))
 
 def escape_preview(content):
-    from markdown.entire_doc import generate_preview
-    return ''.join(generate_preview(content.split('\n')))
+    return ''.join(markdown.entire_doc.generate_preview(content.split('\n')))
 
 def post_for_client(post):
     post.title = escape_title(post.title)
@@ -26,9 +28,27 @@ def post_for_client(post):
 def posts_for_client(origin_posts):
     return map(lambda p: post_for_client(p), origin_posts)
 
+def comments_for_client(comments):
+    def forge_inline(text):
+        from markdown.inline import esc_back_slash, img, sub, sup, italic, bold
+        from markdown.inline import monospace
+        return esc_back_slash(
+            img(sub(sup(italic(bold(monospace(markdown.html.forge(text))))))))
+    def client_comment(c):
+        c.email_md5 = hashlib.md5(c.email).hexdigest()
+        c.content = '<br>'.join(forge_inline(c.content).split('\n'))
+        return c
+    return [client_comment(c) for c in comments]
+
 class BaseView(webapp.RequestHandler):
     def get(self):
         raise_not_found(self)
+
+    def request_value(self, key, wanted_type):
+        try:
+            return wanted_type(self.request.get(key))
+        except ValueError:
+            return wanted_type()
 
     def post(self):
         raise_not_found(self)

@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>{{ post.title }} - Bit Focus iBlog</title>
+<title>{{ title }} - Bit Focus iBlog</title>
 {% include 'page_meta.htmlt' %}
 <link rel='stylesheet' type='text/css' href='/static/{{ style }}/post.css'>
 <script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
@@ -8,11 +8,12 @@
 <script>
 $('document').ready(function() {
   bfplTextFill('author', 'Your name'
-             , 'email', 'Your email (wont be public)'
+             , 'email', 'Your email (for Gravatar, wont be public)'
              , 'url', 'Your homepage link (placed after your name)'
              , 'content', 'Comment (REQUIRED)');
 });
 </script>
+{% include 'analytics.htmlt' %}
 </head>
 <body>
 {% include 'page_head.htmlt' %}
@@ -24,10 +25,15 @@ $('document').ready(function() {
 </div>
 
 <div style='vertical-align: middle; width: 640px; margin-left: auto; margin-right: auto;'>
-{% if comments.count %}
+{% if comments|length %}
 <p class='comments_hint'>Comments:</p>
+<table style='width: 640px; border-spacing: 6px;'>
 {% for comment in comments %}
-<div class='comment'>
+<tr class='comment'>
+<th style='width: 48px; vertical-align: top;'>
+<img src='http://0.gravatar.com/avatar/{{ comment.email_md5 }}?s=48' style='border-radius: 4px;'/>
+</th>
+<td>
 <p class='comment_head'>
 {% if comment.author %}
   <b>{{ comment.author|escape }}</b>
@@ -41,9 +47,11 @@ $('document').ready(function() {
 {% endif %}
 said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
 </p>
-<p class='comment_content'>{{ comment.content|escape }}</p>
-</div>
+<p class='comment_content'>{{ comment.content }}</p>
+</td>
+</tr>
 {% endfor %}
+</table>
 {% endif %}
 
 <form name='f' action='/postcomment' method='post'>

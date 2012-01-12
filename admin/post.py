@@ -45,8 +45,11 @@ class Add(base.BaseView):
 
 class List(base.BaseView):
     def get(self):
-        self.put_page('templates/list.html', {
-                'posts': persist.fetch_posts(),
+        p = self.request_value('page', int)
+        self.put_page('templates/list_posts.html', {
+                'posts': base.posts_for_client(persist.fetch_posts(p)),
+                'current_page': p,
+                'page_count': xrange(persist.total_posts_page_count()),
             })
 
 class Edit(base.BaseView):

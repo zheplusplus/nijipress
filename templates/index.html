@@ -3,6 +3,8 @@
 <title>Bit Focus iBlog</title>
 {% include 'page_meta.htmlt' %}
 <link rel='stylesheet' type='text/css' href='/static/{{ style }}/index.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ style }}/paging.css'>
+{% include 'analytics.htmlt' %}
 </head>
 <body>
 {% include 'page_head.htmlt' %}
@@ -25,7 +27,7 @@
 <p class='paging'>
 {% for i in page_count %}
 {% ifequal i current_page %}
-<span>You are now browsing Page <b>{{ current_page }}</b></span>
+<span>Page <b>{{ current_page }}</b></span>
 {% else %}
 {% if query_tag %}
 <a href='?tag={{ query_tag }}&page={{ i }}'>{{ i }}</a>

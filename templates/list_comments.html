@@ -2,22 +2,34 @@
 <head>
 <title>Comments</title>
 {% include 'page_meta.htmlt' %}
+<link rel='stylesheet' type='text/css' href='/static/{{ style }}/paging.css'>
 <style type="text/css">
 table { border-spacing: 6px; }
 table tr:nth-child(even) { background: #2B2B2B; }
 </style>
 </head>
 <body>
+{% include 'admin_bar.htmlt' %}
 <table class='right_col'>
 <tr><th>Author</th><th>IP</th><th>Email</th><th>URL</th><th>Content</th><th>Post ID</th></tr>
 {% for comment in comments %}
 <tr>
 <td>{{ comment.author|escape }}</td>
 <td>{{ comment.ipaddr }}</td>
-<td>{{ comment.email }}</td>
+<td>{{ comment.email|escape }}</td>
 <td>{{ comment.url|escape }}</td>
-<td>{{ comment.content|escape }}</td>
+<td>{{ comment.content }}</td>
 <td>{{ comment.post_id }}</td>
 </tr>
 {% endfor %}
 </table>
+
+<p class='paging'>
+{% for i in page_count %}
+{% ifequal i current_page %}
+<span>Page <b>{{ current_page }}</b></span>
+{% else %}
+<a href='?page={{ i }}'>{{ i }}</a>
+{% endifequal %}
+{% endfor %}
+</p>
