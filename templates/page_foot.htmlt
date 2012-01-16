@@ -1,0 +1,10 @@
+<hr style='clear: both;'>
+<div style='vertical-align: middle; width: 400px; margin-left: auto; margin-right: auto;' class='page_foot'>
+<table>
+<tr>
+  <td rowspan=2><a href='/'><img src='/favicon.ico'/></a></td>
+  <td>Copyright (C) Neuron Teckid @ <span class='foot_lnk'><a href='http://bitfoc.us/'>Bit Focus</a></span></td>
+</tr>
+<tr><td>A {{ style|capfirst }} Theme</td></tr>
+</table>
+</div>

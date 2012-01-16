@@ -23,6 +23,7 @@ if __name__ == '__main__':
         ('/c/login', usr.LoginPage),
         ('/c/auth', usr.LoginAction),
         ('/rss', rss.Build),
+        ('/about', base.About),
         ('/.*', base.NotFound),
     ], debug=True)
     wsgiref.handlers.CGIHandler().run(application)

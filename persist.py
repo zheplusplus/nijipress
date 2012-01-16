@@ -98,7 +98,7 @@ def all_tags():
         tags[r.tag] = tags[r.tag] + 1 if r.tag in tags else 0
         if tags[r.tag] > max_tag_count:
             max_tag_count = tags[r.tag]
-    return sorted([Tag(n, 0.8 + 1.2 * c / max_tag_count) for n, c in
+    return sorted([Tag(n, 8 + 16.0 * c / max_tag_count) for n, c in
                                  tags.iteritems()], key=lambda tag: tag.name)
 
 class Comment(db.Model):

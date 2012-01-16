@@ -14,7 +14,7 @@ def bold(text):
 
 def italic(text):
     from nijiconf import ITALIC_BEGIN, ITALIC_END
-    return re.sub('//(?P<italic>([^/]|/[^/])*)//'
+    return re.sub('///(?P<italic>([^/]|/[^/]|//[^/])*)///'
                 , lambda m: ITALIC_BEGIN + m.group('italic') + ITALIC_END
                 , text)
 

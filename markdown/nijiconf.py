@@ -42,8 +42,8 @@ H2_END = '</h2>'
 H3_BEGIN = '<h3>'
 H3_END = '</h3>'
 
-MONO_BLOCK_BEGIN = '''<p><tt><code>'''
-MONO_BLOCK_END = '''</code></tt></p>'''
+MONO_BLOCK_BEGIN = '''<pre><p><tt><code>'''
+MONO_BLOCK_END = '''</code></tt></p></pre>'''
 
 AA_BEGIN = '''<tt><code><p style='line-height: 96%; white-space: nowrap;'>'''
 AA_END = '''</p></code></tt>'''

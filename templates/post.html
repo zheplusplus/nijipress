@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>{{ title }} - Bit Focus iBlog</title>
+<title>{{ title }} - Bit Focus</title>
 {% include 'page_meta.htmlt' %}
 <link rel='stylesheet' type='text/css' href='/static/{{ style }}/post.css'>
 <script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
@@ -42,7 +42,7 @@ $('document').ready(function() {
 {% endif %}
 {% if comment.url %}
 <script lang='javascript'>
-  document.write('<a href="{{ comment.url|escape }}">&lt;^&gt;</a>');
+  document.write('<a href='{{ comment.url|escape }}'>&lt;^&gt;</a>');
 </script>
 {% endif %}
 said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
@@ -64,3 +64,4 @@ said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
   <input type='submit' id='submit' value='Post it!'>
 </form>
 </div>
+{% include 'page_foot.htmlt' %}

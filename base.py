@@ -16,7 +16,8 @@ def escape_title(title):
     return markdown.inline.forge(markdown.html.escape(title))
 
 def escape_preview(content):
-    return ''.join(markdown.entire_doc.generate_preview(content.split('\n')))
+    return ''.join(markdown.entire_doc.generate_preview(content.split('\n'),
+                                                        1729))
 
 def post_for_client(post):
     post.title = escape_title(post.title)
@@ -75,3 +76,7 @@ def raise_forbidden(view):
     view.put_page('templates/forbidden.html', {
             'posts': posts_for_client(persist.fetch_posts(0, 5)),
         })
+
+class About(BaseView):
+    def get(self):
+        self.put_page('templates/about.html')

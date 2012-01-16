@@ -18,7 +18,7 @@ td { background: #2B2B2B; }
 <th><i>Tags:</i></th>
 {% for tag in prepared_tags %}
 <td>
-{{ tag }}
+{{ tag|escape }}
 </td>
 {% endfor %}
 </tr></table>
@@ -28,9 +28,9 @@ td { background: #2B2B2B; }
 {% if id %}
   <input type='hidden' name='id' value='{{ id }}'>
 {% endif %}
-  <input type='hidden' name='tags' value='{{ tags }}'>
-  <input type='hidden' name='title' value='{{ title }}'>
-  <textarea name='content' style='visibility: hidden;'>{{ content }}</textarea>
+  <input type='hidden' name='tags' value='{{ tags|escape }}'>
+  <input type='hidden' name='title' value='{{ title|escape }}'>
+  <textarea name='content' style='visibility: hidden;'>{{ content|escape }}</textarea>
 </form>
 {% else %}
 <hr>

@@ -3,6 +3,7 @@
   margin-bottom: 0px;
   background-color: #EEE;
   border-radius: 4px;
+  color: #304030;
 }
 .post_title a {
   color: #304030;
@@ -26,8 +27,4 @@
 .post_foot a:hover {
   color: #506050;
   background-color: #F4E3B6;
-}
-
-.paging {
-  text-align: center;
 }

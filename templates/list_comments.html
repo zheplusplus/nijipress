@@ -3,7 +3,7 @@
 <title>Comments</title>
 {% include 'page_meta.htmlt' %}
 <link rel='stylesheet' type='text/css' href='/static/{{ style }}/paging.css'>
-<style type="text/css">
+<style type='text/css'>
 table { border-spacing: 6px; }
 table tr:nth-child(even) { background: #2B2B2B; }
 </style>
@@ -11,15 +11,16 @@ table tr:nth-child(even) { background: #2B2B2B; }
 <body>
 {% include 'admin_bar.htmlt' %}
 <table class='right_col'>
-<tr><th>Author</th><th>IP</th><th>Email</th><th>URL</th><th>Content</th><th>Post ID</th></tr>
+<tr><th>Author</th><th>IP</th><th>Email</th><th>URL</th><th>Time</th><th>Content</th><th>Post ID</th></tr>
 {% for comment in comments %}
 <tr>
 <td>{{ comment.author|escape }}</td>
 <td>{{ comment.ipaddr }}</td>
 <td>{{ comment.email|escape }}</td>
 <td>{{ comment.url|escape }}</td>
+<td>{{ comment.date|date:"D, d M Y H:i:s" }}</td>
 <td>{{ comment.content }}</td>
-<td>{{ comment.post_id }}</td>
+<td><a href='/?p={{ comment.post_id }}'>{{ comment.post_id }}</a></td>
 </tr>
 {% endfor %}
 </table>

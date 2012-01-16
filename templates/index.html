@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Bit Focus iBlog</title>
+<title>Bit Focus</title>
 {% include 'page_meta.htmlt' %}
 <link rel='stylesheet' type='text/css' href='/static/{{ style }}/index.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ style }}/paging.css'>
@@ -23,7 +23,6 @@
 {% endfor %}
 
 {% if paging_on %}
-<hr>
 <p class='paging'>
 {% for i in page_count %}
 {% ifequal i current_page %}
@@ -45,7 +44,7 @@
 <p class='div_header'>Tags</p>
 <p class='tags'>
 {% for tag in tags %}
-<a href='/?tag={{ tag.name|urlencode }}' style='font-size: {{ tag.rate }}em'>{{ tag.name }}</a>
+<a href='/?tag={{ tag.name|urlencode }}' style='font-size: {{ tag.rate }}pt'>{{ tag.name|escape }}</a>
 {% endfor %}
 </p>
 <hr>
@@ -58,3 +57,4 @@
 <a href='/rss'><img width=48px height=48px src='http://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg'/></a>
 </div>
 </div>
+{% include 'page_foot.htmlt' %}
