@@ -15,7 +15,37 @@ $('document').ready(function() {
                'content', 'Comment (REQUIRED)\n' +
                           'Please use no more than 500 characters for your opinion.\n' +
                           'And not contain any offensive material or advertisement.');
+  if (localStorage.author) {
+    document.getElementById('author').value = localStorage.author;
+    document.getElementById('author').actual_value = localStorage.author;
+  }
+  if (localStorage.email) {
+    document.getElementById('email').value = localStorage.email;
+    document.getElementById('email').actual_value = localStorage.email;
+  }
+  if (localStorage.url) {
+    document.getElementById('url').value = localStorage.url;
+    document.getElementById('url').actual_value = localStorage.url;
+  }
 });
+
+function submit() {
+  localStorage.author = $('#author').val();
+  localStorage.email = $('#email').val();
+  localStorage.url = $('#url').val();
+  $('#post_f').submit();
+}
+
+function contentChanged(t) {
+  var len = t.value.length;
+  $('#submit').attr('disabled', !(0 < len && len <= 500));
+  if (len > 500) {
+    $('#submit').html('Please truncate your comment (' + len +
+                      '/ up to 500 characters)');
+  } else {
+    $('#submit').html('Post it!');
+  }
+}
 </script>
 {% include 'analytics.htmlt' %}
 </head>
@@ -46,7 +76,7 @@ $('document').ready(function() {
 {% endif %}
 {% if comment.url %}
 <script lang='javascript'>
-  document.write('<a href='{{ comment.url|escape }}'>&lt;^&gt;</a>');
+  document.write('<a href="{{ comment.url|escape }}">&lt;^&gt;</a>');
 </script>
 {% endif %}
 said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
@@ -61,26 +91,27 @@ said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
 
 <div style='vertical-align: middle; width: 720px; margin-left: auto; margin-right: auto;'>
 <div style='float: left; width: 600px;'>
-<form name='f' action='/postcomment' method='post'>
+<form id='post_f' name='f' action='/postcomment' method='post'>
   <p class='comments_hint' style='margin-bottom: 0;'><a name='leavecomment'>Leave a comment:</a></p>
   <input type='hidden' name='post_id' value='{{ post.pid }}'><br>
   <input size=48 type='text' id='author' name='author'><br>
   <input size=48 type='text' id='email' name='email'><br>
   <input size=48 type='text' id='url' name='url'><br>
-  <textarea id='content' name='content' rows='4' cols='80'></textarea><br>
-  <table class='page_foot'>
-    <tr>
-      <td rowspan=2><input type='submit' id='submit' value='Post it!'></td>
-      <td rowspan=2 style='padding-left: 60px;'><a rel='license' href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>
-        <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png'/>
-      </a></td>
-      <td>Your comment will be licensed under</td>
-      </tr>
-      <tr class='foot_lnk'><td>
-        <a rel='license' href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>CC-NC-ND 3.0</td></a>
-      </tr>
-  </table>
+  <textarea id='content' name='content' rows='4' cols='80'
+    onchange='contentChanged(this)' onkeyup='contentChanged(this)'></textarea><br>
 </form>
+<table class='page_foot'>
+<tr>
+  <td rowspan=2><button id='submit' disabled='true' onclick='submit()'>Post it!</button></td>
+  <td rowspan=2 style='padding-left: 60px;'><a rel='license' href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>
+    <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png'/>
+  </a></td>
+  <td>Your comment will be licensed under</td>
+  </tr>
+  <tr class='foot_lnk'><td>
+    <a rel='license' href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>CC-NC-ND 3.0</td></a>
+  </tr>
+</table>
 </div>
 <div style='font-size: 0.8em; padding-top: 24px;'>
 <p>Hint -- You may use following markdown syntax for your comment:</p>
