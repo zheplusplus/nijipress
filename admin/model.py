@@ -1,4 +1,5 @@
 from google.appengine.ext import db
+from google.appengine.api import memcache
 
 class User(db.Model):
     name = db.StringProperty(multiline=False)
@@ -28,3 +29,37 @@ class User(db.Model):
         if u.count() == 0:
             return User.new('')
         return u[0]
+
+class SiteConfiguration(db.Model):
+    title = db.StringProperty(multiline=False)
+    style = db.StringProperty(multiline=False)
+    rss_uri = db.StringProperty(multiline=False)
+    rss_description = db.StringProperty(multiline=False)
+    analytics_code = db.StringProperty(multiline=False)
+    analytics_domain = db.StringProperty(multiline=False)
+
+    @staticmethod
+    def _load_cache():
+        conf = SiteConfiguration.all()
+        if conf.count() == 0:
+            conf = SiteConfiguration()
+            conf.title = 'A NijiPress Site'
+            conf.style = 'midnight'
+            conf.rss_uri = '/rss'
+            conf.rss_description = ''
+            conf.analytics_code = ''
+            return conf
+        return conf[0]
+
+    @staticmethod
+    def load():
+        cache = memcache.get('siteconf')
+        if cache == None:
+            cache = SiteConfiguration._load_cache()
+            memcache.set('siteconf', cache)
+        return cache
+
+    @staticmethod
+    def save(conf):
+        memcache.set('siteconf', conf)
+        conf.put()

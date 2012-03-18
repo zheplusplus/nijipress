@@ -1,16 +1,20 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>{{ title }} - Bit Focus</title>
+<title>{{ title }} - {{ conf.title }}</title>
 {% include 'page_meta.htmlt' %}
-<link rel='stylesheet' type='text/css' href='/static/{{ style }}/post.css'>
+<meta name='keywords' content='{% for tag in post.tags %}{{ tag }},{% endfor %}'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/post.css'>
 <script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
 <script type='text/javascript' src='http://leaf.bitfoc.us/static/textfill.js'></script>
 <script>
 $('document').ready(function() {
-  bfplTextFill('author', 'Your name'
-             , 'email', 'Your email (for Gravatar, wont be public)'
-             , 'url', 'Your homepage link (placed after your name)'
-             , 'content', 'Comment (REQUIRED)');
+  bfplTextFill('author', 'Your name',
+               'email', 'Your email (for Gravatar, wont be public)',
+               'url', 'Your homepage link (placed after your name)',
+               'content', 'Comment (REQUIRED)\n' +
+                          'Please use no more than 500 characters for your opinion.\n' +
+                          'And not contain any offensive material or advertisement.');
 });
 </script>
 {% include 'analytics.htmlt' %}
@@ -24,10 +28,10 @@ $('document').ready(function() {
 {% include 'print_tags.htmlt' %}
 </div>
 
-<div style='vertical-align: middle; width: 640px; margin-left: auto; margin-right: auto;'>
+<div style='vertical-align: middle; width: 720px; margin-left: auto; margin-right: auto;'>
 {% if comments|length %}
 <p class='comments_hint'>Comments:</p>
-<table style='width: 640px; border-spacing: 6px;'>
+<table style='width: 720px; border-spacing: 6px;'>
 {% for comment in comments %}
 <tr class='comment'>
 <th style='width: 48px; vertical-align: top;'>
@@ -53,15 +57,37 @@ said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
 {% endfor %}
 </table>
 {% endif %}
+</div>
 
+<div style='vertical-align: middle; width: 720px; margin-left: auto; margin-right: auto;'>
+<div style='float: left; width: 600px;'>
 <form name='f' action='/postcomment' method='post'>
   <p class='comments_hint' style='margin-bottom: 0;'><a name='leavecomment'>Leave a comment:</a></p>
-  <input size=40 type='hidden' name='post_id' value='{{ post.pid }}'><br>
-  <input size=40 type='text' id='author' name='author'><br>
-  <input size=40 type='text' id='email' name='email'><br>
-  <input size=40 type='text' id='url' name='url'><br>
-  <textarea id='content' name='content' rows='4' cols='64'></textarea><br>
-  <input type='submit' id='submit' value='Post it!'>
+  <input type='hidden' name='post_id' value='{{ post.pid }}'><br>
+  <input size=48 type='text' id='author' name='author'><br>
+  <input size=48 type='text' id='email' name='email'><br>
+  <input size=48 type='text' id='url' name='url'><br>
+  <textarea id='content' name='content' rows='4' cols='80'></textarea><br>
+  <table class='page_foot'>
+    <tr>
+      <td rowspan=2><input type='submit' id='submit' value='Post it!'></td>
+      <td rowspan=2 style='padding-left: 60px;'><a rel='license' href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>
+        <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png'/>
+      </a></td>
+      <td>Your comment will be licensed under</td>
+      </tr>
+      <tr class='foot_lnk'><td>
+        <a rel='license' href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>CC-NC-ND 3.0</td></a>
+      </tr>
+  </table>
 </form>
+</div>
+<div style='font-size: 0.8em; padding-top: 24px;'>
+<p>Hint -- You may use following markdown syntax for your comment:</p>
+<tt><code>``monospace``</code></tt><br>
+<b>**bold**</b><br>
+A,,<sub>subscript</sub>,,<br>
+A^^<sup>superscript</sup>^^<br>
+</div>
 </div>
 {% include 'page_foot.htmlt' %}

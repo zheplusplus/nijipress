@@ -2,7 +2,7 @@
 <head>
 <title>Posts</title>
 {% include 'page_meta.htmlt' %}
-<link rel='stylesheet' type='text/css' href='/static/{{ style }}/paging.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
 <style type='text/css'>
 table { border-spacing: 12px 0px; }
 table tr:nth-child(even) { background: #2B2B2B; }
@@ -13,10 +13,10 @@ table tr:nth-child(even) { background: #2B2B2B; }
 <table class='right_col'>
 {% for post in posts %}
 <tr>
+<td><a href='/?p={{ post.pid }}'>{{ post.pid }}</a></td>
 <td>{{ post.title }}</td>
 <td><tt>{{ post.date|date:"D, d M Y H:i:s" }}</tt></td>
 <td><a href='/c/edit?id={{ post.pid }}'>Edit</a></td>
-<td><a href='/?p={{ post.pid }}'>View</a></td>
 </tr>
 {% endfor %}
 </table>

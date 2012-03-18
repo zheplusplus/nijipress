@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>Bit Focus</title>
+<title>{{ conf.title }}</title>
 {% include 'page_meta.htmlt' %}
-<link rel='stylesheet' type='text/css' href='/static/{{ style }}/index.css'>
-<link rel='stylesheet' type='text/css' href='/static/{{ style }}/paging.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/index.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
 {% include 'analytics.htmlt' %}
 </head>
 <body>
@@ -50,11 +51,19 @@
 <hr>
 <p class='div_header'>Blogrolls</p>
 <a href='http://bitfoc.us/'>Bit Focus Home</a><br/>
-<a href='http://blog.bitfoc.us/'>Bit Focus Blog</a><br/>
+<a href='http://abitno.me/'>A Bit? No!!!</a><br>
+<a href='https://www.deleak.com/'>delectate&#039;s Home Page</a><br>
+<a href='http://blog.crackcell.com/'>if 0 {</a><br>
+<a href='http://linluxiang.info/'>LinLuxiang</a><br>
+<a href='http://blog.liuw.name/'>Liuw&#039;s Thinkpad</a><br>
+<a href='http://smallarcher.com'>Small Archer</a><br>
+<p>
+<a href='/about'>About this site</a>
+</p>
 </div>
 <hr>
 <p class='div_header'>Follow me...</p>
-<a href='/rss'><img width=48px height=48px src='http://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg'/></a>
+<a href='{{ conf.rss_uri }}'><img width=48px height=48px src='http://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg'/></a>
 </div>
 </div>
 {% include 'page_foot.htmlt' %}

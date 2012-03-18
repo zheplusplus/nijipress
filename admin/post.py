@@ -1,5 +1,5 @@
 import base
-import persist
+import models.post
 import admin.model as admin
 
 class NewPost(base.BaseView):
@@ -31,30 +31,33 @@ class Preview(base.BaseView):
 
 class Add(base.BaseView):
     def post(self):
-        post = persist.post_by_id(self.request.get('id'))
-        usr = admin.User.get_by_session(self.request)
-        if usr.admin:
-            post.title = self.request.get('title')
-            post.content = self.request.get('content')
-            post.preview = base.escape_preview(post.content)
-            tags = self.request.get('tags')
-            persist.put_post(post, [s.strip() for s in tags.split(',')])
-            self.redirect('/c/posts')
-        else:
-            base.raise_forbidden(self)
+        if not admin.User.get_by_session(self.request).admin:
+            return base.raise_forbidden(self)
+        post_id = self.request.get('id')
+        p = None
+        try:
+            p = models.post.by_id(post_id)
+        except ValueError:
+            p = models.post.new()
+            post_id = str(p.pid)
+        p.title = self.request.get('title')
+        p.content = self.request.get('content')
+        tags = self.request.get('tags')
+        models.post.put(p, [s.strip() for s in tags.split(',')])
+        self.redirect('/?p=' + post_id)
 
 class List(base.BaseView):
     def get(self):
         p = self.request_value('page', int)
         self.put_page('templates/list_posts.html', {
-                'posts': base.posts_for_client(persist.fetch_posts(p)),
+                'posts': base.posts_for_client(models.post.fetch(p)),
                 'current_page': p,
-                'page_count': xrange(persist.total_posts_page_count()),
+                'page_count': xrange(models.post.count_pages()),
             })
 
 class Edit(base.BaseView):
     def get(self):
-        post = persist.post_by_id(self.request.get('id'))
+        post = models.post.by_id(self.request.get('id'))
         self.put_page('templates/new.html', {
                 'is_new': False,
                 'id': post.pid,

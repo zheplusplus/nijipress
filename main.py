@@ -5,6 +5,7 @@ import base
 import browse
 from admin import post
 from admin import usr
+from admin import siteconf
 from admin import comments
 import rss
 
@@ -18,10 +19,13 @@ if __name__ == '__main__':
         ('/c/posts', post.List),
         ('/c/edit', post.Edit),
         ('/c/comments', comments.List),
+        ('/c/delcomment', comments.Delete),
         ('/c/reg', usr.Register),
         ('/c/newusr', usr.New),
         ('/c/login', usr.LoginPage),
         ('/c/auth', usr.LoginAction),
+        ('/c/siteconf', siteconf.ConfigureSite),
+        ('/c/savesiteconf', siteconf.Save),
         ('/rss', rss.Build),
         ('/about', base.About),
         ('/.*', base.NotFound),

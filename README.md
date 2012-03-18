@@ -15,3 +15,5 @@ To manage your site
 * edit the user you have just registered, change field `admin` to `True`, save
 * go to `/` of your site, then you may see administrator bar at the top of the page
 * go wherever you want
+
+This project is published under the MIT License.

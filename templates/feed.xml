@@ -8,8 +8,8 @@
  xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
 >
 <channel>
-<title>{{ title }}</title>
-<description>{{ description }}</description>
+<title>{{ conf.title }}</title>
+<description>{{ conf.rss_description }}</description>
 <link>{{ site_link }}</link>
 {% for post in posts %}
 <item>

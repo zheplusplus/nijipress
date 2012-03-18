@@ -5,6 +5,7 @@ Logged in as <b>{{ usr.name }}.</b>
 <a href='/c/newpost'>Add new post</a>
 <a href='/c/comments'>View comments</a>
 <a href='/c/posts'>Manage posts</a>
+<a href='/c/siteconf'>Config Site</a>
 {% else %}
 You are not administrator.
 {% endif %}

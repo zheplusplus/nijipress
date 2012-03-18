@@ -1,4 +1,5 @@
+<meta charset="UTF-8">
 {% if usr.admin %}
-<link rel='stylesheet' type='text/css' href='/static/{{ style }}/admin.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/admin.css'>
 {% endif %}
-<link rel='stylesheet' type='text/css' href='/static/{{ style }}/main.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/main.css'>
