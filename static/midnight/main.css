@@ -36,7 +36,7 @@ tt, code {
   margin-left: 10px;
   margin-bottom: 10px;
 }
-.post_content b, strong {
+.post_content .ntstrong {
   color: #FFE040;
 }
 .post_content i {
@@ -111,8 +111,7 @@ tt, code {
   border-radius: 2px;
 }
 
-.ntinlinecode {
-  color: white;
+.post_content .ntinlinecode {
   background-color: #2B2B2B;
   padding: 2px;
   font-size: 92%;
