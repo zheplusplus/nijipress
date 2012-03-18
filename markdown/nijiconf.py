@@ -1,6 +1,5 @@
 AND = '&amp;'
 SPACE = '&nbsp;'
-DOT = '&#46;'
 MINUS = '&#45;'
 SQUOT = '&#39;'
 DQUOT = '&#34;'
