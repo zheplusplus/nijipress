@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>Forbidden - Bit Focus</title>
+<title>Forbidden - {{ conf.title }}</title>
 {% include 'page_meta.htmlt' %}
 </head>
 <body>
@@ -45,12 +46,12 @@ ________                               `.                            \
                                                                      `.  |
                                                                        `.|</tt></pre>
 </div>
-<div class='right_col' style='padding-top: 40px; margin-left: 720px;'>
+<div class='stdlnk' style='padding-top: 40px; margin-left: 720px;'>
 <p class='div_header'>You might</p>
 <p style='margin-left: 20px; line-height: 1.3;'>
 <a href='/'>Go home</a><br/>
 <a href='http://bitfoc.us/'>Visit BitFocus</a><br/>
-<a href='/rss'>Read via RSS feed</a><br/>
+<a href='{{ conf.rss_uri }}'>Read via RSS feed</a><br/>
 </p>
 <p>
 <p class='div_header'>Random posts</p>

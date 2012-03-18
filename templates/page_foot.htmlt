@@ -1,10 +1,12 @@
 <hr style='clear: both;'>
-<div style='vertical-align: middle; width: 400px; margin-left: auto; margin-right: auto;' class='page_foot'>
-<table>
+<div style='vertical-align: middle; width: 400px; margin-left: auto; margin-right: auto;'>
+<table class='page_foot'>
+<tr><td class='stdlnk' colspan=2><a style='font-size: 1em;' href='/'>Back to {{ conf.title }}</a></td></tr>
 <tr>
-  <td rowspan=2><a href='/'><img src='/favicon.ico'/></a></td>
-  <td>Copyright (C) Neuron Teckid @ <span class='foot_lnk'><a href='http://bitfoc.us/'>Bit Focus</a></span></td>
+  <td rowspan=3><a class='imglink' href='/'><img src='/favicon.ico'/></a></td>
+  <td><a href='https://github.com/neuront/nijipress'>NijiPress</a> - Copyright (C) Neuron Teckid @ <span class='stdlnk'><a href='http://bitfoc.us/'>Bit Focus</a></span></td>
 </tr>
-<tr><td>A {{ style|capfirst }} Theme</td></tr>
+<tr><td>A {{ conf.style|capfirst }} Theme</td></tr>
+<tr><td><span class='stdlnk'><a href='/about'>About</a></span> this site</td></tr>
 </table>
 </div>

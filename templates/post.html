@@ -1,67 +1,33 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>{{ title }} - Bit Focus</title>
+<title>{{ title }} - {{ conf.title }}</title>
 {% include 'page_meta.htmlt' %}
-<link rel='stylesheet' type='text/css' href='/static/{{ style }}/post.css'>
+<meta name='keywords' content='{% for tag in post.tags %}{{ tag }},{% endfor %}'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/post.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
 <script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
-<script type='text/javascript' src='http://leaf.bitfoc.us/static/textfill.js'></script>
+<script type='text/javascript' src='/static/utils.js'></script>
 <script>
-$('document').ready(function() {
-  bfplTextFill('author', 'Your name'
-             , 'email', 'Your email (for Gravatar, wont be public)'
-             , 'url', 'Your homepage link (placed after your name)'
-             , 'content', 'Comment (REQUIRED)');
-});
+$('document').ready(function() { resetComment(); });
 </script>
 {% include 'analytics.htmlt' %}
 </head>
 <body>
 {% include 'page_head.htmlt' %}
 <div style='vertical-align: middle; width: 800px; margin-left: auto; margin-right: auto;'>
-<h1 class='post_title'>{{ post.title }}</h1>
+<h1 class='post_title'>{{ post.title|safe }}</h1>
 <p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
-<div class='post_content'>{{ post.content }}</div>
+<div class='post_content stdlnk'>{{ post.content|safe }}</div>
 {% include 'print_tags.htmlt' %}
-</div>
 
-<div style='vertical-align: middle; width: 640px; margin-left: auto; margin-right: auto;'>
-{% if comments|length %}
-<p class='comments_hint'>Comments:</p>
-<table style='width: 640px; border-spacing: 6px;'>
-{% for comment in comments %}
-<tr class='comment'>
-<th style='width: 48px; vertical-align: top;'>
-<img src='http://0.gravatar.com/avatar/{{ comment.email_md5 }}?s=48' style='border-radius: 4px;'/>
-</th>
-<td>
-<p class='comment_head'>
-{% if comment.author %}
-  <b>{{ comment.author|escape }}</b>
-{% else %}
-  <i>Anonymous</i>
-{% endif %}
-{% if comment.url %}
-<script lang='javascript'>
-  document.write('<a href='{{ comment.url|escape }}'>&lt;^&gt;</a>');
-</script>
-{% endif %}
-said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
-</p>
-<p class='comment_content'>{{ comment.content }}</p>
-</td>
-</tr>
-{% endfor %}
-</table>
+{% if usr.admin %}
+<p><a href='/c/edit?id={{ post.pid }}'>Edit</a></p>
 {% endif %}
 
-<form name='f' action='/postcomment' method='post'>
-  <p class='comments_hint' style='margin-bottom: 0;'><a name='leavecomment'>Leave a comment:</a></p>
-  <input size=40 type='hidden' name='post_id' value='{{ post.pid }}'><br>
-  <input size=40 type='text' id='author' name='author'><br>
-  <input size=40 type='text' id='email' name='email'><br>
-  <input size=40 type='text' id='url' name='url'><br>
-  <textarea id='content' name='content' rows='4' cols='64'></textarea><br>
-  <input type='submit' id='submit' value='Post it!'>
-</form>
+{{ conf.post_html|safe }}
 </div>
+
+{% include 'display_comments.seg.html' %}
+{% include 'leave_comment.seg.html' %}
 {% include 'page_foot.htmlt' %}

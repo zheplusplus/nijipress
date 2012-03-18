@@ -10,30 +10,24 @@
   font-size=1.6em;
 }
 
-.comment a {
-  color: #C5DEB3;
-}
-.comment a:hover {
-  background-color: #C5DEB3;
-  color: black;
-  text-decoration: none;
-}
-.comment td {
+.comment td.text {
   background-color: #2B2B2B;
   border-radius: 4px;
 }
 
 .comment_head {
+  margin-top: 6px;
   margin-left: 6px;
 }
 .comment_head b {
-  color: #E0E0E0;
+  color: #eee;
 }
 .comment_head i {
-  color: #B0B0B0;
+  color: #bbb;
 }
 
 .comment_content {
-  margin-left: 6px;
-  color: #A1A1A1;
+  margin-top: 12px;
+  margin-left: 12px;
+  color: #aaa;
 }

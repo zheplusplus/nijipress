@@ -2,7 +2,7 @@ import hashlib
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
-import persist
+import models
 import admin.model as admin
 import markdown
 import markdown.inline
@@ -21,9 +21,8 @@ def escape_preview(content):
 
 def post_for_client(post):
     post.title = escape_title(post.title)
+    post.preview = escape_preview(post.content)
     post.content = escape_content(post.content)
-    from conf import build_post_link
-    post.ident = build_post_link(post.pid)
     return post
 
 def posts_for_client(origin_posts):
@@ -37,12 +36,15 @@ def comments_for_client(comments):
             img(sub(sup(italic(bold(monospace(markdown.html.forge(text))))))))
     def client_comment(c):
         c.email_md5 = hashlib.md5(c.email).hexdigest()
-        c.content = '<br>'.join(forge_inline(c.content).split('\n'))
+        c.esc_content = '<br>'.join(map(forge_inline, c.content.split('\n')))
         return c
     return [client_comment(c) for c in comments]
 
 class BaseView(webapp.RequestHandler):
     def get(self):
+        raise_not_found(self)
+
+    def post(self):
         raise_not_found(self)
 
     def request_value(self, key, wanted_type):
@@ -51,16 +53,16 @@ class BaseView(webapp.RequestHandler):
         except ValueError:
             return wanted_type()
 
-    def post(self):
-        raise_not_found(self)
+    def siteconf(self):
+        return admin.SiteConfiguration.load()
 
     def put_page(self, template_file, template_value=dict()):
         import os
-        usr = admin.User.get_by_session(self.request)
-        template_value['usr'] = usr
-        template_value['style'] = 'midnight'
+        template_value['usr'] = admin.User.get_by_session(self.request)
+        template_value['conf'] = self.siteconf()
         path = os.path.join(os.path.dirname(__file__), template_file)
-        self.response.out.write(template.render(path, template_value))
+        content = str(template.render(path, template_value).encode('utf-8'))
+        self.response.out.write(content)
 
 class NotFound(BaseView):
     pass
@@ -68,13 +70,13 @@ class NotFound(BaseView):
 def raise_not_found(view):
     view.error(404)
     view.put_page('templates/notfound.html', {
-            'posts': posts_for_client(persist.fetch_posts(0, 5)),
+            'posts': posts_for_client(models.post.fetch(0, 5)),
         })
 
 def raise_forbidden(view):
     view.error(403)
     view.put_page('templates/forbidden.html', {
-            'posts': posts_for_client(persist.fetch_posts(0, 5)),
+            'posts': posts_for_client(models.post.fetch(0, 5)),
         })
 
 class About(BaseView):

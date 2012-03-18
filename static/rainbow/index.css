@@ -1,0 +1,42 @@
+.post_title {
+  font-size: 2em;
+  margin-bottom: 0px;
+  background-color: #ecdcac;
+  border-radius: 4px;
+  color: #145;
+}
+.post_title a {
+  color: #145;
+  margin-left: 10px;
+}
+.post_title a:hover {
+  text-decoration: none;
+}
+
+.post_foot {
+  font-weight: bolder;
+  font-size: 0.8em;
+}
+.post_foot a {
+  padding: 5px;
+  color: #222;
+  background-color: #c5deb3;
+  border-radius: 3px;
+  border: solid 1px;
+}
+.post_foot a:hover {
+  color: #232;
+  background-color: #dec;
+  text-decoration: none;
+}
+
+.right_col a {
+  color: #2ae;
+  padding: 2px;
+}
+.right_col a:hover {
+  background-color: #2ae;
+  color: white;
+  text-decoration: none;
+  border-radius: 2px;
+}

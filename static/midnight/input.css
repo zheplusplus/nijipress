@@ -1,0 +1,28 @@
+textarea, input[type='text'] {
+  background-color: #222;
+  color: #ccc;
+  padding: 3px;
+  border-radius: 2px;
+  border: solid 1px;
+}
+
+textarea:focus, input[type='text']:focus {
+  background-color: #111;
+  color: white;
+}
+
+button, input[type='submit'] {
+  background-color: #222;
+  color: #ccc;
+  padding: 3px;
+  border-radius: 2px;
+  border: solid 1px;
+  text-decoration: underline;
+}
+
+button:hover, input[type='submit']:hover {
+  text-decoration: none;
+  background-color: #eee;
+  color: #222;
+  cursor: pointer;
+}

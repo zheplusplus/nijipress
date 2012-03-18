@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>
+Site Configuration
+</title>
+{% include 'page_meta.htmlt' %}
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
+<style>
+.conf td {
+  vertical-align: top;
+}
+</style>
+</head>
+<body>
+{% include 'admin_bar.htmlt' %}
+<form action='/c/savesiteconf' method='post'>
+<table class='stdlnk conf'>
+<tr>
+  <td>Title</td>
+  <td><input type='text' name='title' value='{{ conf.title|escape }}' size='40'></td>
+</tr>
+<tr>
+  <td>Style</td>
+  <td><input type='text' name='style' value='{{ conf.style|escape }}' size='40'></td>
+</tr>
+<tr>
+  <td>RSS URI</td>
+  <td><input type='text' name='rss_uri' value='{{ conf.rss_uri|escape }}' size='40'></td>
+</tr>
+<tr>
+  <td>RSS Description</td>
+  <td><input type='text' name='rss_description' value='{{ conf.rss_description|escape }}' size='40'></td>
+</tr>
+<tr>
+  <td>Google Analytics Code<br/>
+      <sub>Leave blank if not use Google Analytics</sub></td>
+  <td><input type='text' name='analytics_code' value='{{ conf.analytics_code|escape }}' size='40'></td>
+</tr>
+<tr>
+  <td>Google Analytics Domain</td>
+  <td><input type='text' name='analytics_domain' value='{{ conf.analytics_domain|escape }}' size='40'></td>
+</tr>
+<tr>
+  <td>HTML Content After Each Post<br>
+      <sub>Watch out! Do not XSS yourself</sub></td>
+  <td><textarea name='post_html' rows='4' cols='60'>{{ conf.post_html|escape }}</textarea></td>
+</tr>
+<tr>
+  <td>Blogrolls<br>
+      <sub>In this format each line: URI&lt;text</sub></td>
+  <td><textarea name='blogrolls' rows='4' cols='60'></textarea>
+      {% for r in conf.blogrolls %}
+        <br/><a href='{{ r.uri }}'>{{ r.uri }}</a> &lt; {{ r.text|escape }}</a>
+      {% endfor %}
+      </td>
+</tr>
+<tr><td><input type='submit'></td></tr>
+</table>
+</form>
+{% include 'page_foot.htmlt' %}

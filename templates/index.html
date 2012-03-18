@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html>
 <head>
-<title>Bit Focus</title>
+<title>{{ conf.title }}</title>
 {% include 'page_meta.htmlt' %}
-<link rel='stylesheet' type='text/css' href='/static/{{ style }}/index.css'>
-<link rel='stylesheet' type='text/css' href='/static/{{ style }}/paging.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/index.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
 {% include 'analytics.htmlt' %}
 </head>
 <body>
@@ -12,9 +13,9 @@
 <div style='float: left; width: 640px;'>
 
 {% for post in posts %}
-<p class='post_title'><a href='/?p={{ post.pid }}'>{{ post.title }}</a></p>
+<p class='post_title'><a href='/?p={{ post.pid }}'>{{ post.title|safe }}</a></p>
 <p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
-<div class='post_content'>{{ post.preview }}</div>
+<div class='post_content stdlnk'>{{ post.preview|safe }}</div>
 <span class='post_foot'><a href='/?p={{ post.pid }}'>Read full text &gt;&gt;&gt;</a></span>
 <div style='float: right;'>
 <span class='post_foot'><a href='/?p={{ post.pid }}#leavecomment'>Leave a comment</a></span>
@@ -29,7 +30,7 @@
 <span>Page <b>{{ current_page }}</b></span>
 {% else %}
 {% if query_tag %}
-<a href='?tag={{ query_tag }}&page={{ i }}'>{{ i }}</a>
+<a href='?tag={{ query_tag|urlencode }}&page={{ i }}'>{{ i }}</a>
 {% else %}
 <a href='?page={{ i }}'>{{ i }}</a>
 {% endif %}
@@ -49,12 +50,18 @@
 </p>
 <hr>
 <p class='div_header'>Blogrolls</p>
-<a href='http://bitfoc.us/'>Bit Focus Home</a><br/>
-<a href='http://blog.bitfoc.us/'>Bit Focus Blog</a><br/>
+{% for r in conf.blogrolls %}
+  <a href='{{ r.uri }}'>{{ r.text|escape }}</a><br/>
+{% endfor %}
+<p>
+<a href='/about'>About this site</a>
+</p>
 </div>
 <hr>
 <p class='div_header'>Follow me...</p>
-<a href='/rss'><img width=48px height=48px src='http://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg'/></a>
+<a class='imglink' href='{{ conf.rss_uri }}'>
+  <img width=48px height=48px src='http://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg'/>
+</a>
 </div>
 </div>
 {% include 'page_foot.htmlt' %}

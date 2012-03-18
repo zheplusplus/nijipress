@@ -2,26 +2,61 @@
 <head>
 <title>Comments</title>
 {% include 'page_meta.htmlt' %}
-<link rel='stylesheet' type='text/css' href='/static/{{ style }}/paging.css'>
-<style type='text/css'>
-table { border-spacing: 6px; }
-table tr:nth-child(even) { background: #2B2B2B; }
-</style>
+<script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
+<script>
+function delClick(id, event) {
+  var sp = (event || window.event).srcElement;
+  sp.onclick = null;
+  sp.innerHTML = '';
+  var no = document.createElement('span');
+  no.innerHTML = 'NO ';
+  no.onclick = function() {
+    sp.onclick = function() { delClick(id); }
+    sp.innerHTML = '.';
+  };
+  sp.appendChild(no);
+  var yes = document.createElement('a');
+  yes.innerHTML = 'Y';
+  yes.onclick = function(event) {
+    $.ajax({
+      type: 'POST',
+      url: '/c/{{ path }}',
+      data: {
+        id: id
+      },
+      success: function (r) {
+        $('#clist')[0].deleteRow($('#c' + id)[0]);
+      }
+    });
+  };
+  yes.href = '#';
+  sp.appendChild(yes);
+}
+</script>
 </head>
 <body>
 {% include 'admin_bar.htmlt' %}
-<table class='right_col'>
-<tr><th>Author</th><th>IP</th><th>Email</th><th>URL</th><th>Time</th><th>Content</th><th>Post ID</th></tr>
+<table id='clist' class='stdlnk'>
 {% for comment in comments %}
-<tr>
-<td>{{ comment.author|escape }}</td>
-<td>{{ comment.ipaddr }}</td>
-<td>{{ comment.email|escape }}</td>
-<td>{{ comment.url|escape }}</td>
-<td>{{ comment.date|date:"D, d M Y H:i:s" }}</td>
-<td>{{ comment.content }}</td>
-<td><a href='/?p={{ comment.post_id }}'>{{ comment.post_id }}</a></td>
-</tr>
+<tr id='c{{ comment.key.id }}'><td>
+  <table class='admin_list'>
+    <tr>
+      <td rowspan='2'><img src='http://0.gravatar.com/avatar/{{ comment.email_md5 }}?s=48' style='border-radius: 4px;'/></td>
+      <td>{{ comment.ipaddr }}</td>
+      <td>{{ comment.email }}</td>
+      <td>{{ comment.url }}</td>
+      <td><a href='/?p={{ comment.post_id }}'>{{ comment.post_id }}</a></td>
+      <td><span onclick='delClick({{ comment.key.id }});'>.</span></td>
+    </tr>
+    <tr>
+      <td>{{ comment.author }}</td>
+      <td colspan='6'>{{ comment.date|date:"D, d M Y H:i:s" }}</td>
+    </tr>
+    <tr><td colspan='7'>{{ comment.esc_content|safe }}</td></tr>
+    <tr><td colspan='7'></td></tr>
+  </table>
+</td></tr>
 {% endfor %}
 </table>
 
@@ -34,3 +69,9 @@ table tr:nth-child(even) { background: #2B2B2B; }
 {% endifequal %}
 {% endfor %}
 </p>
+
+{% if clearall %}
+<div class='adminbar'><a href='/c/clearpending'>Clear all</a></div>
+{% endif %}
+
+{% include 'page_foot.htmlt' %}

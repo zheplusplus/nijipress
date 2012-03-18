@@ -1,39 +1,33 @@
 .paging {
-  margin: 16px 0;
   text-align: center;
 }
 
 .paging b {
   padding-left: 2px;
   padding-right: 2px;
-  color: #555;
-  background-color: #ddd;
+  color: white;
+  background-color: gray;
   border-radius: 3px;
 }
 .paging span {
   padding: 5px;
   padding-left: 8px;
   padding-right: 8px;
-  color: #eee;
-  background-color: #222;
+  color: gray;
   border-radius: 3px;
   border: solid 1px;
 }
-.paging a[href] {
+.paging a {
   padding: 5px;
   padding-left: 8px;
   padding-right: 8px;
-  color: #555;
-  background-color: #ddd;
+  color: #468;
   border-radius: 3px;
+  border: solid 2px;
   text-decoration: none;
   font-weight: bolder;
 }
-.paging a[href]:hover {
-  color: #222;
-  background-color: #eee;
-}
-.paging a[href]:active {
-  color: #eee;
-  background-color: #222;
+.paging a:hover {
+  color: #fea;
+  background-color: #468;
 }

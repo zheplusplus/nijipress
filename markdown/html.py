@@ -9,13 +9,9 @@ def leading_spaces(text):
     from nijiconf import SPACE
     return re.sub('^[ ]+', lambda m: len(m.group(0)) * SPACE, text)
 
-def triple_dots(text):
-    from nijiconf import DOT
-    return re.sub('\.\.\.', lambda m: DOT * 3, text)
-
-def double_minus(text):
+def tripple_minus(text):
     from nijiconf import MINUS
-    return re.sub('--', lambda m: MINUS * 2, text)
+    return re.sub('---', lambda m: MINUS * 3, text)
 
 def forge(text):
-    return double_minus(triple_dots(leading_spaces(escape(text))))
+    return tripple_minus(leading_spaces(escape(text)))
