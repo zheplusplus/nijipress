@@ -18,6 +18,12 @@ def italic(text):
                 , lambda m: ITALIC_BEGIN + m.group('italic') + ITALIC_END
                 , text)
 
+def stroke(text):
+    from nijiconf import STROKE_BEGIN, STROKE_END
+    return re.sub('--(?P<s>([^-]|-[^-])*)--'
+                , lambda m: STROKE_BEGIN + m.group('s') + STROKE_END
+                , text)
+
 def link(text):
     from nijiconf import LINK_BEGIN, LINK_END
     return re.sub('@@(?P<url>([^@ ]+))@(?P<text>(([^@]|@[^@])+))@@'
@@ -44,9 +50,10 @@ def img(text):
                 , text)
 
 def esc_back_slash(text):
-    return re.sub('\\\\(?P<esc>[`*/,:;=|@#$%&\\^\\[\\]\\{\\}\\(\\)\\\\])'
+    return re.sub('\\\\(?P<esc>[-`*/,:;=|@#$%&\\^\\[\\]\\{\\}\\(\\)\\\\])'
                 , lambda m: m.group('esc')
                 , text)
 
 def forge(text):
-    return esc_back_slash(img(sub(sup(link(italic(bold(monospace(text))))))))
+    return esc_back_slash(
+            img(sub(sup(link(stroke(italic(bold(monospace(text)))))))))

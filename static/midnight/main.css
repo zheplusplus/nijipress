@@ -110,3 +110,42 @@ tt, code {
   text-decoration: none;
   border-radius: 2px;
 }
+
+.ntinlinecode {
+  color: white;
+  background-color: #2B2B2B;
+  padding: 2px;
+  font-size: 92%;
+  border-radius: 3px;
+  color: #CCC;
+}
+
+.ntaa {
+  padding: 4px;
+  line-height: 95%;
+  white-space: pre;
+  font-size: 84%;
+  border-radius: 4px;
+  background-color: #2B2B2B;
+  color: #EEE;
+}
+
+.ntblockcode {
+  padding: 4px;
+  line-height: 95%;
+  border: solid 1px;
+  background-color: #2B2B2B;
+  border-radius: 4px;
+  font-size: 84%;
+  color: #D8D8D8;
+}
+
+.nttable {
+  border-collapse: collapse;
+  border-spacing: 0px 0px;
+}
+
+.nttd {
+  border: 1px solid gray;
+  padding: 4px;
+}
