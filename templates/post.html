@@ -30,6 +30,10 @@ $('document').ready(function() {
 });
 
 function submit() {
+  document.getElementById('author').value = document.getElementById('author').actual_value;
+  document.getElementById('email').value = document.getElementById('email').actual_value;
+  document.getElementById('url').value = document.getElementById('url').actual_value;
+  document.getElementById('content').value = document.getElementById('content').actual_value;
   localStorage.author = $('#author').val();
   localStorage.email = $('#email').val();
   localStorage.url = $('#url').val();
