@@ -21,4 +21,5 @@ class Save(base.BaseView):
         conf.analytics_domain = self.request.get('analytics_domain').strip()
         conf.post_html = self.request.get('post_html').strip()
         model.SiteConfiguration.save(conf)
+        model.Blogroll.add_by_text(self.request.get('blogrolls').strip())
         self.redirect('/c/siteconf')

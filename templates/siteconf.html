@@ -4,8 +4,10 @@
 Site Configuration
 </title>
 {% include 'page_meta.htmlt' %}
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
 </head>
 <body>
+{% include 'admin_bar.htmlt' %}
 <form action='/c/savesiteconf' method='post'>
 <table>
 <tr>
@@ -34,9 +36,20 @@ Site Configuration
   <td><input type='text' name='analytics_domain' value='{{ conf.analytics_domain|escape }}' size='40'></td>
 </tr>
 <tr>
-  <td>HTML Code After Each Post<br>
+  <td>HTML Content After Each Post<br>
       <sub>Watch out! Do not XSS yourself</sub></td>
   <td><textarea name='post_html' rows='4' cols='60'>{{ conf.post_html|escape }}</textarea></td>
 </tr>
+<tr>
+  <td>Blogrolls<br>
+      <sub>In this format each line: URI&lt;text</sub></td>
+  <td><textarea name='blogrolls' rows='4' cols='60'></textarea>
+      {% for r in conf.blogrolls %}
+        <br/>{{ r.uri|escape }} &lt; {{ r.text|escape }}</a>
+      {% endfor %}
+      </td>
+</tr>
 <tr><td><input type='submit'></td></tr>
+</table>
 </form>
+{% include 'page_foot.htmlt' %}

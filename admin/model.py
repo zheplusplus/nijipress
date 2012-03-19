@@ -49,7 +49,7 @@ class SiteConfiguration(db.Model):
             conf.rss_uri = '/rss'
             conf.rss_description = ''
             conf.analytics_code = ''
-            cont.post_html = ''
+            conf.post_html = ''
             return conf
         return conf[0]
 
@@ -65,3 +65,31 @@ class SiteConfiguration(db.Model):
     def save(conf):
         memcache.set('siteconf', conf)
         conf.put()
+
+    def blogrolls(self):
+        return Blogroll.load()
+
+class Blogroll(db.Model):
+    uri = db.StringProperty(multiline=False)
+    text = db.StringProperty(multiline=False)
+
+    @staticmethod
+    def add_by_text(text):
+        for line in text.split('\n'):
+            line = line.strip()
+            if len(line) == 0:
+                continue
+            r = line.partition('<')
+            blogroll = Blogroll()
+            blogroll.uri = r[0].strip()
+            blogroll.text = r[2].strip()
+            blogroll.put()
+        memcache.set('blogrolls', None)
+
+    @staticmethod
+    def load():
+        cache = memcache.get('blogrolls')
+        if cache == None:
+            cache = Blogroll.all()
+            memcache.set('blogrolls', cache)
+        return cache

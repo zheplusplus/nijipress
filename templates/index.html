@@ -50,13 +50,9 @@
 </p>
 <hr>
 <p class='div_header'>Blogrolls</p>
-<a href='http://bitfoc.us/'>Bit Focus Home</a><br/>
-<a href='http://abitno.me/'>A Bit? No!!!</a><br>
-<a href='https://www.deleak.com/'>delectate&#039;s Home Page</a><br>
-<a href='http://blog.crackcell.com/'>if 0 {</a><br>
-<a href='http://linluxiang.info/'>LinLuxiang</a><br>
-<a href='http://blog.liuw.name/'>Liuw&#039;s Thinkpad</a><br>
-<a href='http://smallarcher.com'>Small Archer</a><br>
+{% for r in conf.blogrolls %}
+  <a href='{{ r.uri|escape }}'>{{ r.text|escape }}</a><br/>
+{% endfor %}
 <p>
 <a href='/about'>About this site</a>
 </p>
