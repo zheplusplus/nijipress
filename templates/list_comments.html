@@ -21,7 +21,7 @@ function delClick(id, event) {
   sp.appendChild(no);
   var yes = document.createElement('a');
   yes.innerHTML = 'Y';
-  yes.href = '/c/delcomment?id=' + id;
+  yes.href = '/c/{{ path }}?id=' + id;
   sp.appendChild(yes);
 }
 </script>
@@ -55,4 +55,9 @@ function delClick(id, event) {
 {% endifequal %}
 {% endfor %}
 </p>
+
+{% if clearall %}
+<div class='adminbar'><a href='/c/clearpending'>Clear all</a></div>
+{% endif %}
+
 {% include 'page_foot.htmlt' %}

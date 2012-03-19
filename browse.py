@@ -56,6 +56,12 @@ class Index(base.BaseView):
             return by_tag(self)
         return index_page(self)
 
+def _comment_token(request):
+    import time
+    from hashlib import sha256
+    return request.cookies['ctkn'] if 'ctkn' in request.cookies else sha256(
+                                                 str(time.time())).hexdigest()
+
 class PostComment(base.BaseView):
     def post(self):
         try:
@@ -63,16 +69,27 @@ class PostComment(base.BaseView):
             models.post.by_id(post_id)
         except ValueError:
             return base.raise_not_found(self)
-        comment = models.comment.Comment()
-        comment.author = self.request.get('author').strip()
+        comment = models.comment.PendingComment()
         comment.content = self.request.get('content').strip()
-        if len(comment.content) > 0:
+        if 0 < len(comment.content) <= 500:
+            comment.author = self.request.get('author').strip()
             comment.email = self.request.get('email').strip()
+            comment.ctoken = _comment_token(self.request)
             url = self.request.get('url').strip()
             if len(url) > 0 and not url.startswith('http'):
                 url = 'http://' + url
-            comment.url = url.strip()
+            comment.url = url
             comment.ipaddr = self.request.remote_addr
             comment.post_id = post_id
-            comment.put()
+            if models.comment.put(comment):
+                update_cookie(self.response, comment.ctoken)
         self.redirect('/?p=' + str(post_id))
+
+def update_cookie(response, token):
+    from Cookie import BaseCookie
+    cookie = BaseCookie()
+    cookie['ctkn'] = token
+    cookie['ctkn']['path'] = '/'
+    cookie['ctkn']['max-age'] = 17299119
+    header_val = 'Set-Cookie', cookie['ctkn'].output(header='').lstrip()
+    response.headers._headers.append(header_val)
