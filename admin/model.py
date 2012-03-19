@@ -84,7 +84,7 @@ class Blogroll(db.Model):
             blogroll.uri = r[0].strip()
             blogroll.text = r[2].strip()
             blogroll.put()
-        memcache.set('blogrolls', None)
+        memcache.delete('blogrolls')
 
     @staticmethod
     def load():

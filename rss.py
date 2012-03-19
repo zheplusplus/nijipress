@@ -1,5 +1,5 @@
 import base
-import models.post
+import models
 from urlparse import urlparse
 
 def post_for_client(post, url):

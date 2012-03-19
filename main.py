@@ -8,6 +8,7 @@ from admin import usr
 from admin import siteconf
 from admin import comments
 import rss
+import sitemap
 
 if __name__ == '__main__':
     application = webapp.WSGIApplication([
@@ -29,8 +30,9 @@ if __name__ == '__main__':
         ('/c/auth', usr.LoginAction),
         ('/c/siteconf', siteconf.ConfigureSite),
         ('/c/savesiteconf', siteconf.Save),
-        ('/rss', rss.Build),
         ('/about', base.About),
+        ('/rss', rss.Build),
+        ('/sitemap.*', sitemap.Build),
         ('/.*', base.NotFound),
     ], debug=True)
     wsgiref.handlers.CGIHandler().run(application)

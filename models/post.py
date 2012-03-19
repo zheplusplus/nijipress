@@ -19,7 +19,7 @@ def new():
     p.title = ''
     p.tags = []
     p.content = ''
-    posts = db.GqlQuery('SELECT * FROM Post ORDER BY pid DESC')
+    posts = db.Query(Post).order('-pid')
     if posts.count() == 0:
         p.pid = 0
     else:
@@ -52,13 +52,18 @@ def by_tag(t, page=0, count=util.ITEMS_PER_PAGE):
                                     .fetch(count, count * page)]
 
 def put(post, tags):
+    tags = filter(lambda t: len(t) > 0, map(lambda t: t.strip(), tags))
     post.put()
-    _invalidate_cache()
     tag.update_relations(post.pid, tags)
+    _invalidate_cache()
+
+def posts_ids():
+    return _load_posts_ids()
 
 def _invalidate_cache():
     memcache.delete('posts')
     memcache.delete('tags')
+    memcache.delete('posts_ids')
 
 def _first_page_posts(count):
     cache = memcache.get('posts')
@@ -70,3 +75,10 @@ def _first_page_posts(count):
 def _load_cache():
     return [p.init_tags(tag.tags_by_post_id(p.pid))
             for p in db.Query(Post).order('-date').fetch(util.ITEMS_PER_PAGE)]
+
+def _load_posts_ids():
+    cache = memcache.get('posts_ids')
+    if cache == None:
+        cache = map(lambda p: p.pid, Post.all())
+        memcache.set('posts_ids', cache)
+    return cache

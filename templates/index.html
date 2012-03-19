@@ -51,7 +51,7 @@
 <hr>
 <p class='div_header'>Blogrolls</p>
 {% for r in conf.blogrolls %}
-  <a href='{{ r.uri|escape }}'>{{ r.text|escape }}</a><br/>
+  <a href='{{ r.uri|urlencode }}'>{{ r.text|escape }}</a><br/>
 {% endfor %}
 <p>
 <a href='/about'>About this site</a>
