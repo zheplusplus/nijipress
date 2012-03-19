@@ -83,6 +83,13 @@ class PostComment(base.BaseView):
             comment.post_id = post_id
             if models.comment.put(comment):
                 update_cookie(self.response, comment.ctoken)
+                self.error(404)
+                self.put_page('templates/message.html', {
+                        'id': post_id,
+                        'message': 'Your comment is awaiting moderation',
+                        'posts': base.posts_for_client(models.post.fetch(0, 5)),
+                    })
+                return
         self.redirect('/?p=' + str(post_id))
 
 def update_cookie(response, token):
