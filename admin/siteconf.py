@@ -19,5 +19,6 @@ class Save(base.BaseView):
         conf.rss_description = self.request.get('rss_description').strip()
         conf.analytics_code = self.request.get('analytics_code').strip()
         conf.analytics_domain = self.request.get('analytics_domain').strip()
+        conf.post_html = self.request.get('post_html').strip()
         model.SiteConfiguration.save(conf)
         self.redirect('/c/siteconf')

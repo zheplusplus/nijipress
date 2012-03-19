@@ -37,6 +37,7 @@ class SiteConfiguration(db.Model):
     rss_description = db.StringProperty(multiline=False)
     analytics_code = db.StringProperty(multiline=False)
     analytics_domain = db.StringProperty(multiline=False)
+    post_html = db.StringProperty(multiline=True)
 
     @staticmethod
     def _load_cache():
@@ -48,6 +49,7 @@ class SiteConfiguration(db.Model):
             conf.rss_uri = '/rss'
             conf.rss_description = ''
             conf.analytics_code = ''
+            cont.post_html = ''
             return conf
         return conf[0]
 

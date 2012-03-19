@@ -56,6 +56,7 @@ function contentChanged(t) {
 <p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
 <div class='post_content'>{{ post.content }}</div>
 {% include 'print_tags.htmlt' %}
+{{ conf.post_html }}
 </div>
 
 <div style='vertical-align: middle; width: 720px; margin-left: auto; margin-right: auto;'>
