@@ -17,7 +17,7 @@ class User(db.Model):
 
     @staticmethod
     def get_by_name(name):
-        u = db.GqlQuery('SELECT * FROM User WHERE name = :1', name)
+        u = db.Query(User).filter('name =', name)
         if u.count() == 0:
             return User.new(name)
         return u[0]
@@ -25,7 +25,7 @@ class User(db.Model):
     @staticmethod
     def get_by_session(request):
         key = request.cookies['skey'] if 'skey' in request.cookies else ''
-        u = db.GqlQuery('SELECT * FROM User WHERE session_key = :1', key)
+        u = db.Query(User).filter('session_key =', key)
         if u.count() == 0:
             return User.new('')
         return u[0]

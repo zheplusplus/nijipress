@@ -6,15 +6,15 @@ class TagPostR(db.Model):
     post_id = db.IntegerProperty()
 
 def _put_relation(tag, post_id):
-    if db.GqlQuery('SELECT * FROM TagPostR WHERE tag = :1 AND post_id = :2',
-                   tag, post_id).count() == 0:
+    if db.Query(TagPostR).filter('tag =', tag
+                        ).filter('post_id =', post_id).count() == 0:
         r = TagPostR()
         r.tag = tag
         r.post_id = post_id
         r.put()
 
 def _relations_by_post_id(post_id):
-    return db.GqlQuery('SELECT * FROM TagPostR WHERE post_id = :1', post_id)
+    return db.Query(TagPostR).filter('post_id =', post_id)
 
 def tags_by_post_id(post_id):
     return [r.tag for r in _relations_by_post_id(post_id)]
@@ -41,7 +41,7 @@ class _Tag:
 def _load_cache():
     tags = dict()
     max_tag_count = 1
-    for r in db.GqlQuery('SELECT * FROM TagPostR'):
+    for r in TagPostR.all():
         tags[r.tag] = tags[r.tag] + 1 if r.tag in tags else 0
         if tags[r.tag] > max_tag_count:
             max_tag_count = tags[r.tag]

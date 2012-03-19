@@ -30,26 +30,23 @@ def fetch(page=0, count=util.ITEMS_PER_PAGE):
     if page == 0:
         return _first_page_posts(count)
     return [post.init_tags(tag.tags_by_post_id(post.pid)) for post in
-       db.GqlQuery('SELECT * FROM Post ORDER BY date DESC').fetch(count,
-                                                                  count * page)]
+       db.Query(Post).order('-date').fetch(count, count * page)]
 
 def count_pages():
-    return util.count_pages(db.GqlQuery('SELECT __key__ FROM Post').count())
+    return util.count_pages(db.Query(Post).count())
 
 def count_pages_by_tag(t):
-    return util.count_pages(
-          db.GqlQuery('SELECT __key__ FROM TagPostR WHERE tag = :1', t).count())
+    return util.count_pages(db.Query(tag.TagPostR).filter('tag =', t).count())
 
 def by_id(ident):
     post_id = int(ident)
-    posts = db.GqlQuery('SELECT * FROM Post WHERE pid = :1', post_id)
+    posts = db.Query(Post).filter('pid =', post_id)
     if posts.count() == 0:
         raise ValueError('no such post')
     return posts[0].init_tags(tag.tags_by_post_id(post_id))
 
 def by_tag(t, page=0, count=util.ITEMS_PER_PAGE):
-    post_ids = [r.post_id for r in
-                      db.GqlQuery('SELECT * FROM TagPostR WHERE tag = :1', t)]
+    post_ids = [r.post_id for r in db.Query(tag.TagPostR).filter('tag =', t)]
     return [post.init_tags(tag.tags_by_post_id(post.pid)) for post in
                         db.Query(Post).filter('pid in', post_ids).order('-date')
                                     .fetch(count, count * page)]
@@ -72,5 +69,4 @@ def _first_page_posts(count):
 
 def _load_cache():
     return [p.init_tags(tag.tags_by_post_id(p.pid))
-            for p in db.GqlQuery('SELECT * FROM Post ORDER BY date DESC').
-                                                 fetch(util.ITEMS_PER_PAGE)]
+            for p in db.Query(Post).order('-date').fetch(util.ITEMS_PER_PAGE)]

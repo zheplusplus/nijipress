@@ -12,15 +12,13 @@ class Comment(db.Model):
     post_id = db.IntegerProperty()
 
 def count_pages():
-    return util.count_pages(db.GqlQuery('SELECT __key__ FROM Comment').count())
+    return util.count_pages(db.Query(Comment).count())
 
 def fetch(page=0, count=util.ITEMS_PER_PAGE):
-    return db.GqlQuery('SELECT * FROM Comment ORDER BY date DESC').fetch(
-                                count, count * page)
+    return db.Query(Comment).order('-date').fetch(count, count * page)
 
 def by_post_id(post_id):
-    return db.GqlQuery('SELECT * FROM Comment WHERE post_id = :1 ORDER BY date',
-                       post_id)
+    return db.Query(Comment).filter('post_id =', post_id).order('date')
 
 def _copy_comment(dest, src):
     dest.author = src.author
