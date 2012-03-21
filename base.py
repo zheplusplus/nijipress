@@ -36,7 +36,7 @@ def comments_for_client(comments):
             img(sub(sup(italic(bold(monospace(markdown.html.forge(text))))))))
     def client_comment(c):
         c.email_md5 = hashlib.md5(c.email).hexdigest()
-        c.content = '<br>'.join(forge_inline(c.content).split('\n'))
+        c.esc_content = '<br>'.join(map(forge_inline, c.content.split('\n')))
         return c
     return [client_comment(c) for c in comments]
 

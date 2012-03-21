@@ -41,7 +41,7 @@ function delClick(id, event) {
   <td>{{ comment.author|escape }}</td>
   <td colspan=5>{{ comment.date|date:"D, d M Y H:i:s" }}</td>
 </tr>
-<tr><td colspan=6>{{ comment.content }}</td></tr>
+<tr><td colspan=6>{{ comment.esc_content }}</td></tr>
 <tr><td colspan=6></td></tr>
 {% endfor %}
 </table>

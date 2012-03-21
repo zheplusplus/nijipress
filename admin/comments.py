@@ -10,11 +10,11 @@ class List(base.BaseView):
         if not usr.admin:
             return base.raise_forbidden(self)
         self.put_page('templates/list_comments.html', {
-                'comments': base.comments_for_client(models.comment.fetch(p)),
-                'path': 'delcomment',
-                'current_page': p,
-                'page_count': xrange(models.comment.count_pages()),
-            })
+            'comments': base.comments_for_client(models.comment.fetch(p)),
+            'path': 'delcomment',
+            'current_page': p,
+            'page_count': xrange(models.comment.count_pages()),
+        })
 
 class Delete(base.BaseView):
     def get(self):
@@ -30,10 +30,10 @@ class ListPending(base.BaseView):
         if not usr.admin:
             return base.raise_forbidden(self)
         self.put_page('templates/list_comments.html', {
-                'comments': comment.PendingComment.all(),
-                'path': 'approvecomment',
-                'clearall': True,
-            })
+            'comments': base.comments_for_client(comment.PendingComment.all()),
+            'path': 'approvecomment',
+            'clearall': True,
+        })
 
 class Approve(base.BaseView):
     def get(self):

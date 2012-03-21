@@ -1,4 +1,4 @@
-application: nijipress
+application: bitfocusblog
 version: nautilus
 runtime: python
 api_version: 1

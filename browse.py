@@ -50,6 +50,8 @@ def single_post(view):
 
 class Index(base.BaseView):
     def get(self):
+        if 'feed' in self.request.arguments():
+            return self.redirect('http://rss.bitfoc.us/')
         if 'p' in self.request.arguments():
             return single_post(self)
         if 'tag' in self.request.arguments():
