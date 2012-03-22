@@ -1,0 +1,33 @@
+.paging {
+  text-align: center;
+}
+
+.paging b {
+  padding-left: 2px;
+  padding-right: 2px;
+  color: white;
+  background-color: gray;
+  border-radius: 3px;
+}
+.paging span {
+  padding: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: gray;
+  border-radius: 3px;
+  border: solid 1px;
+}
+.paging a {
+  padding: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #468;
+  border-radius: 3px;
+  border: solid 2px;
+  text-decoration: none;
+  font-weight: bolder;
+}
+.paging a:hover {
+  color: #fea;
+  background-color: #468;
+}

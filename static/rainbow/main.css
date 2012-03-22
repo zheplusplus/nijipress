@@ -1,22 +1,22 @@
 body {
-  background-color: #1A1A1A;
+  background-color: #eaeaf5;
   font-family: Tahoma, Verdana, Arial, Sans-Serif;
-  color: #A1A1A1;
+  color: #584848;
 }
 tt, code {
   font-family: Monospace, Inconsolata, 'Courier New';
 }
 
 .stdlnk a {
-  color: #D5EEC3;
+  color: #2970a6;
   font-size: 0.9em;
   padding-left: 2px;
   padding-right: 2px;
 }
 .stdlnk a:hover {
-  background-color: #D5EEC3;
+  background-color: #2970a6;
   border-radius: 2px;
-  color: black;
+  color: #efefb7;
   text-decoration: none;
 }
 
@@ -26,17 +26,17 @@ tt, code {
 }
 #top h1 {
   font-size: 3.6em;
-  padding-top: 24px;
-  letter-spacing: 7px;
-  text-shadow: 1px 2px gray;
+  padding-top: 16px;
+  letter-spacing: 8px;
+  text-shadow: 1px 2px #143853;
 }
 #top a {
-  color: #C5DEB3;
+  color: #19d;
   text-decoration: none;
 }
 
 .date {
-  color: #666;
+  color: #866;
   font-size: 0.9em;
 }
 .post_date {
@@ -53,21 +53,21 @@ tt, code {
   font-size: 0.7em;
 }
 .tags a {
-  color: #C5DEB3;
+  color: #a73800;
   padding: 2px;
 }
 .tags a:hover {
-  background-color: #C5DEB3;
-  color: black;
+  background-color: #a73800;
+  color: #d6e9f0;
   text-decoration: none;
   border-radius: 2px;
 }
 .tags i {
-  color: #B0B0B0
+  color: #555;
 }
 
 .div_header {
-  color: #E4D3A6;
+  color: #432;
   font-weight: bold;
 }
 
@@ -76,39 +76,39 @@ tt, code {
   text-align: center;
 }
 .foot_lnk a {
-  color: #C5DEB3;
+  color: #2970a6;
   padding-left: 2px;
   padding-right: 2px;
 }
 .foot_lnk a:hover {
-  background-color: #C5DEB3;
-  color: black;
+  background-color: #2970a6;
+  color: #efefb7;
   text-decoration: none;
   border-radius: 2px;
 }
 
 .post_content .ntitalic {
-  color: #D0D0D0;
+  color: #a55;
 }
 .post_content .ntstrong {
-  color: #FFE040;
+  color: #400;
 }
 .post_content .ntinlinecode {
-  background-color: #2B2B2B;
+  background-color: #ceced0;
   padding: 2px;
   font-size: 92%;
   border-radius: 3px;
-  color: #CCC;
+  color: #421;
 }
 
 .nth1 {
-  color: #C8C8C8;
+  color: #864;
 }
 .nth2 {
-  color: #C0C8B8;
+  color: #975;
 }
 .nth3 {
-  color: #B0B8A8;
+  color: #a86;
 }
 .ntul {
   list-style-type: circle;
@@ -120,18 +120,18 @@ tt, code {
   white-space: pre;
   font-size: 84%;
   border-radius: 4px;
-  background-color: #2B2B2B;
-  color: #EEE;
+  background-color: #dde;
+  color: #332;
 }
 
 .ntblockcode {
   padding: 4px;
   line-height: 95%;
   border: solid 1px;
-  background-color: #2B2B2B;
+  background-color: #dde;
   border-radius: 4px;
   font-size: 84%;
-  color: #D8D8D8;
+  color: #332;
 }
 
 .nttable {
@@ -140,6 +140,6 @@ tt, code {
 }
 
 .nttd {
-  border: 1px solid gray;
+  border: 1px solid #228;
   padding: 4px;
 }

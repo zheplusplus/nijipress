@@ -1,0 +1,25 @@
+.adminbar b {
+  color: #111;
+}
+.adminbar a {
+  font-weight: bolder;
+  color: #468;
+  margin-left: 10px;
+  border-radius: 4px;
+  border: solid 1px;
+  padding: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.adminbar a:hover {
+  color: #fec;
+  background-color: #468;
+  text-decoration: none;
+}
+
+.admin_list {
+  border-spacing: 12px 0px;
+}
+.admin_list tr:nth-child(even) {
+  background: #ccc;
+}
