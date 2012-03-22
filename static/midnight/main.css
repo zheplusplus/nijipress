@@ -21,6 +21,7 @@ tt, code {
 }
 
 #top {
+  color: #C5DEB3;
   height: 128px;
   text-align: center;
 }
@@ -31,7 +32,6 @@ tt, code {
   text-shadow: 1px 2px gray;
 }
 #top a {
-  color: #C5DEB3;
   text-decoration: none;
 }
 
