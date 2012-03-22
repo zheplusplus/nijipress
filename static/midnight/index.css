@@ -28,3 +28,14 @@
   color: #506050;
   background-color: #F4E3B6;
 }
+
+.right_col a {
+  color: #C5DEB3;
+}
+.right_col a:hover {
+  background-color: #C5DEB3;
+  color: black;
+  text-decoration: none;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}

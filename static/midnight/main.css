@@ -7,6 +7,19 @@ tt, code {
   font-family: Monospace, Inconsolata, 'Courier New';
 }
 
+.stdlnk a {
+  color: #D5EEC3;
+  font-size: 0.9em;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+.stdlnk a:hover {
+  background-color: #D5EEC3;
+  border-radius: 2px;
+  color: black;
+  text-decoration: none;
+}
+
 #top {
   color: #C5DEB3;
   height: 128px;
@@ -52,17 +65,6 @@ tt, code {
 }
 .tags i {
   color: #B0B0B0
-}
-
-.right_col a {
-  color: #C5DEB3;
-}
-.right_col a:hover {
-  background-color: #C5DEB3;
-  color: black;
-  text-decoration: none;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
 }
 
 .div_header {
@@ -140,17 +142,4 @@ tt, code {
 .nttd {
   border: 1px solid gray;
   padding: 4px;
-}
-
-.ntlink {
-  color: #D5EEC3;
-  font-size: 0.9em;
-}
-.ntlink:hover {
-  background-color: #D5EEC3;
-  padding-left: 2px;
-  padding-right: 2px;
-  border-radius: 2px;
-  color: black;
-  text-decoration: none;
 }
