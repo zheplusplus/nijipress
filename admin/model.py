@@ -37,7 +37,7 @@ class SiteConfiguration(db.Model):
     rss_description = db.StringProperty(multiline=False)
     analytics_code = db.StringProperty(multiline=False)
     analytics_domain = db.StringProperty(multiline=False)
-    post_html = db.StringProperty(multiline=True)
+    post_html = db.TextProperty()
 
     @staticmethod
     def _load_cache():

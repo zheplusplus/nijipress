@@ -3,10 +3,6 @@
 <title>Comments</title>
 {% include 'page_meta.htmlt' %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
-<style type='text/css'>
-table { border-spacing: 6px; }
-table tr:nth-child(2n) { background: #2B2B2B; }
-</style>
 <script>
 function delClick(id, event) {
   var sp = (event || window.event).srcElement;
@@ -20,6 +16,7 @@ function delClick(id, event) {
   };
   sp.appendChild(no);
   var yes = document.createElement('a');
+  yes.className = 'ntlink';
   yes.innerHTML = 'Y';
   yes.href = '/c/{{ path }}?id=' + id;
   sp.appendChild(yes);
@@ -28,13 +25,13 @@ function delClick(id, event) {
 </head>
 <body>
 {% include 'admin_bar.htmlt' %}
-<table class='right_col'>
+<table class='admin_list'>
 {% for comment in comments %}
 <tr>
   <td>{{ comment.ipaddr }}</td>
   <td>{{ comment.email|escape }}</td>
   <td>{{ comment.url|escape }}</td>
-  <td><a href='/?p={{ comment.post_id }}'>{{ comment.post_id }}</a></td>
+  <td><a class='ntlink' href='/?p={{ comment.post_id }}'>{{ comment.post_id }}</a></td>
   <td><span onclick='delClick({{ comment.key.id }});'>.</span></td>
 </tr>
 <tr>

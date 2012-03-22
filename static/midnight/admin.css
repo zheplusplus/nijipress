@@ -16,3 +16,10 @@
   background-color: #DEC;
   text-decoration: none;
 }
+
+.admin_list {
+  border-spacing: 12px 0px;
+}
+.admin_list tr:nth-child(even) {
+  background: #2B2B2B;
+}

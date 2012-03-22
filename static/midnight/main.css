@@ -36,32 +36,6 @@ tt, code {
   margin-left: 10px;
   margin-bottom: 10px;
 }
-.post_content .ntstrong {
-  color: #FFE040;
-}
-.post_content i {
-  color: #D0D0D0;
-}
-.post_content a {
-  color: #D5EEC3;
-}
-.post_content a:hover {
-  background-color: #D5EEC3;
-  color: black;
-  text-decoration: none;
-}
-.post_content h1 {
-  color: #C8C8C8;
-}
-.post_content h2 {
-  color: #C0C8B8;
-}
-.post_content h3 {
-  color: #B0B8A8;
-}
-.post_content ul {
-  list-style-type: circle;
-}
 
 .tags {
   font-size: 0.7em;
@@ -111,12 +85,31 @@ tt, code {
   border-radius: 2px;
 }
 
+.post_content .ntitalic {
+  color: #D0D0D0;
+}
+.post_content .ntstrong {
+  color: #FFE040;
+}
 .post_content .ntinlinecode {
   background-color: #2B2B2B;
   padding: 2px;
   font-size: 92%;
   border-radius: 3px;
   color: #CCC;
+}
+
+.nth1 {
+  color: #C8C8C8;
+}
+.nth2 {
+  color: #C0C8B8;
+}
+.nth3 {
+  color: #B0B8A8;
+}
+.ntul {
+  list-style-type: circle;
 }
 
 .ntaa {
@@ -147,4 +140,17 @@ tt, code {
 .nttd {
   border: 1px solid gray;
   padding: 4px;
+}
+
+.ntlink {
+  color: #D5EEC3;
+  font-size: 0.9em;
+}
+.ntlink:hover {
+  background-color: #D5EEC3;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 2px;
+  color: black;
+  text-decoration: none;
 }
