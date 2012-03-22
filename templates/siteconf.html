@@ -7,7 +7,7 @@ Site Configuration
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
 <style>
-td {
+.conf td {
   vertical-align: top;
 }
 </style>
@@ -15,7 +15,7 @@ td {
 <body>
 {% include 'admin_bar.htmlt' %}
 <form action='/c/savesiteconf' method='post'>
-<table>
+<table class='stdlnk conf'>
 <tr>
   <td>Title</td>
   <td><input type='text' name='title' value='{{ conf.title|escape }}' size='40'></td>
@@ -51,7 +51,7 @@ td {
       <sub>In this format each line: URI&lt;text</sub></td>
   <td><textarea name='blogrolls' rows='4' cols='60'></textarea>
       {% for r in conf.blogrolls %}
-        <br/>{{ r.uri|escape }} &lt; {{ r.text|escape }}</a>
+        <br/><a href='{{ r.uri }}'>{{ r.uri }}</a> &lt; {{ r.text|escape }}</a>
       {% endfor %}
       </td>
 </tr>
