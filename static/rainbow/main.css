@@ -21,7 +21,7 @@ tt, code {
 }
 
 #top {
-  color: #19d;
+  color: #9eb28f;
   height: 128px;
   text-align: center;
 }
@@ -75,26 +75,15 @@ tt, code {
   font-size: 12px;
   text-align: center;
 }
-.foot_lnk a {
-  color: #2970a6;
-  padding-left: 2px;
-  padding-right: 2px;
-}
-.foot_lnk a:hover {
-  background-color: #2970a6;
-  color: #efefb7;
-  text-decoration: none;
-  border-radius: 2px;
-}
 
 .post_content .ntitalic {
-  color: #a55;
+  color: #433;
 }
 .post_content .ntstrong {
   color: #400;
 }
 .post_content .ntinlinecode {
-  background-color: #ceced0;
+  background-color: #dde;
   padding: 2px;
   font-size: 92%;
   border-radius: 3px;
@@ -120,7 +109,7 @@ tt, code {
   white-space: pre;
   font-size: 84%;
   border-radius: 4px;
-  background-color: #dde;
+  background-color: #dadaea;
   color: #332;
 }
 
@@ -128,7 +117,7 @@ tt, code {
   padding: 4px;
   line-height: 95%;
   border: solid 1px;
-  background-color: #dde;
+  background-color: #dadaea;
   border-radius: 4px;
   font-size: 84%;
   color: #332;

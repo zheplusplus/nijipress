@@ -1,7 +1,7 @@
 .post_title {
   font-size: 2em;
   margin-bottom: 0px;
-  background-color: #edc;
+  background-color: #ecdcac;
   border-radius: 4px;
   color: #145;
 }
@@ -20,13 +20,13 @@
 .post_foot a {
   padding: 5px;
   color: #222;
-  background-color: #eda;
+  background-color: #c5deb3;
   border-radius: 3px;
   border: solid 1px;
 }
 .post_foot a:hover {
-  color: #565;
-  background-color: #feb;
+  color: #232;
+  background-color: #dec;
   text-decoration: none;
 }
 

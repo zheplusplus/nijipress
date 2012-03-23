@@ -5,24 +5,25 @@
 .paging b {
   padding-left: 2px;
   padding-right: 2px;
-  color: white;
-  background-color: #88A;
+  color: #555;
+  background-color: #DDD;
   border-radius: 3px;
 }
 .paging span {
   padding: 5px;
   padding-left: 8px;
   padding-right: 8px;
-  color: #2B2B2B;
-  background-color: #EEE;
+  color: #EEE;
+  background-color: #2B2B2B;
   border-radius: 3px;
+  border: solid 1px;
 }
 .paging a {
   padding: 5px;
   padding-left: 8px;
   padding-right: 8px;
-  color: white;
-  background-color: #88A;
+  color: #555;
+  background-color: #DDD;
   border-radius: 3px;
   text-decoration: none;
   font-weight: bolder;
