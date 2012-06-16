@@ -47,5 +47,4 @@ def update_cookie(response, session_key):
     cookie['skey'] = session_key
     cookie['skey']['path'] = '/'
     cookie['skey']['max-age'] = 17299119
-    header_val = 'Set-Cookie', cookie['skey'].output(header='').lstrip()
-    response.headers._headers.append(header_val)
+    response.headers.add('Set-Cookie', cookie['skey'].output(header='').strip())
