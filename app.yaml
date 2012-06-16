@@ -1,7 +1,12 @@
 application: bitfocusblog
 version: nautilus
-runtime: python
+runtime: python27
+threadsafe: false
 api_version: 1
+
+libraries:
+- name: django
+  version: latest
 
 handlers:
 - url: /static

@@ -61,7 +61,8 @@ class BaseView(webapp.RequestHandler):
         template_value['usr'] = admin.User.get_by_session(self.request)
         template_value['conf'] = self.siteconf()
         path = os.path.join(os.path.dirname(__file__), template_file)
-        self.response.out.write(template.render(path, template_value))
+        content = str(template.render(path, template_value).encode('utf-8'))
+        self.response.out.write(content)
 
 class NotFound(BaseView):
     pass

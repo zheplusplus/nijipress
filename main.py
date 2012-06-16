@@ -1,5 +1,5 @@
 import wsgiref.handlers
-from google.appengine.ext import webapp
+import webapp2
 
 import base
 import browse
@@ -11,7 +11,7 @@ import rss
 import sitemap
 
 if __name__ == '__main__':
-    application = webapp.WSGIApplication([
+    application = webapp2.WSGIApplication([
         ('/', browse.Index),
         ('/postcomment', browse.PostComment),
         ('/c/newpost', post.NewPost),
