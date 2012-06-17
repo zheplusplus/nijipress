@@ -18,12 +18,12 @@ Edit {{ title }}
 <table>
 <tr>
   <td>Title</td>
-  <td><input type='text' name='title' value='{{ title|escape }}' size='40'></td>
+  <td><input type='text' name='title' value='{{ title }}' size='40'></td>
 </tr>
 <tr>
   <td style='vertical-align: top;'>Content</td>
-  <td><textarea name='content' rows='32' cols='100'>{{ content|escape }}</textarea></td>
+  <td><textarea name='content' rows='32' cols='100'>{{ content }}</textarea></td>
 </tr>
-<tr><td>Tags</td><td><input type='text' name='tags' value='{{ tags|escape }}' size='40'></td></tr>
+<tr><td>Tags</td><td><input type='text' name='tags' value='{{ tags }}' size='40'></td></tr>
 <tr><td><input type='submit'></td></tr>
 </form>

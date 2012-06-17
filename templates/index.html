@@ -13,9 +13,9 @@
 <div style='float: left; width: 640px;'>
 
 {% for post in posts %}
-<p class='post_title'><a href='/?p={{ post.pid }}'>{{ post.title }}</a></p>
+<p class='post_title'><a href='/?p={{ post.pid }}'>{{ post.title|safe }}</a></p>
 <p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
-<div class='post_content stdlnk'>{{ post.preview }}</div>
+<div class='post_content stdlnk'>{{ post.preview|safe }}</div>
 <span class='post_foot'><a href='/?p={{ post.pid }}'>Read full text &gt;&gt;&gt;</a></span>
 <div style='float: right;'>
 <span class='post_foot'><a href='/?p={{ post.pid }}#leavecomment'>Leave a comment</a></span>
@@ -30,7 +30,7 @@
 <span>Page <b>{{ current_page }}</b></span>
 {% else %}
 {% if query_tag %}
-<a href='?tag={{ query_tag }}&page={{ i }}'>{{ i }}</a>
+<a href='?tag={{ query_tag|urlencode }}&page={{ i }}'>{{ i }}</a>
 {% else %}
 <a href='?page={{ i }}'>{{ i }}</a>
 {% endif %}

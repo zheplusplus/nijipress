@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Preview {{ prepared_title }}</title>
+<title>Preview - {{ prepared_title|safe }}</title>
 {% include 'page_meta.htmlt' %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
 <style type="text/css">
@@ -9,17 +9,17 @@ td { background: #2B2B2B; }
 </style>
 </head>
 <body>
-{{ prepared_title }}
+{{ prepared_title|safe }}
 <hr>
 <div class='post_content'>
-{{ prepared_content }}
+{{ prepared_content|safe }}
 </div>
 <hr>
 <table class='stdlnk'><tr>
 <th><i>Tags:</i></th>
 {% for tag in prepared_tags %}
 <td>
-{{ tag|escape }}
+{{ tag }}
 </td>
 {% endfor %}
 </tr></table>
@@ -29,9 +29,9 @@ td { background: #2B2B2B; }
 {% if id %}
   <input type='hidden' name='id' value='{{ id }}'>
 {% endif %}
-  <input type='hidden' name='tags' value='{{ tags|escape }}'>
-  <input type='hidden' name='title' value='{{ title|escape }}'>
-  <textarea name='content' style='visibility: hidden;'>{{ content|escape }}</textarea>
+  <input type='hidden' name='tags' value='{{ tags }}'>
+  <input type='hidden' name='title' value='{{ title }}'>
+  <textarea name='content' style='visibility: hidden;'>{{ content }}</textarea>
 </form>
 {% else %}
 <hr>

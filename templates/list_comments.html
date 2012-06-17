@@ -28,16 +28,16 @@ function delClick(id, event) {
 {% for comment in comments %}
 <tr>
   <td>{{ comment.ipaddr }}</td>
-  <td>{{ comment.email|escape }}</td>
-  <td>{{ comment.url|escape }}</td>
+  <td>{{ comment.email }}</td>
+  <td>{{ comment.url }}</td>
   <td><a href='/?p={{ comment.post_id }}'>{{ comment.post_id }}</a></td>
   <td><span onclick='delClick({{ comment.key.id }});'>.</span></td>
 </tr>
 <tr>
-  <td>{{ comment.author|escape }}</td>
+  <td>{{ comment.author }}</td>
   <td colspan=5>{{ comment.date|date:"D, d M Y H:i:s" }}</td>
 </tr>
-<tr><td colspan=6>{{ comment.esc_content }}</td></tr>
+<tr><td colspan=6>{{ comment.esc_content|safe }}</td></tr>
 <tr><td colspan=6></td></tr>
 {% endfor %}
 </table>

@@ -47,9 +47,9 @@ def by_id(ident):
 
 def by_tag(t, page=0, count=util.ITEMS_PER_PAGE):
     post_ids = [r.post_id for r in db.Query(tag.TagPostR).filter('tag =', t)]
+    post_ids = sorted(post_ids, reverse=True)[count * page: count * (page + 1)]
     return [post.init_tags(tag.tags_by_post_id(post.pid)) for post in
-                        db.Query(Post).filter('pid in', post_ids).order('-date')
-                                    .fetch(count, count * page)]
+                      db.Query(Post).filter('pid in', post_ids).order('-date')]
 
 def put(post, tags):
     tags = filter(lambda t: len(t) > 0, map(lambda t: t.strip(), tags))

@@ -100,5 +100,4 @@ def update_cookie(response, token):
     cookie['ctkn'] = token
     cookie['ctkn']['path'] = '/'
     cookie['ctkn']['max-age'] = 17299119
-    header_val = 'Set-Cookie', cookie['ctkn'].output(header='').lstrip()
-    response.headers._headers.append(header_val)
+    response.headers.add('Set-Cookie', cookie['ctkn'].output(header='').strip())

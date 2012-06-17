@@ -57,9 +57,9 @@ function contentChanged(t) {
 <body>
 {% include 'page_head.htmlt' %}
 <div style='vertical-align: middle; width: 800px; margin-left: auto; margin-right: auto;'>
-<h1 class='post_title'>{{ post.title }}</h1>
+<h1 class='post_title'>{{ post.title|safe }}</h1>
 <p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
-<div class='post_content stdlnk'>{{ post.content }}</div>
+<div class='post_content stdlnk'>{{ post.content|safe }}</div>
 {% include 'print_tags.htmlt' %}
 {{ conf.post_html }}
 </div>
@@ -76,18 +76,18 @@ function contentChanged(t) {
 <td>
 <p class='comment_head'>
 {% if comment.author %}
-  <b>{{ comment.author|escape }}</b>
+  <b>{{ comment.author }}</b>
 {% else %}
   <i>Anonymous</i>
 {% endif %}
 {% if comment.url %}
 <script lang='javascript'>
-  document.write('<a href="{{ comment.url|escape }}">&lt;^&gt;</a>');
+  document.write('<a href="{{ comment.url }}">&lt;^&gt;</a>');
 </script>
 {% endif %}
 said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
 </p>
-<p class='comment_content'>{{ comment.content }}</p>
+<p class='comment_content'>{{ comment.esc_content|safe }}</p>
 </td>
 </tr>
 {% endfor %}
