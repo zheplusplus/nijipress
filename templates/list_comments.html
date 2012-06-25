@@ -2,6 +2,7 @@
 <head>
 <title>Comments</title>
 {% include 'page_meta.htmlt' %}
+<script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
 <script>
 function delClick(id, event) {
@@ -17,29 +18,45 @@ function delClick(id, event) {
   sp.appendChild(no);
   var yes = document.createElement('a');
   yes.innerHTML = 'Y';
-  yes.href = '/c/{{ path }}?id=' + id;
+  yes.onclick = function(event) {
+    $.ajax({
+      type: 'POST',
+      url: '/c/{{ path }}',
+      data: {
+        id: id
+      },
+      success: function (r) {
+        $('#clist')[0].deleteRow($('#c' + id)[0]);
+      }
+    });
+  };
+  yes.href = '#';
   sp.appendChild(yes);
 }
 </script>
 </head>
 <body>
 {% include 'admin_bar.htmlt' %}
-<table class='admin_list stdlnk'>
+<table id='clist' class='stdlnk'>
 {% for comment in comments %}
-<tr>
-  <td rowspan='2'><img src='http://0.gravatar.com/avatar/{{ comment.email_md5 }}?s=48' style='border-radius: 4px;'/></td>
-  <td>{{ comment.ipaddr }}</td>
-  <td>{{ comment.email }}</td>
-  <td>{{ comment.url }}</td>
-  <td><a href='/?p={{ comment.post_id }}'>{{ comment.post_id }}</a></td>
-  <td><span onclick='delClick({{ comment.key.id }});'>.</span></td>
-</tr>
-<tr>
-  <td>{{ comment.author }}</td>
-  <td colspan=5>{{ comment.date|date:"D, d M Y H:i:s" }}</td>
-</tr>
-<tr><td colspan=6>{{ comment.esc_content|safe }}</td></tr>
-<tr><td colspan=6></td></tr>
+<tr id='c{{ comment.key.id }}'><td>
+  <table class='admin_list'>
+    <tr>
+      <td rowspan='2'><img src='http://0.gravatar.com/avatar/{{ comment.email_md5 }}?s=48' style='border-radius: 4px;'/></td>
+      <td>{{ comment.ipaddr }}</td>
+      <td>{{ comment.email }}</td>
+      <td>{{ comment.url }}</td>
+      <td><a href='/?p={{ comment.post_id }}'>{{ comment.post_id }}</a></td>
+      <td><span onclick='delClick({{ comment.key.id }});'>.</span></td>
+    </tr>
+    <tr>
+      <td>{{ comment.author }}</td>
+      <td colspan='6'>{{ comment.date|date:"D, d M Y H:i:s" }}</td>
+    </tr>
+    <tr><td colspan='7'>{{ comment.esc_content|safe }}</td></tr>
+    <tr><td colspan='7'></td></tr>
+  </table>
+</td></tr>
 {% endfor %}
 </table>
 

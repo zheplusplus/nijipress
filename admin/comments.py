@@ -17,12 +17,11 @@ class List(base.BaseView):
         })
 
 class Delete(base.BaseView):
-    def get(self):
+    def post(self):
         usr = admin.User.get_by_session(self.request)
         if not usr.admin:
             return base.raise_forbidden(self)
         comment.Comment.get_by_id(int(self.request.get('id'))).delete()
-        self.redirect('/c/comments')
 
 class ListPending(base.BaseView):
     def get(self):
@@ -36,12 +35,11 @@ class ListPending(base.BaseView):
         })
 
 class Approve(base.BaseView):
-    def get(self):
+    def post(self):
         usr = admin.User.get_by_session(self.request)
         if not usr.admin:
             return base.raise_forbidden(self)
         comment.PendingComment.get_by_id(int(self.request.get('id'))).approve()
-        self.redirect('/c/pendingcomments')
 
 class ClearPending(base.BaseView):
     def get(self):

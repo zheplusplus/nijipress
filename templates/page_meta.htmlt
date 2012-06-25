@@ -1,4 +1,4 @@
-<meta charset='UTF-8'>
+<meta charset='utf-8'>
 {% if usr.admin %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/admin.css'>
 {% endif %}
