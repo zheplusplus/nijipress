@@ -61,7 +61,7 @@ function contentChanged(t) {
 <p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
 <div class='post_content stdlnk'>{{ post.content|safe }}</div>
 {% include 'print_tags.htmlt' %}
-{{ conf.post_html }}
+{{ conf.post_html|safe }}
 </div>
 
 <div style='vertical-align: middle; width: 720px; margin-left: auto; margin-right: auto;'>
@@ -69,27 +69,27 @@ function contentChanged(t) {
 <p class='comments_hint'>Comments:</p>
 <table style='width: 720px; border-spacing: 6px;'>
 {% for comment in comments %}
-<tr class='comment'>
-<th style='width: 48px; vertical-align: top;'>
-<img src='http://0.gravatar.com/avatar/{{ comment.email_md5 }}?s=48' style='border-radius: 4px;'/>
-</th>
-<td>
-<p class='comment_head'>
-{% if comment.author %}
-  <b>{{ comment.author }}</b>
-{% else %}
-  <i>Anonymous</i>
-{% endif %}
-{% if comment.url %}
-<script lang='javascript'>
-  document.write('<a href="{{ comment.url }}">&lt;^&gt;</a>');
-</script>
-{% endif %}
-said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
-</p>
-<p class='comment_content'>{{ comment.esc_content|safe }}</p>
-</td>
-</tr>
+  <tr class='comment'>
+    <th style='width: 48px; vertical-align: top;'>
+      <img src='http://0.gravatar.com/avatar/{{ comment.email_md5 }}?s=48' style='border-radius: 4px;'/>
+    </th>
+    <td>
+      <p class='comment_head'>
+        {% if comment.author %}
+          <b>{{ comment.author }}</b>
+        {% else %}
+          <i>Anonymous</i>
+        {% endif %}
+        {% if comment.url %}
+          <script lang='javascript'>
+            document.write('<a href="{{ comment.url }}">&lt;^&gt;</a>');
+          </script>
+        {% endif %}
+        said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
+      </p>
+      <p class='comment_content'>{{ comment.esc_content|safe }}</p>
+    </td>
+  </tr>
 {% endfor %}
 </table>
 {% endif %}

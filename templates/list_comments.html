@@ -27,6 +27,7 @@ function delClick(id, event) {
 <table class='admin_list stdlnk'>
 {% for comment in comments %}
 <tr>
+  <td rowspan='2'><img src='http://0.gravatar.com/avatar/{{ comment.email_md5 }}?s=48' style='border-radius: 4px;'/></td>
   <td>{{ comment.ipaddr }}</td>
   <td>{{ comment.email }}</td>
   <td>{{ comment.url }}</td>
