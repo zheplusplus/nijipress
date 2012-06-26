@@ -13,11 +13,11 @@
 <link>{{ site_link }}</link>
 {% for post in posts %}
 <item>
-<title>{{ post.title }}</title>
+<title>{{ post.title|safe }}</title>
 <link>{{ post.ident }}</link>
 <guid>{{ post.ident }}</guid>
 <pubDate>{{ post.date|date:"D, d M Y H:i:s" }} +0000</pubDate>
-<content:encoded><![CDATA[{{ post.content }}]]></content:encoded>
+<content:encoded><![CDATA[{{ post.content|safe }}]]></content:encoded>
 </item>
 {% endfor %}
 </channel>
