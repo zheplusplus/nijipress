@@ -3,6 +3,7 @@ import webapp2
 
 import base
 import browse
+import handlers
 from admin import post
 from admin import usr
 from admin import siteconf
@@ -13,6 +14,7 @@ import sitemap
 if __name__ == '__main__':
     application = webapp2.WSGIApplication([
         ('/', browse.Index),
+        ('/json/loadcomments', handlers.CommentsLoader),
         ('/postcomment', browse.PostComment),
         ('/c/newpost', post.NewPost),
         ('/c/preview', post.Preview),

@@ -8,6 +8,7 @@
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
 <script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
 <script type='text/javascript' src='http://leaf.bitfoc.us/static/textfill.js'></script>
+<script type='text/javascript' src='/static/utils.js'></script>
 <script>
 $('document').ready(function() {
   bfplTextFill('author', 'Your name',
@@ -64,36 +65,7 @@ function contentChanged(t) {
 {{ conf.post_html|safe }}
 </div>
 
-<div style='vertical-align: middle; width: 720px; margin-left: auto; margin-right: auto;'>
-{% if comments|length %}
-<p class='comments_hint'>Comments:</p>
-<table style='width: 720px; border-spacing: 6px;'>
-{% for comment in comments %}
-  <tr class='comment'>
-    <th style='width: 48px; vertical-align: top;'>
-      <img src='http://0.gravatar.com/avatar/{{ comment.email_md5 }}?s=48' style='border-radius: 4px;'/>
-    </th>
-    <td>
-      <p class='comment_head'>
-        {% if comment.author %}
-          <b>{{ comment.author }}</b>
-        {% else %}
-          <i>Anonymous</i>
-        {% endif %}
-        {% if comment.url %}
-          <script lang='javascript'>
-            document.write('<a href="{{ comment.url }}">&lt;^&gt;</a>');
-          </script>
-        {% endif %}
-        said,<span class='date'> at {{ comment.date|date:"D d M Y H:i:s" }}</span><br />
-      </p>
-      <p class='comment_content'>{{ comment.esc_content|safe }}</p>
-    </td>
-  </tr>
-{% endfor %}
-</table>
-{% endif %}
-</div>
+{% include 'display_comments.seg.html' %}
 
 <div style='vertical-align: middle; width: 720px; margin-left: auto; margin-right: auto;'>
 <div style='float: left; width: 600px;'>

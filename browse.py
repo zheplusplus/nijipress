@@ -42,8 +42,6 @@ def single_post(view):
         view.put_page('templates/post.html', {
             'post': post,
             'title': title_text(post.title),
-            'comments': base.comments_for_client(
-                            models.comment.by_post_id(post.pid)),
         })
     except ValueError:
         base.raise_not_found(view)
