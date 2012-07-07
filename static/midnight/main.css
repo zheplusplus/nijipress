@@ -33,6 +33,10 @@ a[href]:active {
 a[href].imglink:hover {
   background-color: inherit;
 }
+a[href].imglink:active {
+  border: inherit;
+  padding: 1px 3px;
+}
 hr {
   margin: 4px;
 }
@@ -143,6 +147,7 @@ hr {
 }
 
 .div_header {
+  margin: 20px 0;
   color: #eda;
   font-weight: bold;
 }
