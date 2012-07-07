@@ -20,6 +20,11 @@ $('document').ready(function() { resetComment(); });
 <p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
 <div class='post_content stdlnk'>{{ post.content|safe }}</div>
 {% include 'print_tags.htmlt' %}
+
+{% if usr.admin %}
+<p><a href='/c/edit?id={{ post.pid }}'>Edit</a></p>
+{% endif %}
+
 {{ conf.post_html|safe }}
 </div>
 

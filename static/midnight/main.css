@@ -30,6 +30,9 @@ a[href]:active {
   color: #dec;
   background-color: inherit;
 }
+a[href].imglink:hover {
+  background-color: inherit;
+}
 hr {
   margin: 4px;
 }

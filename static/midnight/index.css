@@ -1,4 +1,5 @@
 .post_title {
+  color: #343;
   font-size: 2em;
   margin-top: 40px;
   margin-bottom: 0px;
@@ -6,7 +7,7 @@
   border-radius: 4px;
 }
 .post_title a[href] {
-  color: #343;
+  color: inherit;
   margin-left: 10px;
 }
 .post_title a[href]:hover {
