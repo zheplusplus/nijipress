@@ -15,7 +15,7 @@ if __name__ == '__main__':
     application = webapp2.WSGIApplication([
         ('/', browse.Index),
         ('/json/loadcomments', handlers.async.CommentsLoader),
-        ('/postcomment', browse.PostComment),
+        ('/json/leavecomment', handlers.async.CommentRecv),
         ('/c/newpost', post.NewPost),
         ('/c/preview', post.Preview),
         ('/c/add', post.Add),

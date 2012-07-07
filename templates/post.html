@@ -7,51 +7,9 @@
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/post.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
 <script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
-<script type='text/javascript' src='http://leaf.bitfoc.us/static/textfill.js'></script>
 <script type='text/javascript' src='/static/utils.js'></script>
 <script>
-$('document').ready(function() {
-  bfplTextFill('author', 'Your name',
-               'email', 'Your email (for Gravatar, wont be public)',
-               'url', 'Your homepage link (placed after your name)',
-               'content', 'Comment (REQUIRED)\n' +
-                          'Please use no more than 500 characters for your opinion.\n' +
-                          'And not contain any offensive material or advertisement.');
-  if (localStorage.author) {
-    document.getElementById('author').value = localStorage.author;
-    document.getElementById('author').actual_value = localStorage.author;
-  }
-  if (localStorage.email) {
-    document.getElementById('email').value = localStorage.email;
-    document.getElementById('email').actual_value = localStorage.email;
-  }
-  if (localStorage.url) {
-    document.getElementById('url').value = localStorage.url;
-    document.getElementById('url').actual_value = localStorage.url;
-  }
-});
-
-function submit() {
-  document.getElementById('author').value = document.getElementById('author').actual_value;
-  document.getElementById('email').value = document.getElementById('email').actual_value;
-  document.getElementById('url').value = document.getElementById('url').actual_value;
-  document.getElementById('content').value = document.getElementById('content').actual_value;
-  localStorage.author = $('#author').val();
-  localStorage.email = $('#email').val();
-  localStorage.url = $('#url').val();
-  $('#post_f').submit();
-}
-
-function contentChanged(t) {
-  var len = t.value.length;
-  $('#submit').attr('disabled', !(0 < len && len <= 500));
-  if (len > 500) {
-    $('#submit').html('Please truncate your comment (' + len +
-                      '/ up to 500 characters)');
-  } else {
-    $('#submit').html('Post it!');
-  }
-}
+$('document').ready(function() { resetComment(); });
 </script>
 {% include 'analytics.htmlt' %}
 </head>
@@ -66,37 +24,5 @@ function contentChanged(t) {
 </div>
 
 {% include 'display_comments.seg.html' %}
-
-<div style='vertical-align: middle; width: 720px; margin-left: auto; margin-right: auto;'>
-<div style='float: left; width: 600px;'>
-<form id='post_f' name='f' action='/postcomment' method='post'>
-  <p class='comments_hint' style='margin-bottom: 0;'><a name='leavecomment'>Leave a comment:</a></p>
-  <input type='hidden' name='post_id' value='{{ post.pid }}'><br>
-  <input size=48 type='text' id='author' name='author'><br>
-  <input size=48 type='text' id='email' name='email'><br>
-  <input size=48 type='text' id='url' name='url'><br>
-  <textarea id='content' name='content' rows='4' cols='80'
-    onchange='contentChanged(this)' onkeyup='contentChanged(this)'></textarea><br>
-</form>
-<table class='page_foot'>
-<tr>
-  <td rowspan=2><button id='submit' disabled='true' onclick='submit()'>Post it!</button></td>
-  <td rowspan=2 style='padding-left: 60px;'><a rel='license' href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>
-    <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png'/>
-  </a></td>
-  <td>Your comment will be licensed under</td>
-  </tr>
-  <tr class='stdlnk'><td>
-    <a rel='license' href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>CC-NC-ND 3.0</td></a>
-  </tr>
-</table>
-</div>
-<div style='font-size: 0.8em; padding-top: 24px;'>
-<p>Hint -- You may use following markdown syntax for your comment:</p>
-<tt><code>``monospace``</code></tt><br>
-<b>**bold**</b><br>
-A,,<sub>subscript</sub>,,<br>
-A^^<sup>superscript</sup>^^<br>
-</div>
-</div>
+{% include 'leave_comment.seg.html' %}
 {% include 'page_foot.htmlt' %}

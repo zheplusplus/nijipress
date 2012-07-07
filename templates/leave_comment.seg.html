@@ -1,0 +1,120 @@
+<div style='vertical-align: middle; width: 720px; margin: auto;'>
+
+<script>
+function resetComment() {
+  function fillText(id, defVal) {
+    var node = document.getElementById(id);
+    node.resetText = function() {
+      node.actualVal = '';
+      node.value = defVal;
+    };
+    node.resetText();
+    node.onblur = function() {
+      node.actualVal = node.value;
+      if ('' == node.value) node.value = defVal;
+    };
+    node.onfocus = function() {
+      node.value = node.actualVal;
+    };
+  }
+  fillText('author', 'Your name');
+  fillText('email', 'Your email (for Gravatar, wont be public)');
+  fillText('url', 'Your homepage link (placed after your name)');
+  fillText('content', 'Comment (REQUIRED)\n' +
+                      'Please use no more than 500 characters for your opinion.\n' +
+                      'And not contain any offensive material or advertisement.');
+
+  function fillLS(id) {
+    var node = document.getElementById(id);
+    var storage = localStorage[id];
+    if (storage) {
+      node.value = storage;
+      node.actualVal = storage;
+    }
+  }
+  fillLS('author');
+  fillLS('email');
+  fillLS('url');
+}
+
+function submit() {
+  var len = document.getElementById('content').actualVal.length;
+  if (len == 0) {
+    return $('#leave_comment_message').html('Sorry but your comment is empty');
+  }
+  if (len > 500) {
+    return $('#leave_comment_message').html('Sorry but your comment exceeds 500 characters limits '
+                                          + '(it contains ' + len + ' characters)');
+  }
+  $('#leave_comment_message').html('');
+
+  const URI = '/json/leavecomment';
+  var token = '';
+  if (window.localStorage && window.localStorage.ctoken) {
+    token = window.localStorage.ctoken;
+  }
+
+  var author = document.getElementById('author').actualVal;
+  var email = document.getElementById('email').actualVal;
+  var url = document.getElementById('url').actualVal;
+  var content = document.getElementById('content').actualVal;
+  NJPress.request(URI, {
+    post_id: NJPress.pageArgs().p,
+    author: author,
+    email: email,
+    url: url,
+    content: content,
+    token: token
+  }, function(result) {
+    document.getElementById('content').resetText();
+    ({
+      pending: function() {
+        $('#leave_comment_area').slideToggle('slow');
+        $('#leave_comment_message').text('Your comment is awaiting moderation...');
+        localStorage.ctoken = result.token;
+      }, ok: function() {
+        window.location.reload();
+      }
+    }[result.result])();
+  });
+  localStorage.author = author;
+  localStorage.email = email;
+  localStorage.url = url;
+}
+</script>
+
+<div id='leave_comment_area'>
+
+<div style='float: left; width: 600px;'>
+  <p class='comments_hint' style='margin-bottom: 0;'><a name='leavecomment'>Leave a comment:</a></p>
+  <input size='48' type='text' id='author'><br>
+  <input size='48' type='text' id='email'><br>
+  <input size='48' type='text' id='url'><br>
+  <textarea id='content' rows='4' cols='80'></textarea><br>
+  <table class='page_foot'>
+    <tr>
+      <td rowspan='2'><button onclick='submit()'>Post it!</button></td>
+      <td rowspan='2' style='padding-left: 60px;'>
+        <a rel='license' href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>
+          <img alt='Creative Commons License' src='http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png'/>
+        </a>
+      </td>
+      <td>Your comment will be licensed under</td>
+    </tr>
+    <tr class='stdlnk'>
+      <td><a rel='license' href='http://creativecommons.org/licenses/by-nc-nd/3.0/'>CC-NC-ND 3.0</a></td>
+    </tr>
+  </table>
+</div>
+
+<div style='font-size: 0.8em; padding-top: 24px;'>
+  <p>Hint -- You may use following markdown syntax for your comment:</p>
+  <tt><code>``monospace``</code></tt><br>
+  <b>**bold**</b><br>
+  A,,<sub>subscript</sub>,,<br>
+  A^^<sup>superscript</sup>^^<br>
+</div>
+
+</div>
+<p id='leave_comment_message' style='text-align: center;'></p>
+</div>

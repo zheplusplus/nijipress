@@ -33,9 +33,9 @@ def put(comment):
     tokens = db.Query(AllowedToken).filter('token =', comment.ctoken)
     if tokens.count() > 0:
         comment.approve(tokens[0])
-        return False
+        return True
     comment.put()
-    return True
+    return False
 
 class AllowedToken(db.Model):
     token = db.StringProperty(multiline=False)

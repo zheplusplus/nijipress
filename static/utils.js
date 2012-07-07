@@ -6,7 +6,7 @@ NJPress.request = function(url, args, success) {
     url: url,
     data: args,
     success: function(r) {
-      success(eval(r));
+      success(eval('(' + r + ')'));
     }
   });
 };
