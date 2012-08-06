@@ -15,6 +15,10 @@
   color: #565;
   background-color: inherit;
 }
+.post_title .ntinlinecode {
+  color: inherit;
+  background-color: inherit;
+}
 
 .post_foot {
   font-weight: bolder;
