@@ -1,4 +1,4 @@
-application: bitfocusblog
+application:
 version: nautilus
 runtime: python27
 threadsafe: false
