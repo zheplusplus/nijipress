@@ -1,5 +1,5 @@
 application: bitfocusblog
-version: nautilus-exp
+version: nautilus
 runtime: python27
 threadsafe: false
 api_version: 1
