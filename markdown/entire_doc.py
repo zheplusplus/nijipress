@@ -16,3 +16,7 @@ def forge(document):
     from paragraph import split_document
     return reduce(lambda r, para: r + para.build(),
                   split_document(trim_right(document)), [])
+
+def plain_title(text):
+    from inline import plain
+    return plain(text)

@@ -14,8 +14,8 @@ BOLD_END = '''</strong>'''
 ITALIC_BEGIN = '''<i class='ntitalic'>'''
 ITALIC_END = '''</i>'''
 
-STROKE_BEGIN = '''<s class='ntstroke'>'''
-STROKE_END = '''</s>'''
+STROKE_BEGIN = '''<del class='ntdel'>'''
+STROKE_END = '''</del>'''
 
 MONO_BEGIN = '''<tt><code class='ntinlinecode'>'''
 MONO_END = '''</code></tt>'''
