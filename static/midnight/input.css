@@ -1,4 +1,4 @@
-textarea, input[type='text'] {
+textarea, input[type='text'], input[type='password'] {
   background-color: #222;
   color: #ccc;
   padding: 3px;
@@ -6,7 +6,7 @@ textarea, input[type='text'] {
   border: solid 1px;
 }
 
-textarea:focus, input[type='text']:focus {
+textarea:focus, input[type='text']:focus, input[type='password']:focus {
   background-color: #111;
   color: white;
 }
