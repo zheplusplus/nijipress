@@ -38,11 +38,37 @@ NJPress.escape = function(t) {
 };
 
 NJPress.loadTagsIn = function(node) {
-  NJPress.reqList('/post_tags', {}, function(tag) {
+  NJPress.reqList('/json/posttags', {}, function(tag) {
     var a = NJPress.newNode('a');
     a.innerHTML = NJPress.escape(tag.name);
     a.href = '/?tag=' + encodeURIComponent(tag.name);
     a.style.fontSize = (8 + 16 * tag.rate) + 'px';
     node.appendChild(a);
+  });
+};
+
+NJPress.loadPosts = function(nodeRecv) {
+  NJPress.reqList('/json/recentposts', {}, function(post) {
+    var div = NJPress.newNode('div');
+    if (post.id != undefined) {
+      var a = NJPress.newNode('a');
+      a.innerHTML = post.title;
+      a.href = '/?p=' + post.id;
+      div.appendChild(a);
+    }
+    if (post.preview) {
+      var article = NJPress.newNode('article');
+      article.innerHTML = post.preview;
+      div.appendChild(article);
+    }
+    if (post.content) {
+      var article = NJPress.newNode('article');
+      article.innerHTML = post.content;
+      div.appendChild(article);
+    }
+    if (div.childNodes.length == 1) {
+      return nodeRecv(div.childNodes[0]);
+    }
+    nodeRecv(div);
   });
 };

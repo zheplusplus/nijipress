@@ -29,8 +29,8 @@ def new():
 def fetch(page=0, count=util.ITEMS_PER_PAGE):
     if page == 0:
         return _first_page_posts(count)
-    return [post.init_tags(tag.tags_by_post_id(post.pid)) for post in
-       db.Query(Post).order('-date').fetch(count, count * page)]
+    return [ post.init_tags(tag.tags_by_post_id(post.pid)) for post in
+            db.Query(Post).order('-date').fetch(count, count * page) ]
 
 def count_pages():
     return util.count_pages(db.Query(Post).count())

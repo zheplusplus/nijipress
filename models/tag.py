@@ -27,10 +27,10 @@ def update_relations(post_id, tags):
         _put_relation(tag, post_id)
 
 def sort_by_count():
-    cache = memcache.get('tags')
+    cache = memcache.get('ptags')
     if cache == None:
         cache = _load_cache()
-        memcache.set('tags', cache)
+        memcache.set('ptags', cache)
     return cache
 
 def _load_cache():

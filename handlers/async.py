@@ -5,6 +5,7 @@ import json
 import base
 import models.comment
 import models.tag
+import utils.dumpjson
 
 class AsyncHandler(base.BaseView):
     def post(self):
@@ -65,3 +66,8 @@ class CommentRecv(AsyncHandler):
 class Tags(AsyncHandler):
     def serve(self):
         return models.tag.sort_by_count()
+
+class RecentPosts(AsyncHandler):
+    def serve(self):
+        return [ utils.dumpjson.post_title(p)
+                for p in utils.escape.client_posts(models.post.fetch(0, 8)) ]

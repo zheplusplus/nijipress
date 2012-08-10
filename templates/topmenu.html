@@ -7,6 +7,9 @@
         </ul>
     </div>
     <div class='menu'>
+        <span onmouseover='NJPress.loadPostsOnMenu(this)'>Recent Posts</span>
+    </div>
+    <div class='menu'>
         <span>Blogrolls</span>
         <ul>
             {% for r in conf.blogrolls %}
@@ -15,10 +18,10 @@
         </ul>
     </div>
     <div class='menu'>
-        <span>Meta</span>
+        <span>About</span>
         <ul>
-            <li><a href='/about'>I'm insterested in some of your posts. May I forward them to others?</a></li>
-            <li><a href='https://github.com/neuront/nijipress'>I'm insterested in this CMS. Where may I get the source?</a></li>
+            <li><a href='/about'>About this site</a></li>
+            <li><a href='https://github.com/neuront/nijipress'>About this CMS</a></li>
         </ul>
     </div>
     {% include 'admin_bar.html' %}
@@ -30,10 +33,20 @@
 </div>
 <script>
 NJPress.loadTagsOnMenu = function(node) {
-  node.innerHTML = '<i>Post tags: </i>';
   node.onclick = function() {};
+  node.innerHTML = '<i>Post tags: </i>';
   node.className = 'tags';
   NJPress.loadTagsIn(node);
 };
+NJPress.loadPostsOnMenu = function(node) {
+  node.onmouseover = function() {};
+  var ul = NJPress.newNode('ul');
+  node.appendChild(ul);
+  NJPress.loadPosts(function(n) {
+    var li = NJPress.newNode('li');
+    li.appendChild(n);
+    ul.appendChild(li);
+  });
+}
 </script>
 <div id='menumarginer'></div>

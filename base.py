@@ -47,12 +47,8 @@ class NotFound(BaseView):
 
 def raise_not_found(view):
     view.error(404)
-    view.put_page('templates/notfound.html', {
-        'posts': utils.escape.client_posts(models.post.fetch(0, 5)),
-    })
+    view.put_page('templates/notfound.html', dict())
 
 def raise_forbidden(view):
     view.error(403)
-    view.put_page('templates/forbidden.html', {
-        'posts': utils.escape.client_posts(models.post.fetch(0, 5)),
-    })
+    view.put_page('templates/forbidden.html', dict())

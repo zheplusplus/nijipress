@@ -14,7 +14,8 @@ import sitemap
 if __name__ == '__main__':
     application = webapp2.WSGIApplication([
         ('/', handlers.browse.Index),
-        ('/post_tags', handlers.async.Tags),
+        ('/json/posttags', handlers.async.Tags),
+        ('/json/recentposts', handlers.async.RecentPosts),
         ('/json/loadcomments', handlers.async.CommentsLoader),
         ('/json/leavecomment', handlers.async.CommentRecv),
         ('/c/newpost', post.NewPost),
