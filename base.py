@@ -42,9 +42,6 @@ class BaseView(RootHandler):
     def put_page(self, template_file, template_values):
         self.response.out.write(self.render(template_file, template_values))
 
-class NotFound(BaseView):
-    pass
-
 def raise_not_found(view):
     view.error(404)
     view.put_page('templates/notfound.html', dict())

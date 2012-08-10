@@ -37,6 +37,6 @@ if __name__ == '__main__':
         ('/about', base.page_renderer('templates/about.html')),
         ('/rss', handlers.rss.Build),
         ('/sitemap.*', handlers.sitemap.Build),
-        ('/.*', base.NotFound),
+        ('/.*', base.BaseView),
     ], debug=True)
     wsgiref.handlers.CGIHandler().run(application)
