@@ -1,9 +1,10 @@
 import base
+import utils.escape
 import models
 from urlparse import urlparse
 
 def post_for_client(post, url):
-    post = base.post_for_client(post)
+    post = utils.escape.client_post(post)
     post.ident = ''.join([url.scheme, '://', url.netloc, '/?p=', str(post.pid)])
     return post
 

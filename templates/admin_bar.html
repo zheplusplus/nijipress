@@ -1,0 +1,17 @@
+{% if usr.name %}
+<div class='menu'>
+    <span>User</span>
+    <ul>
+        <li>Logged in as <b>{{ usr.name }}</b></li>
+        {% if usr.admin %}
+            <li><a href='/c/newpost'>Add new post</a></li>
+            <li><a href='/c/comments'>Comments</a></li>
+            <li><a href='/c/pendingcomments'>Pending comments</a></li>
+            <li><a href='/c/posts'>Manage posts</a></li>
+            <li><a href='/c/siteconf'>Config Site</a></li>
+        {% else %}
+            <li>You are not administrator</li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}

@@ -1,4 +1,5 @@
 import base
+import utils.escape
 import models.post
 import admin.model as admin
 
@@ -23,8 +24,8 @@ class Preview(base.BaseView):
                 'title': title,
                 'content': content,
                 'tags': tags,
-                'prepared_title': base.escape_title(title),
-                'prepared_content': base.escape_content(content),
+                'prepared_title': utils.escape.esc_content(title),
+                'prepared_content': utils.escape.esc_content(content),
                 'prepared_tags': [s.strip() for s in tags.split(',')],
                 'usr': usr,
             })
@@ -50,7 +51,7 @@ class List(base.BaseView):
     def get(self):
         p = self.request_value('page', int)
         self.put_page('templates/list_posts.html', {
-                'posts': base.posts_for_client(models.post.fetch(p)),
+                'posts': utils.escape.client_posts(models.post.fetch(p)),
                 'current_page': p,
                 'page_count': xrange(models.post.count_pages()),
             })

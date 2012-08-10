@@ -1,20 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>{{ title }} - {{ conf.title }}</title>
+<title>{{ page_title }} - {{ conf.title }}</title>
 {% include 'page_meta.htmlt' %}
 <meta name='keywords' content='{% for tag in post.tags %}{{ tag }},{% endfor %}'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/post.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
-<script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
-<script type='text/javascript' src='/static/utils.js'></script>
-<script>
-$('document').ready(function() { resetComment(); });
-</script>
+{% include 'inc_scripts.html' %}
 {% include 'analytics.htmlt' %}
 </head>
 <body>
-{% include 'page_head.htmlt' %}
+{% include 'topmenu.html' %}
+{% include 'page_head.html' %}
 <div style='vertical-align: middle; width: 800px; margin-left: auto; margin-right: auto;'>
 <h1 class='post_title'>{{ post.title|safe }}</h1>
 <p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>

@@ -40,7 +40,7 @@ class SiteConfiguration(db.Model):
     post_html = db.TextProperty()
 
     @staticmethod
-    def _load_cache():
+    def load_persist():
         conf = SiteConfiguration.all()
         if conf.count() == 0:
             conf = SiteConfiguration()
@@ -57,7 +57,7 @@ class SiteConfiguration(db.Model):
     def load():
         cache = memcache.get('siteconf')
         if cache == None:
-            cache = SiteConfiguration._load_cache()
+            cache = SiteConfiguration.load_persist()
             memcache.set('siteconf', cache)
         return cache
 
