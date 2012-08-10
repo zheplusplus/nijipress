@@ -4,12 +4,12 @@ import webapp2
 import base
 import handlers.browse
 import handlers.async
+import handlers.rss
+import handlers.sitemap
 from admin import post
 from admin import usr
 from admin import siteconf
 from admin import comments
-import rss
-import sitemap
 
 if __name__ == '__main__':
     application = webapp2.WSGIApplication([
@@ -35,8 +35,8 @@ if __name__ == '__main__':
         ('/c/siteconf', base.page_renderer('templates/siteconf.html')),
         ('/c/savesiteconf', siteconf.Save),
         ('/about', base.page_renderer('templates/about.html')),
-        ('/rss', rss.Build),
-        ('/sitemap.*', sitemap.Build),
+        ('/rss', handlers.rss.Build),
+        ('/sitemap.*', handlers.sitemap.Build),
         ('/.*', base.NotFound),
     ], debug=True)
     wsgiref.handlers.CGIHandler().run(application)
