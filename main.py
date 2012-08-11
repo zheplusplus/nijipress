@@ -16,6 +16,7 @@ if __name__ == '__main__':
         ('/', handlers.browse.Index),
         ('/json/posttags', handlers.async.Tags),
         ('/json/recentposts', handlers.async.RecentPosts),
+        ('/json/loadpostbyid', handlers.async.LoadPostById),
         ('/json/loadcomments', handlers.async.CommentsLoader),
         ('/json/leavecomment', handlers.async.CommentRecv),
         ('/c/newpost', post.NewPost),

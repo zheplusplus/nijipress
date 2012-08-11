@@ -62,7 +62,7 @@ def posts_ids():
 
 def _invalidate_cache():
     memcache.delete('posts')
-    memcache.delete('tags')
+    memcache.delete('ptags')
     memcache.delete('posts_ids')
 
 def _first_page_posts(count):

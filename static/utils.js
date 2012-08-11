@@ -19,7 +19,13 @@ NJPress.reqList = function(url, args, successMappingFunc) {
   NJPress.request(url, args, function(result) {
     result.map(successMappingFunc);
   });
-}
+};
+
+NJPress.location = function() {
+  var L = window.location;
+  var port = (L.port == '80' || L.port == '') ? '' : (':' + L.port);
+  return L.protocol + '//' + L.hostname + port + L.pathname;
+};
 
 NJPress.pageArgs = function() {
   var result = {};
@@ -71,4 +77,51 @@ NJPress.loadPosts = function(nodeRecv) {
     }
     nodeRecv(div);
   });
+};
+
+NJPress.loadComments = function(postId, commentsHead, commentsTable) {
+  const URI = '/json/loadcomments';
+  function add(comment) {
+    commentsHead.html('Comments:');
+    var row = commentsTable.insertRow(-1);
+    row.className = 'comment';
+
+    var icon = row.insertCell(-1);
+    icon.style.width = '48px';
+    icon.style.verticalAlign = 'top';
+    var iconImg = document.createElement('img');
+    iconImg.src = 'http://0.gravatar.com/avatar/' + comment.email_md5 + '?s=48';
+    iconImg.style.borderRadius = '4px';
+    icon.appendChild(iconImg);
+
+    var content = row.insertCell(-1);
+    content.className = 'text';
+    var commentHead = document.createElement('p');
+    commentHead.className = 'comment_head';
+    if (comment.author) {
+      commentHead.innerHTML = NJPress.escape(comment.author).bold();
+    } else {
+      commentHead.innerHTML = 'Anonymous '.italics();
+    }
+
+    if (comment.url.length > 0) {
+        var link = document.createElement('a');
+        link.innerHTML = NJPress.escape('<^>');
+        link.href = comment.url;
+        commentHead.appendChild(link);
+    }
+
+    commentHead.innerHTML += ' said,';
+    var postDate = document.createElement('span');
+    postDate.className = 'date';
+    postDate.innerHTML = ' at ' + comment.date + ' (UTC)'.sub();
+    commentHead.appendChild(postDate);
+    content.appendChild(commentHead);
+
+    var contentBody = document.createElement('p');
+    contentBody.className = 'comment_content';
+    contentBody.innerHTML = comment.content;
+    content.appendChild(contentBody);
+  }
+  NJPress.reqList(URI, { post: postId }, add);
 };

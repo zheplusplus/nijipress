@@ -4,60 +4,7 @@
 <table id='comments_list' style='width: 720px; border-spacing: 6px;'></table>
 
 <script>
-function CommentLoader() {
-  const URI = '/json/loadcomments';
-  var start = 0;
-  var pageArgs = NJPress.pageArgs();
-  this.add = function(comment) {
-    ++start;
-    $('#comments_head').html('Comments:');
-    var row = $('#comments_list')[0].insertRow(-1);
-    row.className = 'comment';
-
-    var icon = row.insertCell(-1);
-    icon.style.width = '48px';
-    icon.style.verticalAlign = 'top';
-    var iconImg = document.createElement('img');
-    iconImg.src = 'http://0.gravatar.com/avatar/' + comment.email_md5 + '?s=48';
-    iconImg.style.borderRadius = '4px';
-    icon.appendChild(iconImg);
-
-    var content = row.insertCell(-1);
-    content.className = 'text';
-    var commentHead = document.createElement('p');
-    commentHead.className = 'comment_head';
-    if (comment.author) {
-      commentHead.innerHTML = NJPress.escape(comment.author).bold();
-    } else {
-      commentHead.innerHTML = 'Anonymous '.italics();
-    }
-
-    if (comment.url.length > 0) {
-        var link = document.createElement('a');
-        link.innerHTML = '&lt;^&gt;';
-        link.href = comment.url;
-        commentHead.appendChild(link);
-    }
-
-    commentHead.innerHTML += ' said,';
-    var postDate = document.createElement('span');
-    postDate.className = 'date';
-    postDate.innerHTML = ' at ' + comment.date + ' (UTC)'.sub();
-    commentHead.appendChild(postDate);
-    content.appendChild(commentHead);
-
-    var contentBody = document.createElement('p');
-    contentBody.className = 'comment_content';
-    contentBody.innerHTML = comment.content;
-    content.appendChild(contentBody);
-  };
-  this.load = function() {
-    NJPress.reqList(URI, { post: pageArgs.p, start: start }, this.add);
-  };
-}
-
-NJPress.commentLoader = new CommentLoader();
-NJPress.commentLoader.load();
+NJPress.loadComments(NJPress.pageArgs().p, $('#comments_head'), $('#comments_list')[0]);
 </script>
 
 </div>

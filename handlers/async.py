@@ -5,6 +5,7 @@ import json
 import base
 import models.comment
 import models.tag
+import models.post
 import utils.dumpjson
 
 class AsyncHandler(base.BaseView):
@@ -71,3 +72,8 @@ class RecentPosts(AsyncHandler):
     def serve(self):
         return [ utils.dumpjson.post_title(p)
                 for p in utils.escape.client_posts(models.post.fetch(0, 8)) ]
+
+class LoadPostById(AsyncHandler):
+    def serve(self):
+        return utils.dumpjson.post_full(utils.escape.client_post(
+            models.post.by_id(self.request.get('id'))))

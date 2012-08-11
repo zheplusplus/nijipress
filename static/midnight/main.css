@@ -116,7 +116,8 @@ hr {
 
 .post_content {
   margin-left: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
+  padding-bottom: 4px;
 }
 
 .nth1 {
@@ -186,7 +187,6 @@ hr {
 }
 
 .tags {
-  max-width: 320px;
   margin: 8px 0;
   font-size: 0.7em;
 }
@@ -194,11 +194,40 @@ hr {
   color: #bbb;
 }
 
-.div_header {
-  margin: 20px 0;
-  color: #eda;
-  font-weight: bold;
+.comments_list {
+  width: 680px;
+  margin-left: auto;
+  margin-left: auto;
 }
+
+.comments_hint {
+  font-weight: bolder;
+  color: #D0D0D0;
+  font-size=1.6em;
+}
+
+.comment td.text {
+  background-color: #2B2B2B;
+  border-radius: 4px;
+}
+
+.comment_head {
+  margin-top: 6px;
+  margin-left: 6px;
+}
+.comment_head b {
+  color: #eee;
+}
+.comment_head i {
+  color: #bbb;
+}
+
+.comment_content {
+  margin-top: 12px;
+  margin-left: 12px;
+  color: #aaa;
+}
+
 .page_foot td {
   font-size: 12px;
   text-align: center;

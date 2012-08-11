@@ -15,8 +15,14 @@
 <div style='vertical-align: middle; width: 800px; margin-left: auto; margin-right: auto;'>
 <h1 class='post_title'>{{ post.title|safe }}</h1>
 <p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
-<div class='post_content stdlnk'>{{ post.content|safe }}</div>
-{% include 'print_tags.html' %}
+<article class='post_content'>{{ post.content|safe }}</article>
+
+<p class='tags'>
+    <i>Post tags:&nbsp;</i>
+    {% for tag in post.tags %}
+        {% include 'print_tag.html' %}
+    {% endfor %}
+</p>
 
 {% if usr.admin %}
 <p><a href='/c/edit?id={{ post.pid }}'>Edit</a></p>

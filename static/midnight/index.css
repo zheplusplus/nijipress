@@ -1,9 +1,25 @@
+.post_arena {
+  width: 960px;
+  vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 12px 20px;
+}
+
+.post_cell {
+  width: 720px;
+  vertical-align: top;
+}
+
+.tags_cell {
+  vertical-align: top;
+}
+
 .post_title {
   color: #343;
   font-size: 2em;
-  margin-top: 40px;
-  margin-bottom: 0px;
-  background-color: #EEE;
+  margin-bottom: 4px;
+  background-color: #eee;
   border-radius: 4px;
 }
 .post_title a[href] {
@@ -20,22 +36,21 @@
   background-color: inherit;
 }
 
-.post_foot {
+.action_button {
   font-weight: bolder;
   font-size: 0.8em;
-}
-.post_foot a[href] {
   padding: 5px;
   color: #333;
   background-color: #eda;
   border: none;
   border-radius: 3px;
   text-decoration: none;
+  cursor: pointer;
 }
-.post_foot a[href]:hover {
+.action_button:hover {
   color: #565;
   background-color: #feb;
 }
-.post_foot a[href]:active {
+.action_button:active {
   color: black;
 }

@@ -11,21 +11,37 @@
 <body>
 {% include 'topmenu.html' %}
 {% include 'page_head.html' %}
-<div style='vertical-align: middle; width: 960px; margin-left: auto; margin-right: auto;'>
-    <div style='float: left; width: 640px;'>
-
+<table class='post_arena'>
     {% for post in posts %}
+    <tr>
+    <td class='post_cell'>
         <p class='post_title'><a href='/?p={{ post.pid }}'>{{ post.title|safe }}</a></p>
-        <p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
-        <div class='post_content stdlnk'>{{ post.preview|safe }}</div>
-            <span class='post_foot'><a href='/?p={{ post.pid }}'>Read full text &gt;&gt;&gt;</a></span>
-        <div style='float: right;'>
-            <span class='post_foot'><a href='/?p={{ post.pid }}#leavecomment'>Leave a comment</a></span>
-        </div>
-        {% include 'print_tags.html' %}
+        <div class='post_content' style='border-bottom: 1px dotted;'>{{ post.preview|safe }}</div>
+        <p class='post_date' style='float: left'>
+            Posted at {{ post.date|date:"D, d M Y H:i:s" }}
+        </p>
+        <p style='float: right;'>
+        Permanent Link: <a href='/?p={{ post.pid }}'>
+            <script>document.write(NJPress.location())</script>?p={{ post.pid }}</a>
+        <span class='action_button' onclick='NJPress.loadPostById(this, {{ post.pid }})'>
+            Load full text
+        </span>
+        </p>
+    </td>
+    <td class='tags_cell tags'>
+        <i>Post tags:</i>
+        <p class='tags'>
+        {% for tag in post.tags %}
+            {% include 'print_tag.html' %}<br>
+        {% endfor %}
+        </p>
+    </td>
+    </tr>
     {% endfor %}
 
     {% if paging_on %}
+    <tr>
+    <td colspan='2'>
         <p class='paging'>
             {% for i in page_count %}
                 {% ifequal i current_page %}
@@ -39,7 +55,22 @@
                 {% endifequal %}
             {% endfor %}
         </p>
+    </td>
+    </tr>
     {% endif %}
-    </div>
-</div>
+</table>
+<script>
+NJPress.loadPostById = function(span, id) {
+  NJPress.request('/json/loadpostbyid', { id: id }, function(r) {
+    span.innerHTML = 'Leave comment';
+    var cell = span.parentNode.parentNode;
+    span.onclick = function() {
+      window.location = NJPress.location() + '?p=' + id + '#leavecomment';
+    };
+    var content = cell.getElementsByClassName('post_content')[0];
+    content.style.borderBottom = '1px dashed';
+    content.innerHTML = r.content;
+  });
+};
+</script>
 {% include 'page_foot.htmlt' %}
