@@ -55,15 +55,15 @@ class SiteConfiguration(db.Model):
 
     @staticmethod
     def load():
-        cache = memcache.get('siteconf')
+        cache = memcache.get('psiteconf')
         if cache == None:
             cache = SiteConfiguration.load_persist()
-            memcache.set('siteconf', cache)
+            memcache.set('psiteconf', cache)
         return cache
 
     @staticmethod
     def save(conf):
-        memcache.set('siteconf', conf)
+        memcache.set('psiteconf', conf)
         conf.put()
 
     def blogrolls(self):
@@ -84,12 +84,12 @@ class Blogroll(db.Model):
             blogroll.uri = r[0].strip()
             blogroll.text = r[2].strip()
             blogroll.put()
-        memcache.delete('blogrolls')
+        memcache.delete('pblogrolls')
 
     @staticmethod
     def load():
-        cache = memcache.get('blogrolls')
+        cache = memcache.get('pblogrolls')
         if cache == None:
             cache = Blogroll.all()
-            memcache.set('blogrolls', cache)
+            memcache.set('pblogrolls', cache)
         return cache

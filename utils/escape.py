@@ -1,3 +1,4 @@
+import hashlib
 import markdown
 import markdown.inline
 import markdown.html
@@ -21,3 +22,10 @@ def client_post(post):
 
 def client_posts(origin_posts):
     return map(lambda p: client_post(p), origin_posts)
+
+def client_comments(comments):
+    def client_comment(c):
+        c.email_md5 = hashlib.md5(c.email).hexdigest()
+        c.esc_content = esc_content(c.content)
+        return c
+    return [client_comment(c) for c in comments]

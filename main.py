@@ -1,15 +1,16 @@
 import wsgiref.handlers
 import webapp2
 
-import base
+import render
+import handlers.base
 import handlers.browse
 import handlers.async
 import handlers.rss
 import handlers.sitemap
-from admin import post
-from admin import usr
-from admin import siteconf
-from admin import comments
+import handlers.postmgr
+import handlers.user
+import handlers.siteconf
+import handlers.comments
 
 if __name__ == '__main__':
     application = webapp2.WSGIApplication([
@@ -19,25 +20,25 @@ if __name__ == '__main__':
         ('/json/loadpostbyid', handlers.async.LoadPostById),
         ('/json/loadcomments', handlers.async.CommentsLoader),
         ('/json/leavecomment', handlers.async.CommentRecv),
-        ('/c/newpost', post.NewPost),
-        ('/c/preview', post.Preview),
-        ('/c/add', post.Add),
-        ('/c/posts', post.List),
-        ('/c/edit', post.Edit),
-        ('/c/comments', comments.List),
-        ('/c/pendingcomments', comments.ListPending),
-        ('/c/delcomment', comments.Delete),
-        ('/c/approvecomment', comments.Approve),
-        ('/c/clearpending', comments.ClearPending),
-        ('/c/reg', usr.Register),
-        ('/c/newusr', usr.New),
-        ('/c/login', usr.LoginPage),
-        ('/c/auth', usr.LoginAction),
-        ('/c/siteconf', base.page_renderer('templates/siteconf.html')),
-        ('/c/savesiteconf', siteconf.Save),
-        ('/about', base.page_renderer('templates/about.html')),
+        ('/c/newpost', handlers.postmgr.NewPost),
+        ('/c/preview', handlers.postmgr.Preview),
+        ('/c/add', handlers.postmgr.Add),
+        ('/c/posts', handlers.postmgr.List),
+        ('/c/edit', handlers.postmgr.Edit),
+        ('/c/comments', handlers.comments.List),
+        ('/c/pendingcomments', handlers.comments.ListPending),
+        ('/c/delcomment', handlers.comments.Delete),
+        ('/c/approvecomment', handlers.comments.Approve),
+        ('/c/clearpending', handlers.comments.ClearPending),
+        ('/c/reg', handlers.user.Register),
+        ('/c/newusr', handlers.user.New),
+        ('/c/login', handlers.user.LoginPage),
+        ('/c/auth', handlers.user.LoginAction),
+        ('/c/siteconf', render.page_renderer('templates/siteconf.html')),
+        ('/c/savesiteconf', handlers.siteconf.Save),
+        ('/about', render.page_renderer('templates/about.html')),
         ('/rss', handlers.rss.Build),
         ('/sitemap.*', handlers.sitemap.Build),
-        ('/.*', base.BaseView),
+        ('/.*', handlers.base.BaseView),
     ], debug=True)
     wsgiref.handlers.CGIHandler().run(application)

@@ -1,7 +1,7 @@
 import base
 import utils.escape
 import models.post
-import admin.model as admin
+import models.admin
 
 class NewPost(base.BaseView):
     def get(self):
@@ -18,7 +18,7 @@ class Preview(base.BaseView):
         title = self.request.get('title')
         content = self.request.get('content')
         tags = self.request.get('tags')
-        usr = admin.User.get_by_session(self.request)
+        usr = models.admin.User.get_by_session(self.request)
         self.put_page('templates/preview.html', {
                 'id': ident,
                 'title': title,
@@ -32,7 +32,7 @@ class Preview(base.BaseView):
 
 class Add(base.BaseView):
     def post(self):
-        if not admin.User.get_by_session(self.request).admin:
+        if not models.admin.User.get_by_session(self.request).admin:
             return base.raise_forbidden(self)
         post_id = self.request.get('id')
         p = None

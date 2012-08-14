@@ -2,7 +2,7 @@ from hashlib import sha256
 from Cookie import BaseCookie
 
 import base
-from admin import model
+import models.admin
 
 class UserView(base.BaseView):
     def usr_page(self, title, handler='', hint=''):
@@ -18,7 +18,7 @@ class Register(UserView):
 
 class New(UserView):
     def post(self):
-        usr = model.User.get_by_name(self.request.get('name'))
+        usr = models.admin.User.get_by_name(self.request.get('name'))
         if usr.passwd and len(usr.passwd) > 0:
             self.usr_page('Register', 'newusr',
                           'User ' + usr.name + ' already exists')
@@ -35,7 +35,7 @@ class LoginPage(UserView):
 
 class LoginAction(UserView):
     def post(self):
-        usr = model.User.get_by_name(self.request.get('name'))
+        usr = models.admin.User.get_by_name(self.request.get('name'))
         if usr.passwd != sha256(self.request.get('passwd_origin')).hexdigest():
             self.usr_page('Login', 'auth', 'Authentication failed')
             return

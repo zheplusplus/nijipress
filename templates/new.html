@@ -11,6 +11,7 @@ Edit {{ title }}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
 </head>
 <body>
+{% include 'topmenu.html' %}
 <form action='/c/preview' method='post'>
 {% if not is_new %}
 <input type='hidden' name='id' value='{{ id }}'>

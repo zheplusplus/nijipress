@@ -1,12 +1,12 @@
 import time
 from hashlib import sha256
 import json
-
 import base
 import models.comment
 import models.tag
 import models.post
 import utils.dumpjson
+import utils.escape
 
 class AsyncHandler(base.BaseView):
     def post(self):
@@ -24,7 +24,7 @@ class CommentsLoader(AsyncHandler):
             } for c in comments]
         try:
             pid = int(self.request.get('post'))
-            clist = base.comments_for_client(models.comment.by_post_id(pid))
+            clist = utils.escape.client_comments(models.comment.by_post_id(pid))
             return comments_to_dicts(clist)
         except ValueError:
             self.error(404)
