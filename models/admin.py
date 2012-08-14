@@ -1,35 +1,6 @@
 from google.appengine.ext import db
 from google.appengine.api import memcache
 
-class User(db.Model):
-    name = db.StringProperty(multiline=False)
-    passwd = db.StringProperty(multiline=False)
-    session_key = db.StringProperty(multiline=False)
-    admin = db.BooleanProperty()
-
-    @staticmethod
-    def new(name):
-        usr = User()
-        usr.name = name
-        usr.passwd = ''
-        usr.admin = False
-        return usr
-
-    @staticmethod
-    def get_by_name(name):
-        u = db.Query(User).filter('name =', name)
-        if u.count() == 0:
-            return User.new(name)
-        return u[0]
-
-    @staticmethod
-    def get_by_session(request):
-        key = request.cookies['skey'] if 'skey' in request.cookies else ''
-        u = db.Query(User).filter('session_key =', key)
-        if u.count() == 0:
-            return User.new('')
-        return u[0]
-
 class SiteConfiguration(db.Model):
     title = db.StringProperty(multiline=False)
     style = db.StringProperty(multiline=False)

@@ -18,7 +18,6 @@ class Preview(base.BaseView):
         title = self.request.get('title')
         content = self.request.get('content')
         tags = self.request.get('tags')
-        usr = models.admin.User.get_by_session(self.request)
         self.put_page('templates/preview.html', {
                 'id': ident,
                 'title': title,
@@ -27,13 +26,11 @@ class Preview(base.BaseView):
                 'prepared_title': utils.escape.esc_content(title),
                 'prepared_content': utils.escape.esc_content(content),
                 'prepared_tags': [s.strip() for s in tags.split(',')],
-                'usr': usr,
             })
 
 class Add(base.BaseView):
+    @models.user.admin_only
     def post(self):
-        if not models.admin.User.get_by_session(self.request).admin:
-            return base.raise_forbidden(self)
         post_id = self.request.get('id')
         p = None
         try:

@@ -7,6 +7,7 @@ import models.tag
 import models.post
 import utils.dumpjson
 import utils.escape
+import utils.cookie
 
 class AsyncHandler(base.BaseView):
     def post(self):
@@ -77,3 +78,18 @@ class LoadPostById(AsyncHandler):
     def serve(self):
         return utils.dumpjson.post_full(utils.escape.client_post(
             models.post.by_id(self.request.get('id'))))
+
+class RegisterUser(AsyncHandler):
+    def serve(self):
+        name = self.request.get('name')
+        passwd_origin = self.request.get('passwd_origin')
+        if len(name) < 6 or len(passwd_origin) < 6:
+            return { 'result': 'fail', 'reason': 'format' }
+        if models.user.User.get_by_name(name) != None:
+            return { 'result': 'fail', 'reason': 'existed' }
+        usr = models.user.User.new(name)
+        usr.passwd = sha256(passwd_origin).hexdigest()
+        usr.session_key = sha256(usr.name + usr.passwd).hexdigest()
+        usr.put()
+        utils.cookie.update_cookie(self.response, usr.session_key)
+        return { 'result': 'ok' }

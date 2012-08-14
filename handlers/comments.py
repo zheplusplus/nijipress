@@ -1,15 +1,13 @@
 import base
-import models.admin
+import models.user
 import models
 import models.comment as comment
 import utils.escape
 
 class List(base.BaseView):
+    @models.user.admin_only
     def get(self):
         p = self.request_value('page', int)
-        usr = models.admin.User.get_by_session(self.request)
-        if not usr.admin:
-            return base.raise_forbidden(self)
         self.put_page('templates/list_comments.html', {
             'comments': utils.escape.client_comments(models.comment.fetch(p)),
             'path': 'delcomment',
@@ -18,17 +16,13 @@ class List(base.BaseView):
         })
 
 class Delete(base.BaseView):
+    @models.user.admin_only
     def post(self):
-        usr = models.admin.User.get_by_session(self.request)
-        if not usr.admin:
-            return base.raise_forbidden(self)
         comment.Comment.get_by_id(int(self.request.get('id'))).delete()
 
 class ListPending(base.BaseView):
+    @models.user.admin_only
     def get(self):
-        usr = models.admin.User.get_by_session(self.request)
-        if not usr.admin:
-            return base.raise_forbidden(self)
         self.put_page('templates/list_comments.html', {
             'comments': utils.escape.client_comments(
                                         comment.PendingComment.all()),
@@ -37,16 +31,12 @@ class ListPending(base.BaseView):
         })
 
 class Approve(base.BaseView):
+    @models.user.admin_only
     def post(self):
-        usr = models.admin.User.get_by_session(self.request)
-        if not usr.admin:
-            return base.raise_forbidden(self)
         comment.PendingComment.get_by_id(int(self.request.get('id'))).approve()
 
 class ClearPending(base.BaseView):
+    @models.user.admin_only
     def get(self):
-        usr = models.admin.User.get_by_session(self.request)
-        if not usr.admin:
-            return base.raise_forbidden(self)
         comment.PendingComment.clear()
         self.redirect('/c/pendingcomments')

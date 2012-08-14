@@ -1,11 +1,11 @@
 import base
 import models.post
 import models.admin
+import models.user
 
 class Save(base.BaseView):
+    @models.user.admin_only
     def post(self):
-        if not models.admin.User.get_by_session(self.request).admin:
-            return base.raise_forbidden(self)
         conf = models.admin.SiteConfiguration.load_persist()
         conf.title = self.request.get('title').strip()
         conf.style = self.request.get('style').strip()
