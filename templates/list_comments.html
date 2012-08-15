@@ -2,8 +2,8 @@
 <head>
 <title>Comments</title>
 {% include 'page_meta.htmlt' %}
-<script type='text/javascript' src='http://code.jquery.com/jquery-latest.js'></script>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
+{% include 'inc_scripts.html' %}
 <script>
 function delClick(id, event) {
   var sp = (event || window.event).srcElement;

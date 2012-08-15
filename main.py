@@ -8,7 +8,6 @@ import handlers.async
 import handlers.rss
 import handlers.sitemap
 import handlers.postmgr
-import handlers.user
 import handlers.siteconf
 import handlers.comments
 
@@ -21,6 +20,7 @@ if __name__ == '__main__':
         ('/json/loadcomments', handlers.async.CommentsLoader),
         ('/json/leavecomment', handlers.async.CommentRecv),
         ('/json/register', handlers.async.RegisterUser),
+        ('/json/login', handlers.async.UserLogin),
         ('/c/newpost', handlers.postmgr.NewPost),
         ('/c/preview', handlers.postmgr.Preview),
         ('/c/add', handlers.postmgr.Add),
@@ -32,8 +32,7 @@ if __name__ == '__main__':
         ('/c/approvecomment', handlers.comments.Approve),
         ('/c/clearpending', handlers.comments.ClearPending),
         ('/c/reg', render.page_renderer('templates/register.html')),
-        ('/c/login', handlers.user.LoginPage),
-        ('/c/auth', handlers.user.LoginAction),
+        ('/c/login', render.page_renderer('templates/login.html')),
         ('/c/siteconf', render.page_renderer('templates/siteconf.html')),
         ('/c/savesiteconf', handlers.siteconf.Save),
         ('/about', render.page_renderer('templates/about.html')),

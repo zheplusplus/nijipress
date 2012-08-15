@@ -34,7 +34,8 @@ function submit() {
     ({
       pending: function() {
         $('#leave_comment_area').slideToggle('slow');
-        $('#leave_comment_message').text('Your comment is awaiting moderation...');
+        $('#leave_comment_message').text('Thanks for your advice.'
+                                + ' Your comment is awaiting moderation...');
         localStorage.ctoken = result.token;
       }, ok: function() {
         window.location.reload();
