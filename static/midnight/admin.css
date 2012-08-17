@@ -25,7 +25,8 @@
 }
 
 .admin_list {
-  border-spacing: 12px 0px;
+  border-spacing: 12px 4px;
+  width: 800px;
 }
 .admin_list tr:nth-child(even) {
   background: #222;

@@ -15,13 +15,12 @@ class BaseView(webapp.RequestHandler):
             return wanted_type()
 
     def put_page(self, template_file, template_values):
-        self.response.out.write(render.render(self.request, template_file,
-                                              template_values))
+        render.put_page(self, template_file, template_values)
 
-def raise_not_found(view):
-    view.error(404)
-    view.put_page('templates/notfound.html', dict())
+def raise_not_found(handler):
+    handler.error(404)
+    render.put_page(handler, 'templates/notfound.html', dict())
 
-def raise_forbidden(view):
-    view.error(403)
-    view.put_page('templates/forbidden.html', dict())
+def raise_forbidden(handler):
+    handler.error(403)
+    render.put_page(handler, 'templates/forbidden.html', dict())

@@ -13,3 +13,23 @@ def post_full(p):
     return dict({
         'content': p.content,
     }.items() + post_title(p).items())
+
+def comment_view(c):
+    return {
+        'email_md5': c.email_md5,
+        'author': c.author,
+        'url': c.url,
+        'date': str(c.date),
+        'content': c.esc_content,
+    }
+
+def comment_admin(c):
+    return {
+        'author': c.author,
+        'email': c.email,
+        'url': c.url,
+        'date': str(c.date),
+        'content': c.esc_content,
+        'ipaddr': c.ipaddr,
+        'post_id': c.post_id,
+    }

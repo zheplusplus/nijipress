@@ -34,5 +34,5 @@ def admin_only(f):
     def wrapper(handler):
         if not User.get_by_session(handler.request).admin:
             return handlers.base.raise_forbidden(handler)
-        f(handler)
+        return f(handler)
     return wrapper

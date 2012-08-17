@@ -14,18 +14,10 @@ class AsyncHandler(base.BaseView):
 
 class CommentsLoader(AsyncHandler):
     def serve(self):
-        def comments_to_dicts(comments):
-            return [{
-                'email_md5': c.email_md5,
-                'author': c.author,
-                'url': c.url,
-                'date': str(c.date),
-                'content': c.esc_content,
-            } for c in comments]
         try:
             pid = int(self.request.get('post'))
             clist = utils.escape.client_comments(models.comment.by_post_id(pid))
-            return comments_to_dicts(clist)
+            return [utils.dumpjson.comment_view(c) for c in clist]
         except ValueError:
             self.error(404)
             return []
@@ -99,3 +91,9 @@ class UserLogin(AsyncHandler):
             return { 'result': 'fail', 'reason': 'invalid' }
         utils.cookie.update_cookie(self.response, usr.session_key)
         return { 'result': 'ok' }
+
+class PendingCommentsLoader(AsyncHandler):
+    @models.user.admin_only
+    def serve(self):
+        return [utils.dumpjson.comment_admin(c) for c in
+              utils.escape.client_comments(models.comment.PendingComment.all())]

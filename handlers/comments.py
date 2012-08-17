@@ -20,16 +20,6 @@ class Delete(base.BaseView):
     def post(self):
         comment.Comment.get_by_id(int(self.request.get('id'))).delete()
 
-class ListPending(base.BaseView):
-    @models.user.admin_only
-    def get(self):
-        self.put_page('templates/list_comments.html', {
-            'comments': utils.escape.client_comments(
-                                        comment.PendingComment.all()),
-            'path': 'approvecomment',
-            'clearall': True,
-        })
-
 class Approve(base.BaseView):
     @models.user.admin_only
     def post(self):

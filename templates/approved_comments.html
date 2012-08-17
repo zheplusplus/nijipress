@@ -1,0 +1,17 @@
+<html>
+<head>
+<title>Comments</title>
+{% include 'page_meta.htmlt' %}
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
+{% include 'inc_scripts.html' %}
+<script src='static/admin.js'></script>
+</head>
+<body>
+{% include 'topmenu.html' %}
+<table class='admin_list'></table>
+{% include 'page_foot.htmlt' %}
+<script>
+(function() {
+  NJPress.loadCommentsForAdmin($('table')[0], 0);
+})();
+</script>

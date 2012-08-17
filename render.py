@@ -15,3 +15,14 @@ def page_renderer(template_file):
         def get(self):
             self.response.out.write(render(self.request, template_file, dict()))
     return PageRender
+
+def admin_page_renderer(template_file):
+    base = page_renderer(template_file)
+    class PageRender(base):
+        @models.user.admin_only
+        def get(self):
+            return base.get(self)
+    return PageRender
+
+def put_page(handler, templ_file, templ_data):
+    handler.response.out.write(render(handler.request, templ_file, templ_data))
