@@ -118,8 +118,9 @@ class ClearPending(AsyncHandler):
 class ApprovedCommentsLoader(AsyncHandler):
     @models.user.admin_only
     def serve(self):
-        return dump_comments(models.comment.fetch(self.request_value('start', int)),
-                             utils.dumpjson.comment_admin)
+        return dump_comments(
+                models.comment.fetch(self.request_value('start', int)),
+                utils.dumpjson.comment_admin)
 
 class DeleteComments(AsyncHandler):
     @models.user.admin_only
