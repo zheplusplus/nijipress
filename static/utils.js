@@ -125,3 +125,7 @@ NJPress.loadComments = function(postId, commentsHead, commentsTable) {
   }
   NJPress.reqList(URI, { post: postId }, add);
 };
+
+NJPress.valuesOf = function(arr) {
+  return arr.map(function(i) { return arr[i].value; }).toArray().join(' ');
+};

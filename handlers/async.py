@@ -37,9 +37,10 @@ class CommentRecv(AsyncHandler):
         comment.author = self.request.get('author').strip()
         comment.email = self.request.get('email').strip()
 
-        token = self.request.get('token')
+        token = self.request_value('token', str)
         if len(token) == 0:
-            comment.ctoken = utils.hash.comment_token(comment.email)
+            token = utils.hash.comment_token(comment.email)
+        comment.ctoken = token
 
         url = self.request.get('url').strip()
         if len(url) > 0 and not url.startswith('http'):
@@ -97,3 +98,40 @@ class PendingCommentsLoader(AsyncHandler):
     def serve(self):
         return [utils.dumpjson.comment_admin(c) for c in
               utils.escape.client_comments(models.comment.PendingComment.all())]
+
+class ApproveComments(AsyncHandler):
+    @models.user.admin_only
+    def serve(self):
+        for id in self.request_value('ids', str).split(' '):
+            try:
+                models.comment.PendingComment.get_by_id(int(id)).approve()
+            except ValueError:
+                pass
+        return []
+
+class ClearPending(AsyncHandler):
+    @models.user.admin_only
+    def serve(self):
+        for id in self.request_value('ids', str).split(' '):
+            try:
+                models.comment.PendingComment.get_by_id(int(id)).delete()
+            except ValueError:
+                pass
+        return []
+
+class ApprovedCommentsLoader(AsyncHandler):
+    @models.user.admin_only
+    def serve(self):
+        return [utils.dumpjson.comment_admin(c) for c in
+                utils.escape.client_comments(models.comment.fetch(
+                    self.request_value('start', int)))]
+
+class DeleteComments(AsyncHandler):
+    @models.user.admin_only
+    def serve(self):
+        for id in self.request_value('ids', str).split(' '):
+            try:
+                models.comment.Comment.get_by_id(int(id)).delete()
+            except ValueError:
+                pass
+        return []

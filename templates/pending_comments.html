@@ -9,9 +9,19 @@
 <body>
 {% include 'topmenu.html' %}
 <table class='admin_list'></table>
+<div style='margin: 10px;'>
+  <span class='action_button' onclick='NJPress.approveComments()'>Approve selected</span>
+  <span class='action_button' onclick='NJPress.clearAll()'>Clear all</span>
+</div>
 {% include 'page_foot.htmlt' %}
 <script>
-(function() {
-  NJPress.loadPendingComments($('table')[0], 0);
-})();
+NJPress.loadPendingComments($('table')[0]);
+
+NJPress.approveComments = function() {
+  NJPress.handleSelected('/json/approvecomments', ':checkbox:checked');
+};
+
+NJPress.clearAll = function() {
+  NJPress.handleSelected('/json/clearpending', ':checkbox');
+};
 </script>

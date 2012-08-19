@@ -10,9 +10,9 @@ NJPress.typoComment = function(comment, commentsTable) {
   iconImg.style.borderRadius = '4px';
   icon.appendChild(iconImg);
 
+  row.insertCell(-1).innerHTML = comment.author;
   row.insertCell(-1).innerHTML = NJPress.escape(comment.url);
   row.insertCell(-1).innerHTML = NJPress.escape(comment.email);
-  row.insertCell(-1).innerHTML = comment.ipaddr;
 
   var post = row.insertCell(-1);
   var postLink = NJPress.newNode('a');
@@ -27,7 +27,7 @@ NJPress.typoComment = function(comment, commentsTable) {
   check.appendChild(checkbox);
 
   row = commentsTable.insertRow(-1);
-  row.insertCell(-1).innerHTML = comment.author;
+  row.insertCell(-1).innerHTML = comment.ipaddr;
   var date = row.insertCell(-1);
   date.colSpan = '4';
   date.innerHTML = comment.date;
@@ -42,9 +42,27 @@ NJPress.typoComment = function(comment, commentsTable) {
   sep.style.height = '1px';
 };
 
-NJPress.loadPendingComments = function(commentsTable, start) {
+NJPress.loadPendingComments = function(commentsTable) {
   const URI = '/json/loadpendingcomments';
+  NJPress.reqList(URI, {}, function(comment) {
+    NJPress.typoComment(comment, commentsTable);
+  });
+};
+
+NJPress.loadApprovedComments = function(commentsTable, start, counter) {
+  const URI = '/json/loadapprovedcomments';
   NJPress.reqList(URI, { start: start }, function(comment) {
     NJPress.typoComment(comment, commentsTable);
+    counter();
+  });
+};
+
+NJPress.handleSelected = function(uri, selector) {
+  var chk = $(selector);
+  if (chk.length == 0) return;
+  NJPress.request(uri, {
+    ids: NJPress.valuesOf(chk),
+  }, function(r) {
+    window.location.reload();
   });
 };

@@ -4,14 +4,31 @@
 {% include 'page_meta.htmlt' %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
 {% include 'inc_scripts.html' %}
-<script src='static/admin.js'></script>
+<script src='/static/admin.js'></script>
 </head>
 <body>
 {% include 'topmenu.html' %}
 <table class='admin_list'></table>
+<div style='margin: 10px;'>
+  <span class='action_button' onclick='NJPress.loadMoreApproved()'>Load more</span>
+  <span class='action_button' onclick="$('#confirm_delete').css('visibility', 'visible')">
+    Delete Selected
+  </span>
+  <span id='confirm_delete' style='visibility: hidden' class='action_button'
+      onclick='NJPress.removeSelected()'>CONFIRM DELETE (CANNOT BE UNDONE)</span>
+</div>
 {% include 'page_foot.htmlt' %}
 <script>
-(function() {
-  NJPress.loadCommentsForAdmin($('table')[0], 0);
-})();
+NJPress.loadStartIndex = 0;
+
+NJPress.loadMoreApproved = function() {
+  NJPress.loadApprovedComments($('table')[0], NJPress.loadStartIndex,
+                               function() { ++NJPress.loadStartIndex; });
+};
+
+NJPress.loadMoreApproved();
+
+NJPress.removeSelected = function() {
+  NJPress.handleSelected('/json/deletecomments', ':checkbox:checked');
+};
 </script>

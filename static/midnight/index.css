@@ -35,22 +35,3 @@
   color: inherit;
   background-color: inherit;
 }
-
-.action_button {
-  font-weight: bolder;
-  font-size: 0.8em;
-  padding: 5px;
-  color: #333;
-  background-color: #eda;
-  border: none;
-  border-radius: 3px;
-  text-decoration: none;
-  cursor: pointer;
-}
-.action_button:hover {
-  color: #565;
-  background-color: #feb;
-}
-.action_button:active {
-  color: black;
-}

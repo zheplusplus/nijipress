@@ -25,8 +25,10 @@ def comment_view(c):
 
 def comment_admin(c):
     return {
+        'id': c.key().id(),
         'author': c.author,
         'email': c.email,
+        'email_md5': c.email_md5,
         'url': c.url,
         'date': str(c.date),
         'content': c.esc_content,

@@ -9,7 +9,6 @@ import handlers.rss
 import handlers.sitemap
 import handlers.postmgr
 import handlers.siteconf
-import handlers.comments
 
 if __name__ == '__main__':
     application = webapp2.WSGIApplication([
@@ -22,17 +21,19 @@ if __name__ == '__main__':
         ('/json/register', handlers.async.RegisterUser),
         ('/json/login', handlers.async.UserLogin),
         ('/json/loadpendingcomments', handlers.async.PendingCommentsLoader),
+        ('/json/approvecomments', handlers.async.ApproveComments),
+        ('/json/clearpending', handlers.async.ClearPending),
+        ('/json/loadapprovedcomments', handlers.async.ApprovedCommentsLoader),
+        ('/json/deletecomments', handlers.async.DeleteComments),
         ('/c/newpost', handlers.postmgr.NewPost),
         ('/c/preview', handlers.postmgr.Preview),
         ('/c/add', handlers.postmgr.Add),
         ('/c/posts', handlers.postmgr.List),
         ('/c/edit', handlers.postmgr.Edit),
-        ('/c/comments', handlers.comments.List),
+        ('/c/comments', render.admin_page_renderer(
+                                'templates/approved_comments.html')),
         ('/c/pendingcomments', render.admin_page_renderer(
                                 'templates/pending_comments.html')),
-        ('/c/delcomment', handlers.comments.Delete),
-        ('/c/approvecomment', handlers.comments.Approve),
-        ('/c/clearpending', handlers.comments.ClearPending),
         ('/c/reg', render.page_renderer('templates/register.html')),
         ('/c/login', render.page_renderer('templates/login.html')),
         ('/c/siteconf', render.page_renderer('templates/siteconf.html')),

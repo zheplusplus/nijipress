@@ -1,5 +1,4 @@
 from google.appengine.ext import db
-
 import util
 
 class Comment(db.Model):
@@ -14,8 +13,8 @@ class Comment(db.Model):
 def count_pages():
     return util.count_pages(db.Query(Comment).count())
 
-def fetch(page=0, count=util.ITEMS_PER_PAGE):
-    return db.Query(Comment).order('-date').fetch(count, count * page)
+def fetch(start):
+    return db.Query(Comment).order('-date').fetch(util.ITEMS_PER_PAGE, start)
 
 def by_post_id(post_id):
     return db.Query(Comment).filter('post_id =', post_id).order('date')
@@ -61,7 +60,3 @@ class PendingComment(db.Model):
         _copy_comment(comment, self)
         comment.put()
         if self.is_saved(): self.delete()
-
-    @staticmethod
-    def clear():
-        db.delete(PendingComment.all())
