@@ -1,6 +1,5 @@
 from google.appengine.ext import db
 from google.appengine.api import memcache
-
 import util
 import tag
 
@@ -27,10 +26,30 @@ def new():
     return p
 
 def fetch(page=0, count=util.ITEMS_PER_PAGE):
-    if page == 0:
-        return _first_page_posts(count)
-    return [ post.init_tags(tag.tags_by_post_id(post.pid)) for post in
-            db.Query(Post).order('-date').fetch(count, count * page) ]
+    start = util.ITEMS_PER_PAGE * page
+    CACHE_SIZE = util.ITEMS_PER_PAGE * 2
+
+    def fetch_posts(start_index, count):
+        if count <= 0:
+            return []
+        return [p.init_tags(tag.tags_by_post_id(p.pid)) for p in
+                    db.Query(Post).order('-date').fetch(count, start_index)]
+    def cache_posts(start_index, count):
+        if count <= 0:
+            return []
+        cache = memcache.get('posts-ura')
+        if cache == None:
+            cache = fetch_posts(0, CACHE_SIZE)
+            memcache.set('posts-ura', cache)
+        return cache[start_index: count + start_index]
+
+    cache_count = CACHE_SIZE - start
+    if util.ITEMS_PER_PAGE < cache_count:
+        cache_count = util.ITEMS_PER_PAGE
+    fetch_count = util.ITEMS_PER_PAGE - cache_count
+    fetch_start = CACHE_SIZE if start < CACHE_SIZE else start
+    return cache_posts(start, cache_count) + fetch_posts(fetch_start,
+                                                         fetch_count)
 
 def count_pages():
     return util.count_pages(db.Query(Post).count())
@@ -61,24 +80,13 @@ def posts_ids():
     return _load_posts_ids()
 
 def _invalidate_cache():
-    memcache.delete('posts')
-    memcache.delete('ptags')
-    memcache.delete('posts_ids')
-
-def _first_page_posts(count):
-    cache = memcache.get('posts')
-    if cache == None:
-        cache = _load_cache()
-        memcache.set('posts', cache)
-    return cache[0: count]
-
-def _load_cache():
-    return [p.init_tags(tag.tags_by_post_id(p.pid))
-            for p in db.Query(Post).order('-date').fetch(util.ITEMS_PER_PAGE)]
+    memcache.delete('posts-ura')
+    memcache.delete('tags-ura')
+    memcache.delete('posts_ids-ura')
 
 def _load_posts_ids():
-    cache = memcache.get('posts_ids')
+    cache = memcache.get('posts_ids-ura')
     if cache == None:
         cache = map(lambda p: p.pid, Post.all())
-        memcache.set('posts_ids', cache)
+        memcache.set('posts_ids-ura', cache)
     return cache
