@@ -12,24 +12,20 @@ class AsyncHandler(base.BaseView):
     def post(self):
         self.response.out.write(json.dumps(self.serve()))
 
+def dump_comments(comments, dump_func):
+    return [dump_func(c) for c in utils.escape.client_comments(comments)]
+
 class CommentsLoader(AsyncHandler):
     def serve(self):
-        try:
-            pid = int(self.request.get('post'))
-            clist = utils.escape.client_comments(models.comment.by_post_id(pid))
-            return [utils.dumpjson.comment_view(c) for c in clist]
-        except ValueError:
-            self.error(404)
-            return []
+        return dump_comments(
+                models.comment.by_post_id(self.request_value('post', int)),
+                utils.dumpjson.comment_view)
 
 class CommentRecv(AsyncHandler):
     def serve(self):
-        try:
-            post_id = int(self.request.get('post_id'))
-            models.post.by_id(post_id)
-        except ValueError:
-            self.error(404)
-            return []
+        post_id = self.request_value('post_id', int)
+        models.post.by_id(post_id)
+
         comment = models.comment.PendingComment()
         comment.content = self.request.get('content').strip()
         if not (0 < len(comment.content) <= 500):
@@ -99,39 +95,34 @@ class PendingCommentsLoader(AsyncHandler):
         return [utils.dumpjson.comment_admin(c) for c in
               utils.escape.client_comments(models.comment.PendingComment.all())]
 
+def deal_with_comments(handler, comment_class, action_mapper):
+    for id in handler.request_value('ids', str).split(' '):
+        try:
+            action_mapper(comment_class.get_by_id(int(id)))
+        except ValueError:
+            pass
+    return []
+
 class ApproveComments(AsyncHandler):
     @models.user.admin_only
     def serve(self):
-        for id in self.request_value('ids', str).split(' '):
-            try:
-                models.comment.PendingComment.get_by_id(int(id)).approve()
-            except ValueError:
-                pass
-        return []
+        return deal_with_comments(self, models.comment.PendingComment,
+                                  lambda c: c.approve())
 
 class ClearPending(AsyncHandler):
     @models.user.admin_only
     def serve(self):
-        for id in self.request_value('ids', str).split(' '):
-            try:
-                models.comment.PendingComment.get_by_id(int(id)).delete()
-            except ValueError:
-                pass
-        return []
+        return deal_with_comments(self, models.comment.PendingComment,
+                                  lambda c: c.delete())
 
 class ApprovedCommentsLoader(AsyncHandler):
     @models.user.admin_only
     def serve(self):
-        return [utils.dumpjson.comment_admin(c) for c in
-                utils.escape.client_comments(models.comment.fetch(
-                    self.request_value('start', int)))]
+        return dump_comments(models.comment.fetch(self.request_value('start', int)),
+                             utils.dumpjson.comment_admin)
 
 class DeleteComments(AsyncHandler):
     @models.user.admin_only
     def serve(self):
-        for id in self.request_value('ids', str).split(' '):
-            try:
-                models.comment.Comment.get_by_id(int(id)).delete()
-            except ValueError:
-                pass
-        return []
+        return deal_with_comments(self, models.comment.Comment,
+                                  lambda c: c.delete())
