@@ -1,42 +1,47 @@
+.post_arena {
+  width: 960px;
+  vertical-align: middle;
+  margin-left: auto;
+  margin-right: auto;
+  border-spacing: 8px 14px;
+}
+
+.post_cell {
+  width: 720px;
+  vertical-align: top;
+}
+
+.tags_cell {
+  vertical-align: top;
+}
+
 .post_title {
   font-size: 2em;
   margin-bottom: 0px;
   background-color: #ecdcac;
   border-radius: 4px;
   color: #145;
+  padding-bottom: 2px;
 }
-.post_title a {
+.post_title:hover {
+  background-color: #eeb;
+}
+.post_title a[href] {
   color: #145;
   margin-left: 10px;
+  background-color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted;
 }
-.post_title a:hover {
+.post_title a[href]:hover {
+  color: #003;
   text-decoration: none;
 }
-
-.post_foot {
-  font-weight: bolder;
-  font-size: 0.8em;
-}
-.post_foot a {
-  padding: 5px;
-  color: #222;
-  background-color: #c5deb3;
-  border-radius: 3px;
-  border: solid 1px;
-}
-.post_foot a:hover {
-  color: #232;
-  background-color: #dec;
+.post_title a[href]:active {
+  border: none;
   text-decoration: none;
 }
-
-.right_col a {
-  color: #2ae;
-  padding: 2px;
-}
-.right_col a:hover {
-  background-color: #2ae;
-  color: white;
-  text-decoration: none;
-  border-radius: 2px;
+.post_title .ntinlinecode {
+  color: inherit;
+  background-color: inherit;
 }

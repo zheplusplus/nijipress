@@ -1,5 +1,6 @@
 .paging {
   text-align: center;
+  margin: 12px;
 }
 
 .paging b {
@@ -13,21 +14,24 @@
   padding: 5px;
   padding-left: 8px;
   padding-right: 8px;
-  color: gray;
   border-radius: 3px;
-  border: solid 1px;
+  border: solid 1px gray;
 }
-.paging a {
+.paging a[href] {
   padding: 5px;
   padding-left: 8px;
   padding-right: 8px;
   color: #468;
+  background-color: #dd9;
   border-radius: 3px;
-  border: solid 2px;
+  border: outset 1px #468;
   text-decoration: none;
   font-weight: bolder;
 }
-.paging a:hover {
-  color: #fea;
-  background-color: #468;
+.paging a[href]:hover {
+  color: #468;
+  background-color: #ffa;
+}
+.paging a[href]:active {
+  border: inset 1px;
 }

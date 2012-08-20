@@ -1,4 +1,4 @@
-textarea, input[type='text'] {
+textarea, input[type='text'], input[type='password'] {
   background-color: #eee;
   color: #777;
   padding: 3px;
@@ -6,7 +6,7 @@ textarea, input[type='text'] {
   border: inset 1px;
 }
 
-textarea:focus, input[type='text']:focus {
+textarea:focus, input[type='text']:focus, input[type='password']:focus {
   background-color: #e8e8e8;
   color: #445;
 }
@@ -24,4 +24,8 @@ button:hover, input[type='submit']:hover {
   background-color: white;
   color: #222;
   cursor: pointer;
+}
+
+button:active, input[type='submit']:active {
+  border: inset 1px;
 }

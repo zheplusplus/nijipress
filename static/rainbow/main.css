@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #eaeaf5;
   font-family: Tahoma, Verdana, Arial, Sans-Serif;
@@ -7,17 +12,79 @@ tt, code {
   font-family: Monospace, Inconsolata, 'Courier New';
 }
 
-.stdlnk a {
+a[href] {
   color: #2970a6;
   font-size: 0.9em;
-  padding-left: 2px;
-  padding-right: 2px;
+  padding: 0 2px;
 }
-.stdlnk a:hover {
-  background-color: #2970a6;
+a[href]:hover {
   border-radius: 2px;
-  color: #efefb7;
   text-decoration: none;
+  background-color: #2970a6;
+  color: #efefb7;
+}
+a[href]:active {
+  border: 1px solid #2970a6;
+  border-radius: 2px;
+  text-decoration: none;
+  padding: 0 2px;
+  color: #2970a6;
+  background-color: inherit;
+}
+a[href].imglink:hover {
+  background-color: inherit;
+}
+a[href].imglink:active {
+  border: inherit;
+  padding: 0 2px;
+}
+
+#fixtop {
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 32px;
+  position: fixed;
+  background-color: #def;
+  border-bottom: 1px dashed #2970a6;
+  font-size: 24px;
+}
+#menumarginer {
+  margin-top: 32px;
+}
+.menu {
+  margin: 4px 6px;
+  padding: 0 6px;
+  border-radius: 4px;
+  float: left;
+  display: inline;
+  text-decoration: underline;
+  font-size: 0.7em;
+}
+.menu:hover {
+  color: black;
+  text-decoration: none;
+}
+.menu ul {
+  display: none;
+  list-style-type: none;
+  background-color: #dff;
+  border-radius: 4px;
+}
+.menu li {
+  padding: 8px;
+}
+.menu:hover ul {
+  display: block;
+  position: absolute;
+}
+.menu:hover li {
+  padding-top: 1px;
+  font-size: 0.60em;
+}
+.access {
+  float: right;
+  display: inline;
 }
 
 #top {
@@ -47,28 +114,34 @@ tt, code {
 .post_content {
   margin-left: 10px;
   margin-bottom: 10px;
+  padding-bottom: 6px;
 }
 
 .tags {
   font-size: 0.7em;
 }
-.tags a {
-  color: #a73800;
-  padding: 2px;
-}
-.tags a:hover {
-  background-color: #a73800;
-  color: #d6e9f0;
-  text-decoration: none;
-  border-radius: 2px;
-}
 .tags i {
   color: #555;
 }
 
-.div_header {
-  color: #432;
-  font-weight: bold;
+.action_button {
+  font-weight: bolder;
+  font-size: 0.8em;
+  padding: 5px;
+  color: #333;
+  background-color: #aad;
+  border: 1px outset;
+  border-radius: 3px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.action_button:hover {
+  color: #343;
+  background-color: #aae;
+}
+.action_button:active {
+  border: 1px inset;
+  color: black;
 }
 
 .page_foot td {
@@ -76,13 +149,13 @@ tt, code {
   text-align: center;
 }
 
-.post_content .ntitalic {
+.ntitalic {
   color: #433;
 }
-.post_content .ntstrong {
+.ntstrong {
   color: #400;
 }
-.post_content .ntinlinecode {
+.ntinlinecode {
   background-color: #dde;
   padding: 2px;
   font-size: 92%;
@@ -101,6 +174,7 @@ tt, code {
 }
 .ntul {
   list-style-type: circle;
+  margin-left: 24px;
 }
 
 .ntaa {
@@ -111,6 +185,7 @@ tt, code {
   border-radius: 4px;
   background-color: #dadaea;
   color: #332;
+  margin: 2px 0;
 }
 
 .ntblockcode {
@@ -121,6 +196,7 @@ tt, code {
   border-radius: 4px;
   font-size: 84%;
   color: #332;
+  margin: 2px 0;
 }
 
 .nttable {
