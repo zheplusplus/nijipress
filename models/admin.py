@@ -20,6 +20,7 @@ class SiteConfiguration(db.Model):
             conf.rss_uri = '/rss'
             conf.rss_description = ''
             conf.analytics_code = ''
+            conf.analytics_domain = ''
             conf.post_html = ''
             return conf
         return conf[0]

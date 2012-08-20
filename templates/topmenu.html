@@ -19,17 +19,15 @@
     <div class='menu'>
         <span onmouseover='NJPress.loadPostsOnMenu(this)'>Recent Posts</span>
     </div>
-    <div class='menu'>
-        <span>About</span>
-        <ul>
-            <li><a href='/about'>About this site</a></li>
-            <li><a href='https://github.com/neuront/nijipress'>About this CMS</a></li>
-        </ul>
-    </div>
     {% include 'admin_bar.html' %}
     <div class='access'>
-        <a class='imglink' href="{{ conf.rss_uri }}">
-            <img width="32px" height="32px" src="http://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg">
+        <a class='imglink' href='/about'>
+            <img width='32px' height='32px' src='http://images.wikia.com/gardener/images/a/af/Question_mark.png'>
+        </a>
+    </div>
+    <div class='access'>
+        <a class='imglink' href='{{ conf.rss_uri }}'>
+            <img width='32px' height='32px' src='http://upload.wikimedia.org/wikipedia/en/4/43/Feed-icon.svg'>
         </a>
     </div>
 </div>
