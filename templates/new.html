@@ -12,7 +12,26 @@ Edit {{ title }}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/post.css'>
 {% include 'inc_scripts.html' %}
 </head>
-<body>
+<body
+{% if is_new %}
+onload='loadCache()' onunload='saveToCache()'
+{% endif %}
+>
+{% if is_new %}
+<script>
+function loadCache() {
+  if (localStorage.cache_title) $('#title').val(localStorage.cache_title);
+  if (localStorage.cache_content) $('#content').val(localStorage.cache_content);
+  if (localStorage.cache_tags) $('#tags').val(localStorage.cache_tags);
+}
+
+function saveToCache() {
+  localStorage.cache_title = $('#title').val();
+  localStorage.cache_content = $('#content').val();
+  localStorage.cache_tags = $('#tags').val();
+}
+</script>
+{% endif %}
 {% include 'topmenu.html' %}
 <table>
 <tr>
@@ -65,6 +84,9 @@ NJPress.submitPost = function() {
     content: $('#content').val(),
     tags: $('#tags').val(),
   }, function(r) {
+    $('#title').val('');
+    $('#content').val('');
+    $('#tags').val('');
     window.location = '/?p=' + r.id;
   });
 };
