@@ -8,7 +8,7 @@ NJPress.request = function(url, args, success) {
   $.ajax({
     type: 'POST',
     url: url,
-    data: args,
+    data: JSON.stringify(args),
     success: function(r) {
       success(JSON.parse(r));
     }

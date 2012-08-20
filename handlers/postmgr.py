@@ -1,4 +1,5 @@
 import base
+import async
 import utils.escape
 import models.post
 import models.admin
@@ -12,37 +13,30 @@ class NewPost(base.BaseView):
                 'tags': '',
             })
 
-class Preview(base.BaseView):
-    def post(self):
-        ident = self.request.get('id')
-        title = self.request.get('title')
-        content = self.request.get('content')
-        tags = self.request.get('tags')
-        self.put_page('templates/preview.html', {
-                'id': ident,
-                'title': title,
-                'content': content,
-                'tags': tags,
-                'prepared_title': utils.escape.esc_content(title),
-                'prepared_content': utils.escape.esc_content(content),
-                'prepared_tags': [s.strip() for s in tags.split(',')],
-            })
+class Preview(async.AsyncHandler):
+    def serve(self):
+        title = self.args['title']
+        content = self.args['content']
+        tags = self.args['tags']
+        return {
+            'title': utils.escape.esc_content(title),
+            'content': utils.escape.esc_content(content),
+            'tags': [s.strip() for s in tags.split(',')],
+        }
 
-class Add(base.BaseView):
+class Receiver(async.AsyncHandler):
     @models.user.admin_only
-    def post(self):
-        post_id = self.request.get('id')
-        p = None
-        try:
+    def serve(self):
+        if 'id' in self.args:
+            post_id = self.args['id']
             p = models.post.by_id(post_id)
-        except ValueError:
+        else:
             p = models.post.new()
-            post_id = str(p.pid)
-        p.title = self.request.get('title')
-        p.content = self.request.get('content')
-        tags = self.request.get('tags')
-        models.post.put(p, [s.strip() for s in tags.split(',')])
-        self.redirect('/?p=' + post_id)
+            post_id = p.pid
+        p.title = self.args['title']
+        p.content = self.args['content']
+        models.post.put(p, [s.strip() for s in self.args['tags'].split(',')])
+        return { 'id': post_id }
 
 class List(base.BaseView):
     def get(self):

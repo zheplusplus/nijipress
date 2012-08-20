@@ -5,6 +5,7 @@ import render
 import handlers.base
 import handlers.browse
 import handlers.async
+import handlers.comments
 import handlers.rss
 import handlers.sitemap
 import handlers.postmgr
@@ -16,18 +17,17 @@ if __name__ == '__main__':
         ('/json/posttags', handlers.async.Tags),
         ('/json/recentposts', handlers.async.RecentPosts),
         ('/json/loadpostbyid', handlers.async.LoadPostById),
-        ('/json/loadcomments', handlers.async.CommentsLoader),
-        ('/json/leavecomment', handlers.async.CommentRecv),
-        ('/json/register', handlers.async.RegisterUser),
-        ('/json/login', handlers.async.UserLogin),
-        ('/json/loadpendingcomments', handlers.async.PendingCommentsLoader),
-        ('/json/approvecomments', handlers.async.ApproveComments),
-        ('/json/clearpending', handlers.async.ClearPending),
-        ('/json/loadapprovedcomments', handlers.async.ApprovedCommentsLoader),
-        ('/json/deletecomments', handlers.async.DeleteComments),
+        ('/json/loadcomments', handlers.comments.ByPostLoader),
+        ('/json/leavecomment', handlers.comments.Receiver),
+        ('/json/loadpendingcomments', handlers.comments.PendingLoader),
+        ('/json/approvecomments', handlers.comments.Approve),
+        ('/json/clearpending', handlers.comments.ClearPending),
+        ('/json/loadapprovedcomments', handlers.comments.ApprovedLoader),
+        ('/json/deletecomments', handlers.comments.Deleter),
+        ('/json/deleteblogroll', handlers.siteconf.DeleteBlogroll),
         ('/c/newpost', handlers.postmgr.NewPost),
-        ('/c/preview', handlers.postmgr.Preview),
-        ('/c/add', handlers.postmgr.Add),
+        ('/json/previewpost', handlers.postmgr.Preview),
+        ('/json/submitpost', handlers.postmgr.Receiver),
         ('/c/posts', handlers.postmgr.List),
         ('/c/edit', handlers.postmgr.Edit),
         ('/c/comments', render.admin_page_renderer(
@@ -36,6 +36,8 @@ if __name__ == '__main__':
                                 'templates/pending_comments.html')),
         ('/c/reg', render.page_renderer('templates/register.html')),
         ('/c/login', render.page_renderer('templates/login.html')),
+        ('/json/register', handlers.async.RegisterUser),
+        ('/json/login', handlers.async.UserLogin),
         ('/c/siteconf', render.page_renderer('templates/siteconf.html')),
         ('/c/savesiteconf', handlers.siteconf.Save),
         ('/about', render.page_renderer('templates/about.html')),

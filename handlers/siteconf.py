@@ -1,4 +1,5 @@
 import base
+import async
 import models.post
 import models.admin
 import models.user
@@ -17,3 +18,9 @@ class Save(base.BaseView):
         models.admin.SiteConfiguration.save(conf)
         models.admin.Blogroll.add_by_text(self.request.get('blogrolls').strip())
         self.redirect('/c/siteconf')
+
+class DeleteBlogroll(async.AsyncHandler):
+    @models.user.admin_only
+    def serve(self):
+        models.admin.Blogroll.get_by_id(int(self.args['id'])).delete()
+        return []

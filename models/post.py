@@ -25,7 +25,7 @@ def new():
         p.pid = posts[0].pid + 1
     return p
 
-def fetch(page=0, count=util.ITEMS_PER_PAGE):
+def fetch(page, count=util.ITEMS_PER_PAGE):
     start = util.ITEMS_PER_PAGE * page
     CACHE_SIZE = util.ITEMS_PER_PAGE * 2
 
@@ -44,12 +44,11 @@ def fetch(page=0, count=util.ITEMS_PER_PAGE):
         return cache[start_index: count + start_index]
 
     cache_count = CACHE_SIZE - start
-    if util.ITEMS_PER_PAGE < cache_count:
-        cache_count = util.ITEMS_PER_PAGE
-    fetch_count = util.ITEMS_PER_PAGE - cache_count
+    if count < cache_count:
+        cache_count = count
     fetch_start = CACHE_SIZE if start < CACHE_SIZE else start
     return cache_posts(start, cache_count) + fetch_posts(fetch_start,
-                                                         fetch_count)
+                                                         count - cache_count)
 
 def count_pages():
     return util.count_pages(db.Query(Post).count())

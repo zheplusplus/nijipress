@@ -48,15 +48,28 @@ Site Configuration
   <td><textarea name='post_html' rows='4' cols='60'>{{ conf.post_html|escape }}</textarea></td>
 </tr>
 <tr>
-  <td>Blogrolls<br>
-      <sub>In this format each line: URI&lt;text</sub></td>
-  <td><textarea name='blogrolls' rows='4' cols='60'></textarea>
-      {% for r in conf.blogrolls %}
-        <br/><a href='{{ r.uri }}'>{{ r.uri }}</a> &lt; {{ r.text|escape }}</a>
-      {% endfor %}
-      </td>
+  <td>
+    Blogrolls<br><sub>In this format each line: URI&lt;text</sub>
+  </td>
+  <td>
+    <textarea name='blogrolls' rows='4' cols='60'></textarea>
+    {% for r in conf.blogrolls %}
+    <p id='br{{ r.key.id }}'>
+      <a href='{{ r.uri }}'>{{ r.uri }}</a> &lt; {{ r.text|escape }}</a>
+      <a href='javascript:NJPress.deleteBlogroll({{ r.key.id }})'>x</a>
+    </p>
+    {% endfor %}
+  </td>
 </tr>
 <tr><td><input type='submit'></td></tr>
 </table>
 </form>
+<script>
+NJPress.deleteBlogroll = function(id) {
+  NJPress.request('/json/deleteblogroll', { id: id }, function() {
+      var node = $('#br' + id)[0];
+      node.parentNode.removeChild(node);
+  });
+}
+</script>
 {% include 'page_foot.htmlt' %}

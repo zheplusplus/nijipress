@@ -9,15 +9,15 @@
         </ul>
     </div>
     <div class='menu'>
-        <span onmouseover='NJPress.loadPostsOnMenu(this)'>Recent Posts</span>
-    </div>
-    <div class='menu'>
         <span>Blogrolls</span>
         <ul>
             {% for r in conf.blogrolls %}
             <li><a href='{{ r.uri }}'>{{ r.text|escape }}</a></li>
             {% endfor %}
         </ul>
+    </div>
+    <div class='menu'>
+        <span onmouseover='NJPress.loadPostsOnMenu(this)'>Recent Posts</span>
     </div>
     <div class='menu'>
         <span>About</span>
@@ -40,6 +40,7 @@ NJPress.loadTagsOnMenu = function(node) {
   node.className = 'tags';
   NJPress.loadTagsIn(node);
 };
+
 NJPress.loadPostsOnMenu = function(node) {
   node.onmouseover = function() {};
   var ul = NJPress.newNode('ul');

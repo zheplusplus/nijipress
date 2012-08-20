@@ -3,6 +3,8 @@ import utils.escape
 import models
 from urlparse import urlparse
 
+RSS_ITEMS_COUNT = 16
+
 def rss_post(post, url):
     post.plain_title = utils.escape.esc_title_plain(post.title)
     post.ident = ''.join([url.scheme, '://', url.netloc, '/?p=', str(post.pid)])
@@ -17,5 +19,5 @@ class Build(base.BaseView):
         url = urlparse(self.request.url)
         self.put_page('templates/feed.xml', {
             'site_link': url.scheme + '://' + url.netloc,
-            'posts': rss_posts(models.post.fetch(), url),
+            'posts': rss_posts(models.post.fetch(0, RSS_ITEMS_COUNT), url),
         })

@@ -4,10 +4,10 @@
 function submit() {
   var len = document.getElementById('content').actualVal.length;
   if (len == 0) {
-    return $('#leave_comment_message').html('Sorry but your comment is empty');
+    return $('#leave_comment_message').html('Your comment is empty');
   }
   if (len > 500) {
-    return $('#leave_comment_message').html('Sorry but your comment exceeds 500 characters limits '
+    return $('#leave_comment_message').html('Your comment exceeds 500 characters limits '
                                           + '(it contains ' + len + ' characters)');
   }
   $('#leave_comment_message').html('');
