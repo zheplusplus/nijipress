@@ -30,7 +30,10 @@ NJPress.location = function() {
 NJPress.pageArgs = function() {
   var result = {};
   var url = window.location.href;
-  var parameters = url.slice(url.indexOf('?') + 1).split('&');
+  var begin = url.indexOf('?') + 1;
+  var end = url.indexOf('#');
+  if (end == -1) end = url.length;
+  var parameters = url.slice(begin, end).split('&');
   for(var i = 0;  i < parameters.length; i++) {
     var p = parameters[i].split('=');
     result[p[0]] = p[1];

@@ -1,3 +1,7 @@
+<script>
+if (!localStorage.style) localStorage.style = '{{ conf.style }}';
+NJPress.replaceStyle(localStorage.style);
+</script>
 <div id='fixtop'>
     <div class='menu'>
         <span>Navigate</span>
