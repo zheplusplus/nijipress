@@ -38,7 +38,7 @@ function submit() {
                                 + ' Your comment is awaiting moderation...');
         localStorage.ctoken = result.token;
       }, ok: function() {
-        window.location.reload();
+        NJPress.addComment(result, $('#comments_head'), $('#comments_list')[0]);
       }
     }[result.result])();
   });
@@ -83,40 +83,38 @@ function submit() {
 </div>
 <p id='leave_comment_message' style='text-align: center;'></p>
 <script>
-(function () {
-  function fillText(id, defVal) {
-    var node = document.getElementById(id);
-    node.resetText = function() {
-      node.actualVal = '';
-      node.value = defVal;
-    };
-    node.resetText();
-    node.onblur = function() {
-      node.actualVal = node.value;
-      if ('' == node.value) node.value = defVal;
-    };
-    node.onfocus = function() {
-      node.value = node.actualVal;
-    };
-  }
-  fillText('author', 'Your name');
-  fillText('email', 'Your email (for Gravatar, wont be public)');
-  fillText('url', 'Your homepage link (placed after your name)');
-  fillText('content', 'Comment (REQUIRED)\n' +
-                      'Please use no more than 500 characters for your opinion.\n' +
-                      'And not contain any offensive material or advertisement.');
+function fillText(id, defVal) {
+  var node = document.getElementById(id);
+  node.resetText = function() {
+    node.actualVal = '';
+    node.value = defVal;
+  };
+  node.resetText();
+  node.onblur = function() {
+    node.actualVal = node.value;
+    if ('' == node.value) node.value = defVal;
+  };
+  node.onfocus = function() {
+    node.value = node.actualVal;
+  };
+}
+fillText('author', 'Your name');
+fillText('email', 'Your email (for Gravatar, wont be public)');
+fillText('url', 'Your homepage link (placed after your name)');
+fillText('content', 'Comment (REQUIRED)\n' +
+                    'Please use no more than 500 characters for your opinion.\n' +
+                    'And not contain any offensive material or advertisement.');
 
-  function fillLS(id) {
-    var node = document.getElementById(id);
-    var storage = localStorage[id];
-    if (storage) {
-      node.value = storage;
-      node.actualVal = storage;
-    }
+function fillLS(id) {
+  var node = document.getElementById(id);
+  var storage = localStorage[id];
+  if (storage) {
+    node.value = storage;
+    node.actualVal = storage;
   }
-  fillLS('author');
-  fillLS('email');
-  fillLS('url');
-})();
+}
+fillLS('author');
+fillLS('email');
+fillLS('url');
 </script>
 </div>

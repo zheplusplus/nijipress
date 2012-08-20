@@ -28,7 +28,9 @@ class Receiver(async.AsyncHandler):
         comment.ipaddr = self.request.remote_addr
         comment.post_id = post_id
         if models.comment.put(comment):
-            return { 'result': 'ok' }
+            return dict({ 'result': 'ok' }.items() +
+                    utils.dumpjson.comment_view(
+                            utils.escape.client_comment(comment)).items())
         return {
             'result': 'pending',
             'token': comment.ctoken,
