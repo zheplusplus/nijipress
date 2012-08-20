@@ -132,3 +132,13 @@ NJPress.loadComments = function(postId, commentsHead, commentsTable) {
 NJPress.valuesOf = function(arr) {
   return arr.map(function(i) { return arr[i].value; }).toArray().join(' ');
 };
+
+NJPress.replaceStyle = function(style) {
+  $('link').toArray().filter(function(c) {
+    return c.type === 'text/css';
+  }).map(function(c) {
+    var paths = c.href.split('/');
+    c.href = '/static/' + style + '/' + paths[paths.length - 1];
+  });
+  localStorage.style = style;
+};
