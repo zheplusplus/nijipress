@@ -17,8 +17,8 @@ ITALIC_END = '''</i>'''
 STROKE_BEGIN = '''<del class='ntdel'>'''
 STROKE_END = '''</del>'''
 
-MONO_BEGIN = '''<tt><code class='ntinlinecode'>'''
-MONO_END = '''</code></tt>'''
+MONO_BEGIN = '''<code class='ntinlinecode'>'''
+MONO_END = '''</code>'''
 
 LINK_BEGIN = '''<a href='%s' class='ntlink'>'''
 LINK_END = '''</a>'''
