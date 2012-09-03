@@ -44,11 +44,11 @@ H2_END = '</h2>'
 H3_BEGIN = '''<h3 class='nth3'>'''
 H3_END = '</h3>'
 
-MONO_BLOCK_BEGIN = '''<p class='ntblockcode'><tt><code>'''
-MONO_BLOCK_END = '</code></tt></p>'
+MONO_BLOCK_BEGIN = '''<p class='ntblockcode'><code>'''
+MONO_BLOCK_END = '</code></p>'
 
-AA_BEGIN = '''<p class='ntaa'><tt><code>'''
-AA_END = '</code></tt></p>'
+AA_BEGIN = '''<p class='ntaa'><code>'''
+AA_END = '</code></p>'
 
 TABLE_BEGIN = '''<table class='nttable'>'''
 TABLE_END = '</table>'
