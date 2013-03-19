@@ -44,8 +44,8 @@ H2_END = '</h2>'
 H3_BEGIN = '''<h3 class='nth3'>'''
 H3_END = '</h3>'
 
-MONO_BLOCK_BEGIN = '''<p class='ntblockcode'><code>'''
-MONO_BLOCK_END = '</code></p>'
+MONO_BLOCK_BEGIN = '''<div class='ntblockcode'><code class='prettyprint%s'>'''
+MONO_BLOCK_END = '</code></div>'
 
 AA_BEGIN = '''<p class='ntaa'><code>'''
 AA_END = '</code></p>'

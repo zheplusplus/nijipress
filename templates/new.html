@@ -10,7 +10,9 @@ Edit {{ title }}
 {% include 'page_meta.htmlt' %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/post.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/libs/prettify.css'>
 {% include 'inc_scripts.html' %}
+<script src='/static/libs/prettify.js'></script>
 </head>
 <body
 {% if is_new %}
@@ -63,6 +65,7 @@ NJPress.previewPost = function() {
       cell.style.textDecoration = 'underline';
     });
     $('#preview_area').css('display', 'block');
+    prettyPrint();
   });
 };
 </script>

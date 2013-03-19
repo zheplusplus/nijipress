@@ -6,10 +6,12 @@
 <meta name='keywords' content='{% for tag in post.tags %}{{ tag }},{% endfor %}'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/post.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/libs/prettify.css'>
 {% include 'inc_scripts.html' %}
+<script src='/static/libs/prettify.js'></script>
 {% include 'analytics.htmlt' %}
 </head>
-<body>
+<body onload='prettyPrint()'>
 {% include 'topmenu.html' %}
 {% include 'page_head.html' %}
 <div style='vertical-align: middle; width: 800px; margin-left: auto; margin-right: auto;'>

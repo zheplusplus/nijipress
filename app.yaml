@@ -1,5 +1,5 @@
 application: bitfocusblog
-version: rednoah-alpha
+version: rednoah-prettify
 runtime: python27
 threadsafe: false
 api_version: 1

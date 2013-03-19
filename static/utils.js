@@ -141,7 +141,8 @@ NJPress.replaceStyle = function(style) {
     return c.type === 'text/css';
   }).map(function(c) {
     var paths = c.href.split('/');
-    c.href = '/static/' + style + '/' + paths[paths.length - 1];
+    paths[4] = style;
+    c.href = paths.join('/');
   });
   localStorage.style = style;
 };

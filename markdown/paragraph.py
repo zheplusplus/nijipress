@@ -52,11 +52,16 @@ class Table(Paragraph):
 
 class CodeBlock(Paragraph):
     def __init__(self, lines):
-        Paragraph.__init__(self, lines)
+        lang = lines[0][3:].strip()
+        Paragraph.__init__(self, lines[1:])
+        self.lang = lang
 
     def head(self):
         from nijiconf import MONO_BLOCK_BEGIN
-        return [MONO_BLOCK_BEGIN]
+        lang = ''
+        if len(self.lang) > 0:
+            lang = ' lang-' + self.lang
+        return [MONO_BLOCK_BEGIN % lang]
 
     def tail(self, result):
         from nijiconf import MONO_BLOCK_END
@@ -113,8 +118,6 @@ LEVEL_2_STR = (
 )
 
 class Head(Paragraph):
-    level = 0
-
     def __init__(self, lines, level):
         Paragraph.__init__(self, lines)
         self.level = level
@@ -139,13 +142,13 @@ class Head3(Head):
         Head.__init__(self, lines, 2)
 
 LINE_PATTERNS = (
-    ('{{{', '}}}', CodeBlock, True),
-    ('\[\[\[', ']]]', Table, True),
-    ('[*][ ]', '(?![*][ ])', Bullets, False),
-    ('(: |:$)', '(?!(: |:$))', AsciiArt, False),
-    ('=[ ]', '', Head1, False),
-    ('==[ ]', '', Head2, False),
-    ('===[ ]', '', Head3, False),
+    ('{{{[ ]*[a-zA-Z0-9]*', '}}}', CodeBlock, False, True),
+    ('\[\[\[', ']]]', Table, True, True),
+    ('[*][ ]', '(?![*][ ])', Bullets, False, False),
+    ('(: |:$)', '(?!(: |:$))', AsciiArt, False, False),
+    ('=[ ]', '', Head1, False, False),
+    ('==[ ]', '', Head2, False, False),
+    ('===[ ]', '', Head3, False, False),
 )
 
 def pattern_begin(pattern):
@@ -157,18 +160,21 @@ def pattern_end(pattern):
 def pattern_ctor(pattern):
     return pattern[2]
 
-def pattern_excluded(pattern):
+def pattern_start_excluded(pattern):
     return pattern[3]
+
+def pattern_end_skipped(pattern):
+    return pattern[4]
 
 def search_for_para(document, begin, paragraphs):
     pattern = match_pattern_begin(document[begin])
-    begin += 1 if pattern_excluded(pattern) else 0
+    begin += 1 if pattern_start_excluded(pattern) else 0
     end = begin + 1
     while end < len(document) and not re.match(pattern_end(pattern),
                                                document[end]):
         end += 1
     paragraphs.append(pattern_ctor(pattern)(document[begin: end]))
-    return end + (1 if pattern_excluded(pattern) else 0)
+    return end + (1 if pattern_end_skipped(pattern) else 0)
 
 def normal_text_from(document, begin, paragraphs):
     if match_pattern_begin(document[begin]):

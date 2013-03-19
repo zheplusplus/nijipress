@@ -163,6 +163,9 @@ hr {
 .ntstrong {
   color: #fe4;
 }
+.ntblockcode .ntstrong {
+  border-bottom: 1px dotted #fe4;
+}
 .ntinlinecode {
   background-color: #222;
   padding: 2px;
@@ -188,10 +191,10 @@ hr {
 .ntblockcode {
   margin: 0.5em 0;
   padding: 4px;
-  line-height: 95%;
   border: solid 1px;
-  background-color: #222;
+  background-color: black;
   border-radius: 4px;
+  line-height: 131%;
   font-size: 84%;
   color: #ddd;
 }

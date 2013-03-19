@@ -155,6 +155,9 @@ a[href].imglink:active {
 .ntstrong {
   color: #400;
 }
+.ntblockcode .ntstrong {
+  border-bottom: 1px dotted #400;
+}
 .ntinlinecode {
   background-color: #dde;
   padding: 2px;
@@ -190,7 +193,6 @@ a[href].imglink:active {
 
 .ntblockcode {
   padding: 4px;
-  line-height: 95%;
   border: solid 1px;
   background-color: #dadaea;
   border-radius: 4px;
