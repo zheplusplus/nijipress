@@ -9,10 +9,8 @@ If you want deploy as your own app, modify
 
 To manage your site
 
-* go to `/c/reg` of your site and register a new user
-* go to Google AppEngine dashboard -> Datastore Viewer, choose `User`
-* edit the user you have just registered, change field `admin` to `True`, save
-* go to `/` of your site, then you may see administrator bar at the top of the page
+* go to `/c/init` of your site and register a new admin
+* go to `/c/login` of your site, then you may see administrator bar at the top of the page
 * go to `/c/siteconf/` to configure your site
 * go wherever you want
 

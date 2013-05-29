@@ -11,7 +11,22 @@ class UserView(base.BaseView):
                 'handler': handler,
                 'hint': hint,
             })
-
+class Init(UserView):
+    def get(self):
+        self.usr_page('Init (Set Admin\'s username and password.)', 'newadmin')
+class NewAdmin(UserView):
+    def post(self):
+        usr = model.User.get_by_name(self.request.get('name'))
+        if usr.passwd and len(usr.passwd) > 0:
+            self.usr_page('Register', 'newusr',
+                          'User ' + usr.name + ' already exists')
+            return
+        usr.passwd = sha256(self.request.get('passwd_origin')).hexdigest()
+        usr.session_key = sha256(usr.name + usr.passwd).hexdigest()
+        usr.admin = True
+        usr.put()
+        self.redirect('/c/login')
+        update_cookie(self.response, usr.session_key)
 class Register(UserView):
     def get(self):
         self.usr_page('Register', 'newusr')

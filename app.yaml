@@ -1,7 +1,7 @@
-application:
+application: nijipress
 version: nautilus
 runtime: python27
-threadsafe: false
+threadsafe: true
 api_version: 1
 
 libraries:
@@ -25,4 +25,4 @@ handlers:
   upload: static/robots\.txt
 
 - url: /.*
-  script: main.py
+  script: main.application
