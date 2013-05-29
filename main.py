@@ -30,6 +30,7 @@ application = webapp.WSGIApplication([
     ('/c/newadmin', usr.NewAdmin),
     ('/c/reg', usr.Register),
     ('/c/newusr', usr.New),
+    ('/c/error', usr.Error),
     ('/c/login', usr.LoginPage),
     ('/c/auth', usr.LoginAction),
     ('/c/siteconf', siteconf.ConfigureSite),

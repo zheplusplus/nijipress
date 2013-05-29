@@ -2,7 +2,7 @@ A(nother) CMS for Google AppEngine, single user.
 
 If you want deploy as your own app, modify
 
-* app.yaml --- application, version and url for Google web tools verification
+* app.yaml --- application, *version* and url for Google web tools verification
 * static/favicon.ico
 * static/googlexxxxxxxxxxxxxxxx.html --- the Google Webmaster authentication page
 * templates/ --- change any pages as you want

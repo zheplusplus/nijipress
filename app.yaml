@@ -1,4 +1,4 @@
-application: nijipress
+application:
 version: nautilus
 runtime: python27
 threadsafe: true
