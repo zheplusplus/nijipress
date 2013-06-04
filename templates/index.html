@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>{{ conf.title }}</title>
-{% include 'page_meta.htmlt' %}
+{% extends './base.html' %}
+
+{% block title %}{{ conf.title }}{% endblock %}
+
+{% block head_extra %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/index.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
-<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/libs/prettify.css'>
-{% include 'inc_scripts.html' %}
-<script src='/static/libs/prettify.js'></script>
-{% include 'analytics.htmlt' %}
-</head>
-<body onload='prettyPrint()'>
-{% include 'topmenu.html' %}
-{% include 'page_head.html' %}
+{% endblock %}
+
+{% block body %}
 <table class='post_arena'>
     {% for post in posts %}
     <tr>
@@ -20,7 +15,7 @@
         <p class='post_title'><a href='/?p={{ post.pid }}'>{{ post.title|safe }}</a></p>
         <div class='post_content' style='border-bottom: 1px dotted;'>{{ post.preview|safe }}</div>
         <p class='post_date' style='float: left'>
-            Posted at {{ post.date|date:"D, d M Y H:i:s" }}
+            Posted at {{ post.date|strftime('%b %d %Y - %H:%M:%S') }}
         </p>
         <p style='float: right;'>
         Permanent Link: <a href='/?p={{ post.pid }}'>
@@ -46,7 +41,7 @@
     <td colspan='2'>
         <p class='paging'>
             {% for i in page_count %}
-                {% ifequal i current_page %}
+                {% if i == current_page %}
                     <span>Page <b>{{ current_page }}</b></span>
                 {% else %}
                     {% if query_tag %}
@@ -54,7 +49,7 @@
                     {% else %}
                         <a href='?page={{ i }}'>{{ i }}</a>
                     {% endif %}
-                {% endifequal %}
+                {% endif %}
             {% endfor %}
         </p>
     </td>
@@ -75,4 +70,4 @@ NJPress.loadPostById = function(span, id) {
   });
 };
 </script>
-{% include 'page_foot.html' %}
+{% endblock %}

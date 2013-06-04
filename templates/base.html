@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{% block title %}{% endblock %}</title>
+<meta charset='utf-8'>
+{% block head_base %}
+{% if usr.admin %}
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/admin.css'>
+{% endif %}
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/main.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/libs/prettify.css'>
+<script type='text/javascript' src='/static/libs/jquery.js'></script>
+<script type='text/javascript' src='/static/utils.js'></script>
+<script src='/static/libs/prettify.js'></script>
+{% endblock %}
+{% block head_extra %}{% endblock %}
+{% if conf.analytics_code and not usr.admin %}
+<script type='text/javascript'>
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', '{{ conf.analytics_code }}']);
+_gaq.push(['_setDomainName', '{{ conf.analytics_domain }}']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+{% endif %}
+</head>
+<body onload='prettyPrint()'>
+{% include 'topmenu.html' %}
+<div id='top'>
+<h1>{{ conf.title }}</h1>
+</div>
+<hr>
+{% block body %}{% endblock %}
+<hr style='clear: both;'>
+<div style='vertical-align: middle; width: 400px; margin-left: auto; margin-right: auto;'>
+<table class='page_foot'>
+<tr>
+  <td rowspan='3'><a class='imglink' href='/'><img alt='.' src='/favicon.ico'/></a></td>
+  <td><a style='font-size: 1em;' href='/'>Back to {{ conf.title }}</a></td>
+</tr>
+<tr>
+  <td><a href='https://github.com/neuront/nijipress'>NijiPress</a> - Copyright (C) Neuron Teckid @ <span><a href='http://bitfoc.us/'>Bit Focus</a></span></td>
+</tr>
+<tr><td><span><a href='/about'>About</a></span> this site</td></tr>
+</table>
+</div>

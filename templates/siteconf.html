@@ -53,7 +53,7 @@ Site Configuration
   </td>
   <td>
     <textarea name='blogrolls' rows='4' cols='60'></textarea>
-    {% for r in conf.blogrolls %}
+    {% for r in conf.blogrolls() %}
     <p id='br{{ r.key.id }}'>
       <a href='{{ r.uri }}'>{{ r.uri }}</a> &lt; {{ r.text|escape }}</a>
       <a href='javascript:NJPress.deleteBlogroll({{ r.key.id }})'>x</a>

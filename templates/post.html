@@ -1,22 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>{{ page_title|safe }} - {{ conf.title }}</title>
-{% include 'page_meta.htmlt' %}
+{% extends './base.html' %}
+
+{% block title %}{{ page_title|safe }} - {{ conf.title }}{% endblock %}
+
+{% block head_extra %}
 <meta name='keywords' content='{% for tag in post.tags %}{{ tag }},{% endfor %}'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/post.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
-<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/libs/prettify.css'>
-{% include 'inc_scripts.html' %}
-<script src='/static/libs/prettify.js'></script>
-{% include 'analytics.htmlt' %}
-</head>
-<body onload='prettyPrint()'>
-{% include 'topmenu.html' %}
-{% include 'page_head.html' %}
+{% endblock %}
+
+{% block body %}
 <div style='vertical-align: middle; width: 800px; margin-left: auto; margin-right: auto;'>
 <h1 class='post_title'>{{ post.title|safe }}</h1>
-<p class='date post_date'>Posted at {{ post.date|date:"D, d M Y H:i:s" }}</p>
+<p class='date post_date'>Posted at {{ post.date|strftime('%b %d %Y - %H:%M:%S') }}</p>
 <article class='post_content'>{{ post.content|safe }}</article>
 
 <p class='tags'>
@@ -35,4 +30,4 @@
 
 {% include 'display_comments.seg.html' %}
 {% include 'leave_comment.seg.html' %}
-{% include 'page_foot.html' %}
+{% endblock %}

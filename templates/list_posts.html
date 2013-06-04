@@ -12,7 +12,7 @@
 <tr>
 <td><a href='/?p={{ post.pid }}'>{{ post.pid }}</a></td>
 <td>{{ post.title|safe }}</td>
-<td><tt>{{ post.date|date:"D, d M Y H:i:s" }}</tt></td>
+<td><tt>{{ post.date|strftime('%b %d %Y - %H:%M:%S') }}</tt></td>
 <td><a href='/c/edit?id={{ post.pid }}'>Edit</a></td>
 </tr>
 {% endfor %}
@@ -20,11 +20,11 @@
 
 <p class='paging'>
 {% for i in page_count %}
-{% ifequal i current_page %}
+{% if i == current_page %}
 <span>Page <b>{{ current_page }}</b></span>
 {% else %}
 <a href='?page={{ i }}'>{{ i }}</a>
-{% endifequal %}
+{% endif %}
 {% endfor %}
 </p>
 {% include 'page_foot.html' %}

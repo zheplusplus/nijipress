@@ -1,14 +1,24 @@
 import os
+import jinja2
+import urllib
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 import models.user
 import models.admin
 
-def render(request, template_file, template_values):
-    template_values['usr'] = models.user.User.get_by_session(request)
-    template_values['conf'] = models.admin.SiteConfiguration.load()
-    path = os.path.join(os.path.dirname(__file__), template_file)
-    return str(template.render(path, template_values).encode('utf-8'))
+def strftime(dt, fmt):
+    if not dt:
+        return ''
+    return dt.strftime(fmt.encode('utf-8')).decode('utf-8')
+
+templ_env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')))
+templ_env.filters['strftime'] = strftime
+templ_env.filters['urlencode'] = urllib.quote
+
+def render(request, filename, kwargs):
+    kwargs['usr'] = models.user.User.get_by_session(request)
+    kwargs['conf'] = models.admin.SiteConfiguration.load()
+    return templ_env.get_template(filename).render(**kwargs)
 
 def page_renderer(template_file):
     class PageRender(webapp.RequestHandler):

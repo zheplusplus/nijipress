@@ -6,7 +6,7 @@ import models.admin
 
 class NewPost(base.BaseView):
     def get(self):
-        self.put_page('templates/new.html', {
+        self.put_page('new.html', {
                 'is_new': True,
                 'title': '',
                 'content': '',
@@ -41,7 +41,7 @@ class Receiver(async.AsyncHandler):
 class List(base.BaseView):
     def get(self):
         p = self.request_value('page', int)
-        self.put_page('templates/list_posts.html', {
+        self.put_page('list_posts.html', {
                 'posts': utils.escape.client_posts(models.post.fetch(p)),
                 'current_page': p,
                 'page_count': xrange(models.post.count_pages()),
@@ -50,7 +50,7 @@ class List(base.BaseView):
 class Edit(base.BaseView):
     def get(self):
         post = models.post.by_id(self.request.get('id'))
-        self.put_page('templates/new.html', {
+        self.put_page('new.html', {
                 'is_new': False,
                 'id': post.pid,
                 'title': post.title,

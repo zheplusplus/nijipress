@@ -5,7 +5,7 @@ import models.comment
 
 def index_page(view):
     p = view.request_value('page', int)
-    view.put_page('templates/index.html', {
+    view.put_page('index.html', {
         'posts': utils.escape.client_posts(models.post.fetch(p)),
         'tags': models.tag.sort_by_count(),
         'current_page': p,
@@ -16,7 +16,7 @@ def index_page(view):
 def by_tag(view):
     p = view.request_value('page', int)
     tag = view.request.get('tag')
-    view.put_page('templates/index.html', {
+    view.put_page('index.html', {
         'posts': utils.escape.client_posts(models.post.by_tag(tag, p)),
         'tags': models.tag.sort_by_count(),
         'current_page': p,
@@ -28,7 +28,7 @@ def by_tag(view):
 def single_post(view):
     try:
         post = models.post.by_id(view.request.get('p'))
-        view.put_page('templates/post.html', {
+        view.put_page('post.html', {
             'page_title': utils.escape.esc_title_plain(post.title),
             'post': utils.escape.client_post(post),
         })
