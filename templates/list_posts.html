@@ -1,12 +1,12 @@
-<html>
-<head>
-<title>Posts</title>
-{% include 'page_meta.htmlt' %}
+{% extends './base.html' %}
+
+{% block title %}Posts{% endblock %}
+
+{% block head_extra %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
-{% include 'inc_scripts.html' %}
-</head>
-<body>
-{% include 'topmenu.html' %}
+{% endblock %}
+
+{% block body %}
 <table class='admin_list stdlnk'>
 {% for post in posts %}
 <tr>
@@ -27,4 +27,4 @@
 {% endif %}
 {% endfor %}
 </p>
-{% include 'page_foot.html' %}
+{% endblock %}

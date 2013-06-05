@@ -1,9 +1,9 @@
-<html>
-<head>
-<title>Register</title>
-{% include 'page_meta.htmlt' %}
+{% extends './base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block head_extra %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
-{% include 'inc_scripts.html' %}
 <script>
 function submit() {
     NJPress.request('/json/register', {
@@ -25,13 +25,14 @@ function submit() {
     });
 }
 </script>
-</head>
-<body>
-{% include 'topmenu.html' %}
+{% endblock %}
+
+{% block body %}
 <h1>Register new user</h1>
 <p style='color: red;' id='hint'></p>
 <table>
   <tr><td>Name:</td><td><input type='text' id='name'></td></tr>
   <tr><td>Password:</td><td><input type='password' id='passwd'></td></tr>
   <tr><td><input type='submit' onclick='submit()'></td></tr>
-</form>
+</table>
+{% endblock %}

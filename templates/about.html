@@ -1,19 +1,18 @@
-<html>
-<head>
-<title>About</title>
-{% include 'page_meta.htmlt' %}
+{% extends './base.html' %}
+
+{% block title %}About{% endblock %}
+{% block heading %}About{% endblock %}
+
+{% block head_extra %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/index.css'>
 <style type='text/css'>
 .post_title {
   margin-bottom: 6px;
 }
 </style>
-{% include 'inc_scripts.html' %}
-{% include 'analytics.htmlt' %}
-</head>
-{% include 'topmenu.html' %}
-<div id='top'><h1>About</h1></div>
-<hr>
+{% endblock %}
+
+{% block body %}
 <div style='vertical-align: middle; width: 800px; margin-left: auto; margin-right: auto;'>
 <p class='post_title'><a name='cms'>This CMS</a></p>
 <div>{{ conf.title }} is based on <a href='https://github.com/neuront/nijipress'>NijiPress</a>, a markdown CMS, using <a href='http://python.org/'>Python</a> 2.7, running on Google App Engine <img src="https://developers.google.com/appengine/images/appengine-noborder-120x30.gif" alt="Powered by Google App Engine" /></div>
@@ -27,4 +26,4 @@ Email information will be kept privately, and only used to find your Gravatar (w
 {{ conf.title }} will also record information like IP address, browser and OS type of each guest for analytics use and of course those will not be public.<br>
 </div>
 </div>
-{% include 'page_foot.html' %}
+{% endblock %}

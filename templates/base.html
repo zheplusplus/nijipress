@@ -31,7 +31,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 <body onload='prettyPrint()'>
 {% include 'topmenu.html' %}
 <div id='top'>
-<h1>{{ conf.title }}</h1>
+<h1>{% block heading %}{{ conf.title }}{% endblock %}</h1>
 </div>
 <hr>
 {% block body %}{% endblock %}

@@ -17,7 +17,7 @@ def rss_posts(origin_posts, url):
 class Build(base.BaseView):
     def get(self):
         url = urlparse(self.request.url)
-        self.put_page('templates/feed.xml', {
+        self.put_page('feed.xml', {
             'site_link': url.scheme + '://' + url.netloc,
             'posts': rss_posts(models.post.fetch(0, RSS_ITEMS_COUNT), url),
         })

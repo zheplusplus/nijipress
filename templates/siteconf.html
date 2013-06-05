@@ -1,20 +1,17 @@
-<html>
-<head>
-<title>
-Site Configuration
-</title>
-{% include 'page_meta.htmlt' %}
-<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
+{% extends './base.html' %}
+
+{% block title %}Site Configuration{% endblock %}
+
+{% block head_extra %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
-{% include 'inc_scripts.html' %}
 <style>
 .conf td {
   vertical-align: top;
 }
 </style>
-</head>
-<body>
-{% include 'topmenu.html' %}
+{% endblock %}
+
+{% block body %}
 <form action='/c/savesiteconf' method='post'>
 <table class='stdlnk conf'>
 <tr>
@@ -43,7 +40,7 @@ Site Configuration
   <td><input type='text' name='analytics_domain' value='{{ conf.analytics_domain|escape }}' size='40'></td>
 </tr>
 <tr>
-  <td>HTML Content After Each Post<br>
+  <td><b>Raw HTML Content</b> After Each Post<br>
       <sub>Watch out! Do not XSS yourself</sub></td>
   <td><textarea name='post_html' rows='4' cols='60'>{{ conf.post_html|escape }}</textarea></td>
 </tr>
@@ -54,9 +51,9 @@ Site Configuration
   <td>
     <textarea name='blogrolls' rows='4' cols='60'></textarea>
     {% for r in conf.blogrolls() %}
-    <p id='br{{ r.key.id }}'>
+    <p id='br{{ r.key().id() }}'>
       <a href='{{ r.uri }}'>{{ r.uri }}</a> &lt; {{ r.text|escape }}</a>
-      <a href='javascript:NJPress.deleteBlogroll({{ r.key.id }})'>x</a>
+      <a href='javascript:NJPress.deleteBlogroll({{ r.key().id() }})'>x</a>
     </p>
     {% endfor %}
   </td>
@@ -72,4 +69,4 @@ NJPress.deleteBlogroll = function(id) {
   });
 }
 </script>
-{% include 'page_foot.html' %}
+{% endblock %}

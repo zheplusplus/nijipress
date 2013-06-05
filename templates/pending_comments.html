@@ -1,13 +1,13 @@
-<html>
-<head>
-<title>Comments</title>
-{% include 'page_meta.htmlt' %}
+{% extends './base.html' %}
+
+{% block title %}Site Configuration{% endblock %}
+
+{% block head_extra %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/paging.css'>
-{% include 'inc_scripts.html' %}
 <script src='/static/admin.js'></script>
-</head>
-<body>
-{% include 'topmenu.html' %}
+{% endblock %}
+
+{% block body %}
 <table class='admin_list'></table>
 <div style='margin: 10px;'>
   <span class='action_button' onclick='NJPress.approveComments()'>Approve selected</span>
@@ -18,7 +18,7 @@
   <span id='confirm_clear' class='action_button' style='visibility: hidden'
       onclick='NJPress.clearAll()'>CONFIRM</span>
 </div>
-{% include 'page_foot.html' %}
+
 <script>
 NJPress.approveComments = function() {
   NJPress.handleSelected('/json/approvecomments', ':checkbox:checked');
@@ -36,3 +36,4 @@ NJPress.reload = function() {
 
 NJPress.reload();
 </script>
+{% endblock %}

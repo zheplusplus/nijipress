@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Requested Content Not Found - {{ conf.title }}</title>
-{% include 'page_meta.htmlt' %}
-{% include 'inc_scripts.html' %}
-</head>
-<body>
-{% include 'topmenu.html' %}
+{% extends './base.html' %}
+
+{% block title %}Requested Content Not Found - {{ conf.title }}{% endblock %}
+
+{% block body %}
 <pre style='color: red;'><tt><b>Mission failed with code 404</b>
                                            _   __   _
                                        ___/ `-'  `-' `---.__
@@ -46,4 +42,4 @@
                                                                    `.    |
                                                                      `.  |
                                                                        `.|</tt></pre>
-{% include 'page_foot.html' %}
+{% endblock %}

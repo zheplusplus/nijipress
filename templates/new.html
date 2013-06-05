@@ -1,40 +1,20 @@
-<html>
-<head>
-<title>
+{% extends './base.html' %}
+
+{% block title %}
 {% if is_new %}
-New
+    New
 {% else %}
-Edit {{ title }}
+    Edit {{ title }}
 {% endif %}
-</title>
-{% include 'page_meta.htmlt' %}
+{% endblock %}
+
+{% block head_extra %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/post.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/libs/prettify.css'>
-{% include 'inc_scripts.html' %}
-<script src='/static/libs/prettify.js'></script>
-</head>
-<body
-{% if is_new %}
-onload='loadCache()' onunload='saveToCache()'
-{% endif %}
->
-{% if is_new %}
-<script>
-function loadCache() {
-  if (localStorage.cache_title) $('#title').val(localStorage.cache_title);
-  if (localStorage.cache_content) $('#content').val(localStorage.cache_content);
-  if (localStorage.cache_tags) $('#tags').val(localStorage.cache_tags);
-}
+{% endblock %}
 
-function saveToCache() {
-  localStorage.cache_title = $('#title').val();
-  localStorage.cache_content = $('#content').val();
-  localStorage.cache_tags = $('#tags').val();
-}
-</script>
-{% endif %}
-{% include 'topmenu.html' %}
+{% block body %}
 <table>
 <tr>
   <td>Title</td>
@@ -95,8 +75,22 @@ NJPress.submitPost = function() {
 };
 </script>
 {% else %}
-This is the preview. You should log in as administrator to submit it.
+This is the preview. You should login as administrator to submit it.
 {% endif %}
 </div>
 
-{% include 'page_foot.html' %}
+{% if is_new %}
+<script>
+if (localStorage.cache_title) $('#title').val(localStorage.cache_title);
+if (localStorage.cache_content) $('#content').val(localStorage.cache_content);
+if (localStorage.cache_tags) $('#tags').val(localStorage.cache_tags);
+
+$(window).unload(function() {
+  localStorage.cache_title = $('#title').val();
+  localStorage.cache_content = $('#content').val();
+  localStorage.cache_tags = $('#tags').val();
+});
+</script>
+{% endif %}
+
+{% endblock %}
