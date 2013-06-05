@@ -1,8 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<p>{{ msg }}
-{% include 'page_foot.htmlt' %}
+{% extends './base.html' %}
+{% block title %}Error{% endblock %}
+{% block body %}
+<p>{{ msg }}</p>
+{% endblock %}

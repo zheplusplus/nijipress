@@ -1,3 +1,4 @@
+from hashlib import sha256
 import base
 import async
 import models.user
@@ -18,23 +19,23 @@ class Init(UserView):
 
 class NewAdmin(UserView):
     def post(self):
-        usr = model.User.get_admin()
+        usr = models.user.User.get_admin()
         if usr is not None:
             return self.redirect('/c/error?msg=' + "Admin exist as User: " + str(usr.name)+ " You can reset password by GAE's Admin Console.")
-        usr = model.User.get_by_name(self.request.get('name'))
+        usr = models.user.User.get_by_name(self.request.get('name'))
         usr.passwd = sha256(self.request.get('passwd_origin')).hexdigest()
         usr.session_key = sha256(usr.name + usr.passwd).hexdigest()
         usr.admin = True
         usr.put()
         self.redirect('/c/login')
-        update_cookie(self.response, usr.session_key)
+        utils.cookie.update_cookie(self.response, usr.session_key)
 
 class Error(UserView):
     def get(self):
         msg = ""
         if 'msg' in self.request.arguments():
             msg = self.request.get("msg")
-        self.put_page('templates/error.html', locals())
+        self.put_page('error.html', { 'msg': msg })
 
 class RegisterUser(async.AsyncHandler):
     def serve(self):
