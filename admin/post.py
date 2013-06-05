@@ -25,7 +25,7 @@ class Preview(base.BaseView):
                 'tags': tags,
                 'prepared_title': base.escape_title(title),
                 'prepared_content': base.escape_content(content),
-                'prepared_tags': [s.strip() for s in tags.split(',')],
+                'prepared_tags': [s for s in " ".join(tags.split(',')).split(" ") if len(s)>1],
                 'usr': usr,
             })
 
@@ -43,7 +43,7 @@ class Add(base.BaseView):
         p.title = self.request.get('title')
         p.content = self.request.get('content')
         tags = self.request.get('tags')
-        models.post.put(p, [s.strip() for s in tags.split(',')])
+        models.post.put(p, [s for s in " ".join(tags.split(',')).split(" ") if len(s)>1])
         self.redirect('/?p=' + post_id)
 
 class List(base.BaseView):

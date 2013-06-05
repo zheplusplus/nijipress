@@ -23,6 +23,13 @@ class User(db.Model):
         return u[0]
 
     @staticmethod
+    def get_admin():
+        u = db.Query(User).filter('admin =', True)
+        if u.count() == 0:
+            return None
+        return u[0]
+
+    @staticmethod
     def get_by_session(request):
         key = request.cookies['skey'] if 'skey' in request.cookies else ''
         u = db.Query(User).filter('session_key =', key)
