@@ -63,6 +63,7 @@ hr {
   display: inline;
   text-decoration: underline;
   font-size: 0.8em;
+  cursor: pointer;
 }
 .menu:hover {
   color: white;
@@ -73,6 +74,7 @@ hr {
   list-style-type: none;
   background-color: black;
   border-radius: 4px;
+  cursor: auto;
 }
 .menu li {
   padding: 8px;

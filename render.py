@@ -11,7 +11,8 @@ def strftime(dt, fmt):
         return ''
     return dt.strftime(fmt.encode('utf-8')).decode('utf-8')
 
-templ_env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.join(os.path.dirname(__file__), 'templates')))
+templ_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
+                        os.path.join(os.path.dirname(__file__), 'templates')))
 templ_env.filters['strftime'] = strftime
 templ_env.filters['urlencode'] = urllib.quote
 

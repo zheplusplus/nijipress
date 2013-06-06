@@ -12,9 +12,7 @@
         <span>Navigate</span>
         <ul>
             <li><a href='/'>Home</a></li>
-            <li style='max-width: 600px;' onclick='NJPress.loadTagsOnMenu(this)'>
-                Click to load post tags
-            </li>
+            <li id='topmenu_tags' style='max-width: 600px;'></li>
         </ul>
     </div>
     <div class='menu'>
@@ -33,7 +31,7 @@
         </ul>
     </div>
     <div class='menu'>
-        <span onmouseover='NJPress.loadPostsOnMenu(this)'>Recent Posts</span>
+        <span id='recent_posts'>Recent Posts</span>
     </div>
     {% include 'admin_bar.html' %}
     <div class='access'>
@@ -48,15 +46,13 @@
     </div>
 </div>
 <script>
-NJPress.loadTagsOnMenu = function(node) {
-  node.onclick = function() {};
++function(node) {
   node.innerHTML = '<i>Post tags: </i>';
   node.className = 'tags';
   NJPress.loadTagsIn(node);
-};
+}($('#topmenu_tags')[0]);
 
-NJPress.loadPostsOnMenu = function(node) {
-  node.onmouseover = function() {};
++function(node) {
   var ul = NJPress.newNode('ul');
   node.appendChild(ul);
   NJPress.loadPosts(function(n) {
@@ -64,6 +60,6 @@ NJPress.loadPostsOnMenu = function(node) {
     li.appendChild(n);
     ul.appendChild(li);
   });
-}
+}($('#recent_posts')[0]);
 </script>
 <div id='menumarginer'></div>
