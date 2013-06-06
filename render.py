@@ -5,6 +5,10 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 import models.user
 import models.admin
+import models.tag
+import models.post
+import utils.dumpjson
+import utils.escape
 
 def strftime(dt, fmt):
     if not dt:
@@ -19,6 +23,9 @@ templ_env.filters['urlencode'] = urllib.quote
 def render(request, filename, kwargs):
     kwargs['usr'] = models.user.User.get_by_session(request)
     kwargs['conf'] = models.admin.SiteConfiguration.load()
+    kwargs['global_tags'] = models.tag.sort_by_count()
+    kwargs['recent_posts'] = [ utils.dumpjson.post_title(p) for p in
+                            utils.escape.client_posts(models.post.fetch(0, 6)) ]
     return templ_env.get_template(filename).render(**kwargs)
 
 def page_renderer(template_file):

@@ -12,7 +12,14 @@
         <span>Navigate</span>
         <ul>
             <li><a href='/'>Home</a></li>
-            <li id='topmenu_tags' style='max-width: 600px;'></li>
+            <li id='topmenu_tags' style='max-width: 600px;'>
+                <i>Post tags: </i>
+                {% for tag in global_tags %}
+                <a style='font-size: {{ (8 + 16 * tag.rate)|string + "px" }}' href='/?tag={{ tag.name|urlencode }}'>
+                    {{ tag.name|escape }}
+                </a>
+                {% endfor %}
+            </li>
         </ul>
     </div>
     <div class='menu'>
@@ -32,6 +39,15 @@
     </div>
     <div class='menu'>
         <span id='recent_posts'>Recent Posts</span>
+        <ul>
+            {% for rp in recent_posts %}
+            <li>
+                <a href='/?p={{ rp.id }}'>
+                    {{ rp.title }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
     {% include 'admin_bar.html' %}
     <div class='access'>
@@ -45,21 +61,4 @@
         </a>
     </div>
 </div>
-<script>
-+function(node) {
-  node.innerHTML = '<i>Post tags: </i>';
-  node.className = 'tags';
-  NJPress.loadTagsIn(node);
-}($('#topmenu_tags')[0]);
-
-+function(node) {
-  var ul = NJPress.newNode('ul');
-  node.appendChild(ul);
-  NJPress.loadPosts(function(n) {
-    var li = NJPress.newNode('li');
-    li.appendChild(n);
-    ul.appendChild(li);
-  });
-}($('#recent_posts')[0]);
-</script>
 <div id='menumarginer'></div>

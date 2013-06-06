@@ -14,8 +14,6 @@ import handlers.siteconf
 
 application = webapp2.WSGIApplication([
     ('/', handlers.browse.Index),
-    ('/json/posttags', handlers.async.Tags),
-    ('/json/recentposts', handlers.async.RecentPosts),
     ('/json/loadpostbyid', handlers.async.LoadPostById),
     ('/json/loadcomments', handlers.comments.ByPostLoader),
     ('/json/leavecomment', handlers.comments.Receiver),
