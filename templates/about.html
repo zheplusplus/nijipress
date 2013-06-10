@@ -1,7 +1,6 @@
 {% extends './base.html' %}
 
 {% block title %}About{% endblock %}
-{% block heading %}About{% endblock %}
 
 {% block head_extra %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/index.css'>
@@ -10,6 +9,13 @@
   margin-bottom: 6px;
 }
 </style>
+{% endblock %}
+
+{% block heading %}
+<div id='top'>
+<h1>About {{ conf.title }}</h1>
+</div>
+<hr>
 {% endblock %}
 
 {% block body %}

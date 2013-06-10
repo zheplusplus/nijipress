@@ -19,7 +19,7 @@ class User(db.Model):
     def get_by_name(name):
         u = db.Query(User).filter('name =', name)
         if u.count() == 0:
-            return User.new(name)
+            return None
         return u[0]
 
     @staticmethod

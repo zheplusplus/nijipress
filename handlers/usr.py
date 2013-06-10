@@ -5,52 +5,31 @@ import models.user
 import utils.hash
 import utils.cookie
 
-class UserView(base.BaseView):
-    def usr_page(self, title, handler='', hint=''):
-        self.put_page('usr.html', {
-            'title': title,
-            'handler': handler,
-            'hint': hint,
-        })
+def mkuser(name, passwd_origin, is_admin, response):
+    if len(name) < 6 or len(passwd_origin) < 6:
+        return { 'result': 'fail', 'reason': 'format' }
+    if models.user.User.get_by_name(name) != None:
+        return { 'result': 'fail', 'reason': 'existed' }
+    usr = models.user.User.new(name)
+    usr.passwd = utils.hash.passwd(passwd_origin)
+    usr.session_key = utils.hash.session_key(usr)
+    usr.admin = is_admin
+    usr.put()
+    utils.cookie.update_cookie(response, usr.session_key)
+    return { 'result': 'ok' }
 
-class Init(UserView):
-    def get(self):
-        self.usr_page('Init (Set Admin\'s username and password.)', 'newadmin')
-
-class NewAdmin(UserView):
-    def post(self):
+class NewAdmin(async.AsyncHandler):
+    def serve(self):
         usr = models.user.User.get_admin()
         if usr is not None:
-            return self.redirect('/c/error?msg=' + "Admin exist as User: " + str(usr.name)+ " You can reset password by GAE's Admin Console.")
-        usr = models.user.User.get_by_name(self.request.get('name'))
-        usr.passwd = sha256(self.request.get('passwd_origin')).hexdigest()
-        usr.session_key = sha256(usr.name + usr.passwd).hexdigest()
-        usr.admin = True
-        usr.put()
-        self.redirect('/c/login')
-        utils.cookie.update_cookie(self.response, usr.session_key)
-
-class Error(UserView):
-    def get(self):
-        msg = ""
-        if 'msg' in self.request.arguments():
-            msg = self.request.get("msg")
-        self.put_page('error.html', { 'msg': msg })
+            return dict(result='fail', reason='admin_existed', name=usr.name)
+        return mkuser(self.args['name'], self.args['passwd_origin'], True,
+                      self.response)
 
 class RegisterUser(async.AsyncHandler):
     def serve(self):
-        name = self.args['name']
-        passwd_origin = self.args['passwd_origin']
-        if len(name) < 6 or len(passwd_origin) < 6:
-            return { 'result': 'fail', 'reason': 'format' }
-        if models.user.User.get_by_name(name) != None:
-            return { 'result': 'fail', 'reason': 'existed' }
-        usr = models.user.User.new(name)
-        usr.passwd = utils.hash.passwd(passwd_origin)
-        usr.session_key = utils.hash.session_key(usr)
-        usr.put()
-        utils.cookie.update_cookie(self.response, usr.session_key)
-        return { 'result': 'ok' }
+        return mkuser(self.args['name'], self.args['passwd_origin'], False,
+                      self.response)
 
 class UserLogin(async.AsyncHandler):
     def serve(self):

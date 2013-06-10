@@ -18,7 +18,7 @@ def new():
     p.title = ''
     p.tags = []
     p.content = ''
-    posts = db.Query(Post).order('-pid')
+    posts = db.Query(Post).order('-pid').fetch(1)
     if posts.count() == 0:
         p.pid = 0
     else:
@@ -33,14 +33,15 @@ def fetch(page, count=util.ITEMS_PER_PAGE):
         if count <= 0:
             return []
         return [p.init_tags(tag.tags_by_post_id(p.pid)) for p in
-                    db.Query(Post).order('-date').fetch(count, start_index)]
+                      db.Query(Post).order('-date')
+                                    .fetch(count, offset=start_index)]
     def cache_posts(start_index, count):
         if count <= 0:
             return []
-        cache = memcache.get('posts-ura')
+        cache = memcache.get('posts')
         if cache == None:
             cache = fetch_posts(0, CACHE_SIZE)
-            memcache.set('posts-ura', cache)
+            memcache.set('posts', cache)
         return cache[start_index: count + start_index]
 
     cache_count = CACHE_SIZE - start
@@ -79,13 +80,13 @@ def posts_ids():
     return _load_posts_ids()
 
 def _invalidate_cache():
-    memcache.delete('posts-ura')
-    memcache.delete('tags-ura')
-    memcache.delete('posts_ids-ura')
+    memcache.delete('posts')
+    memcache.delete('tags')
+    memcache.delete('posts_ids')
 
 def _load_posts_ids():
-    cache = memcache.get('posts_ids-ura')
+    cache = memcache.get('posts_ids')
     if cache == None:
         cache = map(lambda p: p.pid, Post.all())
-        memcache.set('posts_ids-ura', cache)
+        memcache.set('posts_ids', cache)
     return cache

@@ -1,26 +1,32 @@
 {% extends './admin_base.html' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Create Admin{% endblock %}
 
 {% block head_extra %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
 <script>
 function submit() {
-    NJPress.request('/json/register', {
+    NJPress.request('/json/newadmin', {
         name: $('#name').val(),
         passwd_origin: $('#passwd').val(),
     }, function(r) {
         ({
             fail: function() {
-                if (r.reason == 'existed') {
-                    $('#hint').text('User already existent');
-                } else {
-                    $('#hint').text('Name or password shall be at least 6 characters');
-                }
+                ({
+                    existed: function() {
+                        $('#hint').text('User already existent');
+                    },
+                    admin_existed: function() {
+                        $('#hint').text('An administrator named ' + r.name + ' already exists.');
+                    },
+                    format: function() {
+                        $('#hint').text('Name or password shall be at least 6 characters');
+                    }
+                })[r.reason]();
             },
             ok: function() {
                 window.location = '/';
-            },
+            }
         })[r.result]();
     });
 }
@@ -28,7 +34,7 @@ function submit() {
 {% endblock %}
 
 {% block body %}
-<h1>Register new user</h1>
+<h1>Create administrator</h1>
 <p style='color: red;' id='hint'></p>
 <table>
   <tr><td>Name:</td><td><input type='text' id='name'></td></tr>
