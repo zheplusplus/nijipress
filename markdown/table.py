@@ -1,5 +1,8 @@
 import re
 
+_CELL_RE = re.compile('^(?P<cell_attr>((;[^;]+);)|())(?P<cell_content>.*$)')
+_ROW_RE = re.compile('[|][|](?P<cell>([^|]|[|][^|])*)')
+
 def attr_format(attr):
     if 0 == len(attr):
         return ''
@@ -19,13 +22,11 @@ def attr_format(attr):
 
 def attr_content_extract(cell):
     from nijiconf import CELL_BEGIN
-    return re.sub('^(?P<cell_attr>((;[^;]+);)|())(?P<cell_content>.*$)'
-                , lambda m: CELL_BEGIN % (attr_format(m.group('cell_attr'))
-                                        , m.group('cell_content'))
-                , cell)
+    return _CELL_RE.sub(
+            lambda m: CELL_BEGIN % (attr_format(m.group('cell_attr')),
+                                    m.group('cell_content')), cell)
 
 def row_extract(line):
     from nijiconf import CELL_END
-    return re.sub('[|][|](?P<cell>([^|]|[|][^|])*)'
-                , lambda m: attr_content_extract(m.group('cell')) + CELL_END
-                , line)
+    return _ROW_RE.sub(
+            lambda m: attr_content_extract(m.group('cell')) + CELL_END, line)

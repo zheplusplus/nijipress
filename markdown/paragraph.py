@@ -88,8 +88,7 @@ class AsciiArt(Paragraph):
     def modifiers(self):
         from nijiconf import BR, SPACE
         import re
-        return [html.forge,
-                lambda x: re.sub(' ', lambda m: SPACE, x[2: len(x)]) + BR]
+        return [html.forge, lambda x: x[2:].replace(' ', SPACE) + BR]
 
 class Bullets(Paragraph):
     def __init__(self, lines):
@@ -107,7 +106,7 @@ class Bullets(Paragraph):
     def modifiers(self):
         from nijiconf import LI_BEGIN, LI_END
         return [html.forge, inline.forge,
-                lambda text: LI_BEGIN + text[2: len(text)] + LI_END]
+                lambda text: LI_BEGIN + text[2:] + LI_END]
 
 import nijiconf
 
@@ -126,7 +125,7 @@ class Head(Paragraph):
         from nijiconf import LI_BEGIN, LI_END
         return [html.forge, inline.forge,
                 lambda text: LEVEL_2_STR[self.level][0] +
-                             text[self.level + 2: len(text)] +
+                             text[self.level + 2:] +
                              LEVEL_2_STR[self.level][1]]
 
 class Head1(Head):
@@ -142,13 +141,13 @@ class Head3(Head):
         Head.__init__(self, lines, 2)
 
 LINE_PATTERNS = (
-    ('{{{[ ]*[a-zA-Z0-9]*', '}}}', CodeBlock, False, True),
-    ('\[\[\[', ']]]', Table, True, True),
-    ('[*][ ]', '(?![*][ ])', Bullets, False, False),
-    ('(: |:$)', '(?!(: |:$))', AsciiArt, False, False),
-    ('=[ ]', '', Head1, False, False),
-    ('==[ ]', '', Head2, False, False),
-    ('===[ ]', '', Head3, False, False),
+    (re.compile(r'{{{[ ]*\w*'), re.compile('}}}'), CodeBlock, False, True),
+    (re.compile(r'\[\[\['), re.compile(']]]'), Table, True, True),
+    (re.compile('[*][ ]'), re.compile('(?![*][ ])'), Bullets, False, False),
+    (re.compile('(: |:$)'), re.compile('(?!(: |:$))'), AsciiArt, False, False),
+    (re.compile('=[ ]'), re.compile(''), Head1, False, False),
+    (re.compile('==[ ]'), re.compile(''), Head2, False, False),
+    (re.compile('===[ ]'), re.compile(''), Head3, False, False),
 )
 
 def pattern_begin(pattern):
@@ -170,8 +169,7 @@ def search_for_para(document, begin, paragraphs):
     pattern = match_pattern_begin(document[begin])
     begin += 1 if pattern_start_excluded(pattern) else 0
     end = begin + 1
-    while end < len(document) and not re.match(pattern_end(pattern),
-                                               document[end]):
+    while end < len(document) and not pattern_end(pattern).match(document[end]):
         end += 1
     paragraphs.append(pattern_ctor(pattern)(document[begin: end]))
     return end + (1 if pattern_end_skipped(pattern) else 0)
@@ -187,7 +185,7 @@ def normal_text_from(document, begin, paragraphs):
 
 def match_pattern_begin(line):
     for pattern in LINE_PATTERNS:
-        if re.match(pattern_begin(pattern), line):
+        if pattern_begin(pattern).match(line):
             return pattern
     return None
 

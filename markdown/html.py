@@ -1,17 +1,25 @@
 import re
+import nijiconf
+
+ESC_DICT = {
+        '&': nijiconf.AND,
+        '<': nijiconf.LT,
+        '>': nijiconf.GT,
+        '"': nijiconf.DQUOT,
+        "'": nijiconf.SQUOT
+    }
 
 def escape(text):
-    from nijiconf import AND, LT, GT, SQUOT, DQUOT
-    escape_dict = {'&' : AND , '<' : LT, '>' : GT, '"' : DQUOT, "'" : SQUOT}
-    return re.sub('''&|<|>|[']|["]''', lambda m: escape_dict[m.group(0)], text)
+    return ''.join([ ESC_DICT.get(ch, ch) for ch in text ])
+
+_LEADING_SP_RE = re.compile('^[ ]+')
+_TRIPLE_MIN_RE = re.compile('---')
 
 def leading_spaces(text):
-    from nijiconf import SPACE
-    return re.sub('^[ ]+', lambda m: len(m.group(0)) * SPACE, text)
+    return _LEADING_SP_RE.sub(lambda m: len(m.group(0)) * nijiconf.SPACE, text)
 
 def tripple_minus(text):
-    from nijiconf import MINUS
-    return re.sub('---', lambda m: MINUS * 3, text)
+    return _TRIPLE_MIN_RE.sub(lambda m: nijiconf.MINUS * 3, text)
 
 def forge(text):
     return tripple_minus(leading_spaces(escape(text)))
