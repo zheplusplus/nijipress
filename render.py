@@ -18,7 +18,7 @@ def strftime(dt, fmt):
 templ_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
                         os.path.join(os.path.dirname(__file__), 'templates')))
 templ_env.filters['strftime'] = strftime
-templ_env.filters['urlencode'] = urllib.quote
+templ_env.filters['urlencode'] = lambda s: urllib.quote(s.encode('utf8'))
 
 def render(request, filename, kwargs):
     kwargs['usr'] = models.user.User.get_by_session(request)
