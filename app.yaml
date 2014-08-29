@@ -1,5 +1,5 @@
 application: bitfocusblog
-version: excerion-dev
+version: excerion
 runtime: python27
 threadsafe: true
 api_version: 1
