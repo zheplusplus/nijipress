@@ -1,7 +1,7 @@
 import base
+import rss
 import utils.escape
 import models.post
-import models.comment
 
 def index_page(view):
     p = view.request_value('page', int)
@@ -38,7 +38,7 @@ def single_post(view):
 class Index(base.BaseView):
     def get(self):
         if 'feed' in self.request.arguments():
-            return self.redirect('http://rss.bitfoc.us/')
+            return rss.make_rss(self)
         if 'p' in self.request.arguments():
             return single_post(self)
         if 'tag' in self.request.arguments():

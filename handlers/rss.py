@@ -14,10 +14,13 @@ def rss_post(post, url):
 def rss_posts(origin_posts, url):
     return map(lambda p: rss_post(p, url), origin_posts)
 
+def make_rss(view):
+    url = urlparse(view.request.url)
+    return view.put_page('feed.xml', {
+        'site_link': url.scheme + '://' + url.netloc,
+        'posts': rss_posts(models.post.fetch(0, RSS_ITEMS_COUNT), url),
+    })
+
 class Build(base.BaseView):
     def get(self):
-        url = urlparse(self.request.url)
-        self.put_page('feed.xml', {
-            'site_link': url.scheme + '://' + url.netloc,
-            'posts': rss_posts(models.post.fetch(0, RSS_ITEMS_COUNT), url),
-        })
+        return make_rss(self)

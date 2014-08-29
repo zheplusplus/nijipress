@@ -69,8 +69,9 @@ class CodeBlock(Paragraph):
         return result
 
     def modifiers(self):
-        from nijiconf import BR
-        return [html.forge, inline.forge, lambda x: x + BR]
+        from nijiconf import BR, SPACE
+        return [html.forge, lambda x: x.replace(' ', SPACE), inline.forge,
+                lambda x: x + BR]
 
 class AsciiArt(Paragraph):
     def __init__(self, lines):
