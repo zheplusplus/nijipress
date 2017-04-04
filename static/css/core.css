@@ -1,0 +1,1 @@
+.menu {  float: left;}.menu ul {  display: none;  list-style-type: none;}.menu > input[type='checkbox']:checked ~ ul {    display: block;}
