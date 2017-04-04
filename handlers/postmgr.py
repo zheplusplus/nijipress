@@ -4,14 +4,14 @@ import utils.escape
 import models.post
 import models.admin
 
-class NewPost(base.BaseView):
-    def get(self):
-        self.put_page('new.html', {
-                'is_new': True,
-                'title': '',
-                'content': '',
-                'tags': '',
-            })
+@base.get('/c/post')
+def get(request):
+    request.put_page('new.html', {
+        'is_new': True,
+        'title': '',
+        'content': '',
+        'tags': '',
+    })
 
 class Preview(async.AsyncHandler):
     def serve(self):
@@ -38,22 +38,22 @@ class Receiver(async.AsyncHandler):
         models.post.put(p, [s.strip() for s in self.args['tags'].split(',')])
         return { 'id': post_id }
 
-class List(base.BaseView):
-    def get(self):
-        p = self.request_value('page', int)
-        self.put_page('list_posts.html', {
-                'posts': utils.escape.client_posts(models.post.fetch(p)),
-                'current_page': p,
-                'page_count': xrange(models.post.count_pages()),
-            })
+@base.get('/c/posts')
+def get(request):
+    p = request.get_of_type('page', int)
+    request.put_page('list_posts.html', {
+        'posts': utils.escape.client_posts(models.post.fetch(p)),
+        'current_page': p,
+        'page_count': xrange(models.post.count_pages()),
+    })
 
-class Edit(base.BaseView):
-    def get(self):
-        post = models.post.by_id(self.request.get('id'))
-        self.put_page('new.html', {
-                'is_new': False,
-                'id': post.pid,
-                'title': post.title,
-                'content': post.content,
-                'tags': ', '.join(post.tags),
-            })
+@base.get('/c/edit')
+def get(request):
+    post = models.post.by_id(request.get('id'))
+    request.put_page('new.html', {
+        'is_new': False,
+        'id': post.pid,
+        'title': post.title,
+        'content': post.content,
+        'tags': ', '.join(post.tags),
+    })
