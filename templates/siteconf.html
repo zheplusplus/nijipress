@@ -15,11 +15,11 @@
 <form action='/c/savesiteconf' method='post'>
 <table class='stdlnk conf'>
 <tr>
-  <td>Title</td>
+  <td>Site Title</td>
   <td><input type='text' name='title' value='{{ conf.title|escape }}' size='40'></td>
 </tr>
 <tr>
-  <td>Style</td>
+  <td>Site Default Style</td>
   <td><input type='text' name='style' value='{{ conf.style|escape }}' size='40'></td>
 </tr>
 <tr>
@@ -29,6 +29,10 @@
 <tr>
   <td>RSS Description</td>
   <td><input type='text' name='rss_description' value='{{ conf.rss_description|escape }}' size='40'></td>
+</tr>
+<tr>
+  <td>RSS Items Count</td>
+  <td><input type='text' name='rss_items_count' value='{{ conf.rss_items_count or 0 }}' size='40'></td>
 </tr>
 <tr>
   <td>Google Analytics Code<br/>

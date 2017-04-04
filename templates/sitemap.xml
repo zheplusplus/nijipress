@@ -2,22 +2,22 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>{{ site_link }}</loc>
-        <lastmod>2012-01-01T00:00:00+08:00</lastmod>
+        <lastmod>{{ last_modified|strftime('%Y-%m-%dT%H:%M:%S') }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
-    {% for p in posts_ids %}
+    {% for p in posts_id_time %}
     <url>
-        <loc>{{ site_link }}/?p={{ p }}</loc>
-        <lastmod>2012-01-01T00:00:00+08:00</lastmod>
+        <loc>{{ site_link }}/p/{{ p.pid }}</loc>
+        <lastmod>{{ p.date_update|strftime('%Y-%m-%dT%H:%M:%S') }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
     {% endfor %}
     {% for t in tags %}
     <url>
-        <loc>{{ site_link }}/?tag={{ t.name|urlencode }}</loc>
-        <lastmod>2012-01-01T00:00:00+08:00</lastmod>
+        <loc>{{ site_link }}/tag/{{ t|urlencode }}</loc>
+        <lastmod>{{ last_modified|strftime('%Y-%m-%dT%H:%M:%S') }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>
     </url>

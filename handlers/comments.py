@@ -1,4 +1,5 @@
 import async
+import base
 import models.comment
 import models.user
 import utils.dumpjson
@@ -47,10 +48,11 @@ def deal_with_comments(handler, comment_class, action_mapper):
 def dump_comments(comments, dump_func):
     return [ dump_func(c) for c in utils.escape.client_comments(comments) ]
 
-class ByPostLoader(async.AsyncHandler):
-    def serve(self):
-        return dump_comments(models.comment.by_post_id(int(self.args['post'])),
-                             utils.dumpjson.comment_view)
+@base.get('/api/comments_for/([0-9]+)')
+@base.return_json
+def comment_by(request, pid):
+    return dump_comments(models.comment.by_post_id(
+        int(pid)), utils.dumpjson.comment_view)
 
 class PendingLoader(async.AsyncHandler):
     @models.user.admin_only
@@ -81,3 +83,6 @@ class Deleter(async.AsyncHandler):
     def serve(self):
         return deal_with_comments(self, models.comment.Comment,
                                   lambda c: c.delete())
+
+base.admin_page_render('/c/comments', 'approved_comments.html')
+base.admin_page_render('/c/pendingcomments', 'pending_comments.html')

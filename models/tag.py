@@ -1,9 +1,19 @@
+from collections import defaultdict
 from google.appengine.ext import db
-from google.appengine.api import memcache
+
+from caching import cache
 
 class TagPostR(db.Model):
     tag = db.StringProperty(multiline=False)
     post_id = db.IntegerProperty()
+
+    @classmethod
+    @cache('tagcount')
+    def count_tags_by_name(cls):
+        result = defaultdict(int)
+        for r in cls.all():
+            result[r.tag] += 1
+        return result
 
 def _put_relation(tag, post_id):
     if db.Query(TagPostR).filter('tag =', tag
@@ -25,22 +35,3 @@ def update_relations(post_id, tags):
             r.delete()
     for tag in tags:
         _put_relation(tag, post_id)
-
-def sort_by_count():
-    cache = memcache.get('tags')
-    if cache == None:
-        cache = _load_cache()
-        memcache.set('tags', cache)
-    return cache
-
-def _load_cache():
-    tags = dict()
-    max_tag_count = 1
-    for r in TagPostR.all():
-        tags[r.tag] = tags[r.tag] + 1 if r.tag in tags else 0
-        if tags[r.tag] > max_tag_count:
-            max_tag_count = tags[r.tag]
-    return sorted([{
-        'name': n,
-        'rate': (0.0 + c) / max_tag_count,
-    } for n, c in tags.iteritems()], key=lambda tag: tag['name'])

@@ -1,4 +1,4 @@
-import html
+from md.html import escape
 import inline
 import re
 
@@ -26,7 +26,7 @@ class Paragraph:
 
     def modifiers(self):
         from nijiconf import BR
-        return [html.forge, inline.forge, lambda x: x + BR]
+        return [escape, inline.forge, lambda x: x + BR]
 
     def length(self):
         return reduce(lambda length, line: length + len(line), self.lines, 0)
@@ -47,7 +47,7 @@ class Table(Paragraph):
     def modifiers(self):
         from table import row_extract
         from nijiconf import ROW_BEGIN, ROW_END
-        return [html.forge, inline.forge,
+        return [escape, inline.forge,
                 lambda text: ROW_BEGIN + row_extract(text) + ROW_END]
 
 class CodeBlock(Paragraph):
@@ -70,7 +70,7 @@ class CodeBlock(Paragraph):
 
     def modifiers(self):
         from nijiconf import BR, SPACE
-        return [html.forge, lambda x: x.replace(' ', SPACE), inline.forge,
+        return [escape, lambda x: x.replace(' ', SPACE), inline.forge,
                 lambda x: x + BR]
 
 class AsciiArt(Paragraph):
@@ -89,7 +89,7 @@ class AsciiArt(Paragraph):
     def modifiers(self):
         from nijiconf import BR, SPACE
         import re
-        return [html.forge, lambda x: x[2:].replace(' ', SPACE) + BR]
+        return [escape, lambda x: x[2:].replace(' ', SPACE) + BR]
 
 class Bullets(Paragraph):
     def __init__(self, lines):
@@ -106,7 +106,7 @@ class Bullets(Paragraph):
 
     def modifiers(self):
         from nijiconf import LI_BEGIN, LI_END
-        return [html.forge, inline.forge,
+        return [escape, inline.forge,
                 lambda text: LI_BEGIN + text[2:] + LI_END]
 
 import nijiconf
@@ -124,7 +124,7 @@ class Head(Paragraph):
 
     def modifiers(self):
         from nijiconf import LI_BEGIN, LI_END
-        return [html.forge, inline.forge,
+        return [escape, inline.forge,
                 lambda text: LEVEL_2_STR[self.level][0] +
                              text[self.level + 2:] +
                              LEVEL_2_STR[self.level][1]]
