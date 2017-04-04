@@ -1,5 +1,3 @@
-from hashlib import sha256
-import base
 import async
 import models.user
 import utils.hash
