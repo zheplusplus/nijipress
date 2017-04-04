@@ -1,0 +1,49 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: Tahoma, Verdana, Arial, Sans-Serif;
+}
+tt, code {
+  font-family: Monospace, Inconsolata, 'Courier New';
+}
+
+#top-menu {
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  height: 32px;
+  font-size: 24px;
+  border-bottom: 1px solid;
+}
+#menumarginer {
+  margin-top: 32px;
+}
+.menu {
+  float: left;
+}
+.menu ul {
+  display: none;
+  list-style-type: none;
+  position: absolute;
+}
+.menu input {
+  display: none;
+}
+.menu > input[type='checkbox']:checked ~ ul {
+  display: block;
+}
+.access {
+  float: right;
+  display: inline;
+}
+
+.nt-code-snippet-caption {
+  text-align: center;
+}
+.nt-p {
+  text-indent: 2em;
+  margin-bottom: 0.4em;
+}

@@ -1,15 +1,6 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 body {
   background-color: #111;
-  font-family: Tahoma, Verdana, Arial, Sans-Serif;
   color: #aaa;
-}
-tt, code {
-  font-family: Monospace, Inconsolata, 'Courier New';
 }
 a[href] {
   color: #dec;
@@ -41,55 +32,26 @@ hr {
   margin: 4px;
 }
 
-#fixtop {
-  width: 100%;
-  top: 0;
-  left: 0;
-  height: 32px;
-  position: fixed;
+#top-menu {
   background-color: black;
   border-bottom: 1px dashed #dec;
-  font-size: 24px;
   color: #dec;
-}
-#menumarginer {
-  margin-top: 32px;
 }
 .menu {
   margin: 4px 6px;
   padding: 0 6px;
   border-radius: 4px;
-  float: left;
-  display: inline;
-  text-decoration: underline;
   font-size: 0.8em;
-  cursor: pointer;
-}
-.menu:hover {
-  color: white;
-  text-decoration: none;
 }
 .menu ul {
-  display: none;
-  list-style-type: none;
   background-color: black;
   border-radius: 4px;
   cursor: auto;
 }
 .menu li {
   padding: 8px;
-}
-.menu:hover ul {
-  display: block;
-  position: absolute;
-}
-.menu:hover li {
   padding-top: 1px;
   font-size: 0.75em;
-}
-.access {
-  float: right;
-  display: inline;
 }
 
 #top {

@@ -1,49 +1,59 @@
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 from google.appengine.api import memcache
 
-class SiteConfiguration(db.Model):
-    title = db.StringProperty(multiline=False)
-    style = db.StringProperty(multiline=False)
-    rss_uri = db.StringProperty(multiline=False)
-    rss_description = db.StringProperty(multiline=False)
-    analytics_code = db.StringProperty(multiline=False)
-    analytics_domain = db.StringProperty(multiline=False)
-    post_html = db.TextProperty()
+SITECONF_CACHE_KEY = 'siteconf_v110'
+BLOGROLL_CACHE_KEY = 'blogrool_v110'
+
+class SiteConfiguration(ndb.Model):
+    title = ndb.StringProperty()
+    style = ndb.StringProperty()
+    rss_uri = ndb.StringProperty()
+    rss_description = ndb.StringProperty()
+    rss_items_count = ndb.IntegerProperty()
+    analytics_code = ndb.StringProperty()
+    analytics_domain = ndb.StringProperty()
+    post_html = ndb.TextProperty()
+
+    def fix_fields(self):
+        # Since v1.1.0
+        if self.rss_items_count is None:
+            self.rss_items_count = 0
+        return self
 
     @staticmethod
     def load_persist():
-        conf = SiteConfiguration.all()
-        if conf.count() == 0:
+        conf = SiteConfiguration.query().get()
+        if conf is None:
             conf = SiteConfiguration()
             conf.title = 'A NijiPress Site'
             conf.style = 'midnight'
             conf.rss_uri = '/rss'
+            conf.rss_items_count = 0
             conf.rss_description = ''
             conf.analytics_code = ''
             conf.analytics_domain = ''
             conf.post_html = ''
-            return conf
-        return conf[0]
+        return conf
 
     @staticmethod
     def load():
-        cache = memcache.get('siteconf')
+        cache = memcache.get(SITECONF_CACHE_KEY)
         if cache == None:
             cache = SiteConfiguration.load_persist()
-            memcache.set('siteconf', cache)
-        return cache
+            memcache.set(SITECONF_CACHE_KEY, cache)
+        return cache.fix_fields()
 
     @staticmethod
     def save(conf):
-        memcache.set('siteconf', conf)
+        memcache.set(SITECONF_CACHE_KEY, conf)
         conf.put()
 
     def blogrolls(self):
         return Blogroll.load()
 
-class Blogroll(db.Model):
-    uri = db.StringProperty(multiline=False)
-    text = db.StringProperty(multiline=False)
+class Blogroll(ndb.Model):
+    uri = ndb.StringProperty()
+    text = ndb.StringProperty()
 
     @staticmethod
     def add_by_text(text):
@@ -56,12 +66,12 @@ class Blogroll(db.Model):
             blogroll.uri = r[0].strip()
             blogroll.text = r[2].strip()
             blogroll.put()
-        memcache.delete('blogrolls')
+        memcache.delete(BLOGROLL_CACHE_KEY)
 
     @staticmethod
     def load():
-        cache = memcache.get('blogrolls')
+        cache = memcache.get(BLOGROLL_CACHE_KEY)
         if cache == None:
-            cache = Blogroll.all()
-            memcache.set('blogrolls', cache)
+            cache = list(Blogroll.query())
+            memcache.set(BLOGROLL_CACHE_KEY, cache)
         return cache

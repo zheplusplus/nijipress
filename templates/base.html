@@ -3,13 +3,15 @@
 <head>
 <title>{% block title %}{% endblock %}</title>
 <meta charset='utf-8'>
+<link rel='stylesheet' type='text/css' href='/static/css/core.css'>
+<link rel='stylesheet' type='text/css' href='/static/css/main.css'>
 {% block head_base %}
 {% if usr.admin %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/admin.css'>
 {% endif %}
-<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/main.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/libs/prettify.css'>
 <script type='text/javascript' src='/static/libs/jquery.js'></script>
+<script>-function() {window.NJPress = {style: '{{ conf.style }}'};}();</script>
 <script type='text/javascript' src='/static/utils.js'></script>
 <script src='/static/libs/prettify.js'></script>
 {% endblock %}

@@ -1,9 +1,16 @@
-from hashlib import sha256
-import base
+from Cookie import BaseCookie
+
 import async
+import base
 import models.user
 import utils.hash
-import utils.cookie
+
+def update_cookie(response, session_key):
+    cookie = BaseCookie()
+    cookie['skey'] = session_key
+    cookie['skey']['path'] = '/'
+    cookie['skey']['max-age'] = 17299119
+    response.headers.add('Set-Cookie', cookie['skey'].output(header='').strip())
 
 def mkuser(name, passwd_origin, is_admin, response):
     if len(name) < 6 or len(passwd_origin) < 6:
@@ -15,7 +22,7 @@ def mkuser(name, passwd_origin, is_admin, response):
     usr.session_key = utils.hash.session_key(usr)
     usr.admin = is_admin
     usr.put()
-    utils.cookie.update_cookie(response, usr.session_key)
+    update_cookie(response, usr.session_key)
     return { 'result': 'ok' }
 
 class NewAdmin(async.AsyncHandler):
@@ -37,5 +44,9 @@ class UserLogin(async.AsyncHandler):
         if usr == None or usr.passwd != utils.hash.passwd(
                                             self.args['passwd_origin']):
             return { 'result': 'fail', 'reason': 'invalid' }
-        utils.cookie.update_cookie(self.response, usr.session_key)
+        update_cookie(self.response, usr.session_key)
         return { 'result': 'ok' }
+
+base.page_render('/c/reg', 'register.html')
+base.page_render('/c/login', 'login.html')
+base.page_render('/c/init', 'init_admin.html')

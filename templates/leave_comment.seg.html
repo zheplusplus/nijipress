@@ -64,8 +64,10 @@ function submit() {
   var email = document.getElementById('email').actualVal;
   var url = document.getElementById('url').actualVal;
   var content = document.getElementById('content').actualVal;
+  var locSplit = location.pathname.split('/');
+  var postId = locSplit[locSplit.length - 1];
   NJPress.request(URI, {
-    post_id: NJPress.pageArgs().p,
+    post_id: postId,
     author: author,
     email: email,
     url: url,

@@ -1,17 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 body {
   background-color: #eaeaf5;
-  font-family: Tahoma, Verdana, Arial, Sans-Serif;
   color: #584848;
 }
-tt, code {
-  font-family: Monospace, Inconsolata, 'Courier New';
-}
-
 a[href] {
   color: #2970a6;
   font-size: 0.9em;
@@ -39,54 +29,26 @@ a[href].imglink:active {
   padding: 0 2px;
 }
 
-#fixtop {
-  width: 100%;
-  top: 0;
-  left: 0;
-  height: 32px;
-  position: fixed;
+#top-menu {
   background-color: #def;
   border-bottom: 1px dashed #2970a6;
-  font-size: 24px;
-}
-#menumarginer {
-  margin-top: 32px;
 }
 .menu {
   margin: 4px 6px;
   padding: 0 6px;
   border-radius: 4px;
-  float: left;
-  display: inline;
-  text-decoration: underline;
   font-size: 0.7em;
   cursor: pointer;
 }
-.menu:hover {
-  color: black;
-  text-decoration: none;
-}
 .menu ul {
-  display: none;
-  list-style-type: none;
   background-color: #dff;
   border-radius: 4px;
   cursor: auto;
 }
 .menu li {
   padding: 8px;
-}
-.menu:hover ul {
-  display: block;
-  position: absolute;
-}
-.menu:hover li {
   padding-top: 1px;
   font-size: 0.60em;
-}
-.access {
-  float: right;
-  display: inline;
 }
 
 #top {

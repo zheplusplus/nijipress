@@ -16,7 +16,7 @@ NJPress.typoComment = function(comment, commentsTable) {
 
   var post = row.insertCell(-1);
   var postLink = NJPress.newNode('a');
-  postLink.href = '/?p=' + comment.post_id;
+  postLink.href = '/p/' + comment.post_id;
   postLink.innerHTML = comment.post_id;
   post.appendChild(postLink);
 
