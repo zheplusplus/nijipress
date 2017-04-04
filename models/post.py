@@ -18,7 +18,7 @@ def new():
     p.title = ''
     p.tags = []
     p.content = ''
-    posts = db.Query(Post).order('-pid')
+    posts = db.Query(Post).order('-pid').fetch(limit=1)
     if posts.count() == 0:
         p.pid = 0
     else:
