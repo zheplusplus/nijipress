@@ -59,31 +59,15 @@ hr {
   margin: 4px 6px;
   padding: 0 6px;
   border-radius: 4px;
-  float: left;
-  display: inline;
-  text-decoration: underline;
   font-size: 0.8em;
-  cursor: pointer;
-}
-.menu:hover {
-  color: white;
-  text-decoration: none;
 }
 .menu ul {
-  display: none;
-  list-style-type: none;
   background-color: black;
   border-radius: 4px;
   cursor: auto;
 }
 .menu li {
   padding: 8px;
-}
-.menu:hover ul {
-  display: block;
-  position: absolute;
-}
-.menu:hover li {
   padding-top: 1px;
   font-size: 0.75em;
 }
