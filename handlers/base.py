@@ -45,6 +45,9 @@ def Request(object):
         except ValueError:
             return tp()
 
+    def url(self):
+        return self._req.url
+        
     def put_page(self, template_file, template_values):
         render.put_page(self._handler, template_file, template_value)
 
