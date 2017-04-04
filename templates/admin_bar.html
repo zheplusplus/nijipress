@@ -1,5 +1,6 @@
 {% if usr.name %}
-<div class='menu'>
+<label class='menu'>
+    <input type='checkbox'>
     <span>Admin</span>
     <ul>
         <li>Logged in as <b>{{ usr.name }}</b></li>
@@ -10,8 +11,8 @@
             <li><a href='/c/posts'>Manage posts</a></li>
             <li><a href='/c/siteconf'>Configure Site</a></li>
         {% else %}
-            <li>You are not administrator</li>
+            <li>You are not an administrator</li>
         {% endif %}
     </ul>
-</div>
+</label>
 {% endif %}
