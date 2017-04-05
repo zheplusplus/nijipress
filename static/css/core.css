@@ -1,3 +1,25 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  font-family: Tahoma, Verdana, Arial, Sans-Serif;
+}
+tt, code {
+  font-family: Monospace, Inconsolata, 'Courier New';
+}
+
+#fixtop {
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  height: 32px;
+  font-size: 24px;
+}
+#menumarginer {
+  margin-top: 32px;
+}
 .menu {
   float: left;
 }
@@ -8,4 +30,8 @@
 }
 .menu > input[type='checkbox']:checked ~ ul {
   display: block;
+}
+.access {
+  float: right;
+  display: inline;
 }

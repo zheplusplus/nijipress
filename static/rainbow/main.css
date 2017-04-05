@@ -1,17 +1,7 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 body {
   background-color: #eaeaf5;
-  font-family: Tahoma, Verdana, Arial, Sans-Serif;
   color: #584848;
 }
-tt, code {
-  font-family: Monospace, Inconsolata, 'Courier New';
-}
-
 a[href] {
   color: #2970a6;
   font-size: 0.9em;
@@ -40,17 +30,8 @@ a[href].imglink:active {
 }
 
 #fixtop {
-  width: 100%;
-  top: 0;
-  left: 0;
-  height: 32px;
-  position: fixed;
   background-color: #def;
   border-bottom: 1px dashed #2970a6;
-  font-size: 24px;
-}
-#menumarginer {
-  margin-top: 32px;
 }
 .menu {
   margin: 4px 6px;
@@ -68,10 +49,6 @@ a[href].imglink:active {
   padding: 8px;
   padding-top: 1px;
   font-size: 0.60em;
-}
-.access {
-  float: right;
-  display: inline;
 }
 
 #top {
