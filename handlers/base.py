@@ -28,7 +28,7 @@ def raise_forbidden(handler):
 
 all_routes = []
 
-def Request(object):
+class Request(object):
     def __init__(self, handler):
         self._handler = handler
         self._req = handler.request
@@ -49,11 +49,11 @@ def Request(object):
         return self._req.url
         
     def put_page(self, template_file, template_values):
-        render.put_page(self._handler, template_file, template_value)
+        render.put_page(self._handler, template_file, template_values)
 
     def error_page(self, status_code, template_file):
-        self.error(status_code)
-        render.put_page(self, 'errors/' + template_file, {})
+        self._handler.error(status_code)
+        render.put_page(self._handler, 'errors/' + template_file, {})
 
     def raise_not_found(self):
         self.error_page(404, 'not-found.html')

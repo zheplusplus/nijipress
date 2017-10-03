@@ -1,5 +1,6 @@
 import wsgiref.handlers
 import webapp2
+import importlib
 
 import render
 import handlers.base
@@ -13,13 +14,14 @@ modules = [
     'browse',
     'rss',
     'sitemap',
+    'postmgr',
 ]
 
 def main(debug_mode):
     for m in modules:
-        importlib.import_modules('handlers.' + m)
+        importlib.import_module('handlers.' + m)
 
-    application = webapp2.WSGIApplication(handlers.base.all_routes + [
+    app = webapp2.WSGIApplication(handlers.base.all_routes + [
         ('/json/loadpostbyid', handlers.async.LoadPostById),
         ('/json/loadcomments', handlers.comments.ByPostLoader),
         ('/json/leavecomment', handlers.comments.Receiver),
@@ -45,7 +47,7 @@ def main(debug_mode):
         ('/about', render.page_renderer('about.html')),
         ('/.*', handlers.base.BaseView),
     ], debug=debug_mode)
-    wsgiref.handlers.CGIHandler().run(application)
+    wsgiref.handlers.CGIHandler().run(app)
+    return app
 
-if __name__ == '__main__':
-    main(True)
+application = main(True)

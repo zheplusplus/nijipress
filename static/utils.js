@@ -102,11 +102,46 @@ NJPress.valuesOf = function(arr) {
 
 NJPress.replaceStyle = function(style) {
   $('link').toArray().filter(function(c) {
+      console.log(c, c.type === 'text/css');
     return c.type === 'text/css';
   }).map(function(c) {
     var paths = c.href.split('/');
+    console.log('>', paths);
+    if (paths[5] === 'core.css') {
+        console.log('=', paths);
+        return;
+    }
     paths[4] = style;
     c.href = paths.join('/');
+    console.log('<', paths);
   });
   localStorage.style = style;
 };
+
+$(document).ready(function() {
+  var styleArg = NJPress.pageArgs()['style'];
+  if (styleArg && ['midnight', 'rainbow'].indexOf(styleArg) != -1) {
+    localStorage.style = styleArg;
+  } else if (!localStorage.style) localStorage.style = '{{ conf.style }}';
+  NJPress.replaceStyle(localStorage.style);
+
+  var cb = $('.menu input[type="checkbox"]');
+  cb.each(function(i, e) {
+    e.onchange = function() {
+      clearSelection(i);
+    };
+  });
+  function clearSelection(i) {
+    cb.each(function(j, e) {
+      if (i !== j) {
+        e.checked = false;
+      }
+    });
+  }
+  $('body').click(function(e) {
+    clearSelection(-1);
+  });
+  $('#top-menu').click(function(e) {
+    e.stopPropagation();
+  });
+});

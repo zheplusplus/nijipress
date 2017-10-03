@@ -4,7 +4,7 @@ import utils.escape
 import models.post
 import models.admin
 
-@base.get('/c/post')
+@base.get('/c/newpost')
 def get(request):
     request.put_page('new.html', {
         'is_new': True,

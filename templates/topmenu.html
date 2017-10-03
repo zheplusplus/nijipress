@@ -1,13 +1,4 @@
-<script>
-(function() {
-  var styleArg = NJPress.pageArgs()['style'];
-  if (styleArg && ['midnight', 'rainbow'].indexOf(styleArg) != -1) {
-    localStorage.style = styleArg;
-  } else if (!localStorage.style) localStorage.style = '{{ conf.style }}';
-  NJPress.replaceStyle(localStorage.style);
-})();
-</script>
-<div id='fixtop'>
+<div id='top-menu'>
     <label class='menu'>
         <input type='checkbox'>
         <span>Navigate</span>

@@ -15,10 +15,13 @@ def rss_post(post, url):
 def rss_posts(origin_posts, url):
     return map(lambda p: rss_post(p, url), origin_posts)
 
-@base.get('/rss')
 def make_rss(request):
     url = urlparse(request.url())
     request.put_page('feed.xml', {
         'site_link': url.scheme + '://' + url.netloc,
         'posts': rss_posts(models.post.fetch(0, RSS_ITEMS_COUNT), url),
     })
+
+@base.get('/rss')
+def rss(request):
+    return make_rss(request)

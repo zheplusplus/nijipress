@@ -3,9 +3,9 @@ import rss
 import utils.escape
 import models.post
 
-def index_page(view):
-    p = view.request_value('page', int)
-    view.put_page('index.html', {
+def index_page(request):
+    p = request.get_of_type('page', int)
+    request.put_page('index.html', {
         'posts': utils.escape.client_posts(models.post.fetch(p)),
         'tags': models.tag.sort_by_count(),
         'current_page': p,
@@ -13,10 +13,10 @@ def index_page(view):
         'paging_on': models.post.count_pages() > 1,
     })
 
-def by_tag(view):
-    p = view.request_value('page', int)
-    tag = view.request.get('tag')
-    view.put_page('index.html', {
+def by_tag(request):
+    p = request.get_of_type('page', int)
+    tag = request.get('tag')
+    request.put_page('index.html', {
         'posts': utils.escape.client_posts(models.post.by_tag(tag, p)),
         'tags': models.tag.sort_by_count(),
         'current_page': p,
@@ -25,22 +25,22 @@ def by_tag(view):
         'paging_on': models.post.count_pages_by_tag(tag) > 1,
     })
 
-def single_post(view):
+def single_post(request):
     try:
-        post = models.post.by_id(view.request.get('p'))
-        view.put_page('post.html', {
+        post = models.post.by_id(request.get('p'))
+        request.put_page('post.html', {
             'page_title': utils.escape.esc_title_plain(post.title),
             'post': utils.escape.client_post(post),
         })
     except ValueError:
-        base.raise_not_found(view)
+        request.raise_not_found()
 
-class Index(base.BaseView):
-    def get(self):
-        if 'feed' in self.request.arguments():
-            return rss.make_rss(self)
-        if 'p' in self.request.arguments():
-            return single_post(self)
-        if 'tag' in self.request.arguments():
-            return by_tag(self)
-        return index_page(self)
+@base.get('/')
+def index(request):
+    if request.contains('feed'):
+        return rss.make_rss(request)
+    if request.contains('p'):
+        return single_post(request)
+    if request.contains('tag'):
+        return by_tag(request)
+    return index_page(request)
