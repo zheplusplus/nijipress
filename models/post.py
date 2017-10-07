@@ -4,10 +4,11 @@ import util
 import tag
 
 class Post(db.Model):
-    pid = db.IntegerProperty()
+    pid = db.IntegerProperty(indexed=True)
     date = db.DateTimeProperty(auto_now_add=True)
     title = db.StringProperty(multiline=False)
     content = db.TextProperty()
+    markdown = db.StringProperty(multiline=False)
 
     def init_tags(self, tags):
         self.tags = tags

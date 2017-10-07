@@ -35,6 +35,7 @@ class Receiver(async.AsyncHandler):
             post_id = p.pid
         p.title = self.args['title']
         p.content = self.args['content']
+        p.markdown = self.args.get('md', 'nijitext')
         models.post.put(p, [s.strip() for s in self.args['tags'].split(',')])
         return { 'id': post_id }
 
@@ -55,5 +56,6 @@ def get(request):
         'id': post.pid,
         'title': post.title,
         'content': post.content,
+        'markdown': post.markdown or 'nijitext',
         'tags': ', '.join(post.tags),
     })

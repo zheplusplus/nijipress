@@ -1,5 +1,3 @@
-var NJPress = {};
-
 NJPress.newNode = function(tag) {
   return document.createElement(tag);
 };
@@ -101,6 +99,7 @@ NJPress.valuesOf = function(arr) {
 };
 
 NJPress.replaceStyle = function(style) {
+    console.log(style);
   $('link').toArray().filter(function(c) {
       console.log(c, c.type === 'text/css');
     return c.type === 'text/css';
@@ -122,7 +121,9 @@ $(document).ready(function() {
   var styleArg = NJPress.pageArgs()['style'];
   if (styleArg && ['midnight', 'rainbow'].indexOf(styleArg) != -1) {
     localStorage.style = styleArg;
-  } else if (!localStorage.style) localStorage.style = '{{ conf.style }}';
+  } else if (!localStorage.style) {
+    localStorage.style = NJPress.style;
+  }
   NJPress.replaceStyle(localStorage.style);
 
   var cb = $('.menu input[type="checkbox"]');

@@ -29,7 +29,7 @@ def single_post(request):
     try:
         post = models.post.by_id(request.get('p'))
         request.put_page('post.html', {
-            'page_title': utils.escape.esc_title_plain(post.title),
+            'page_title': utils.escape.head_title(post),
             'post': utils.escape.client_post(post),
         })
     except ValueError:

@@ -17,7 +17,7 @@ modules = [
     'postmgr',
 ]
 
-def main(debug_mode):
+def main():
     for m in modules:
         importlib.import_module('handlers.' + m)
 
@@ -46,8 +46,8 @@ def main(debug_mode):
         ('/c/savesiteconf', handlers.siteconf.Save),
         ('/about', render.page_renderer('about.html')),
         ('/.*', handlers.base.BaseView),
-    ], debug=debug_mode)
+    ], debug=False)
     wsgiref.handlers.CGIHandler().run(app)
     return app
 
-application = main(True)
+application = main()
