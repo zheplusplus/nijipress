@@ -99,20 +99,15 @@ NJPress.valuesOf = function(arr) {
 };
 
 NJPress.replaceStyle = function(style) {
-    console.log(style);
   $('link').toArray().filter(function(c) {
-      console.log(c, c.type === 'text/css');
     return c.type === 'text/css';
   }).map(function(c) {
     var paths = c.href.split('/');
-    console.log('>', paths);
     if (paths[5] === 'core.css') {
-        console.log('=', paths);
         return;
     }
     paths[4] = style;
     c.href = paths.join('/');
-    console.log('<', paths);
   });
   localStorage.style = style;
 };

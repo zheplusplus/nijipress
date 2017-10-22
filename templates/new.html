@@ -25,6 +25,13 @@
   <td><textarea id='content' rows='32' cols='100'>{{ content }}</textarea></td>
 </tr>
 <tr><td>Tags</td><td><input type='text' id='tags' value='{{ tags }}' size='40'></td></tr>
+<tr>
+    <td>Markdown</td>
+    <td>
+        <label><input type='radio' name='md' value='nijitext' checked='checked'>Nijitext</label>
+        <label><input type='radio' name='md' value='zmark'>ZMark</label>
+    </td>
+</tr>
 <tr><td><button onclick='NJPress.previewPost()'>Preview</button></td></tr>
 </table>
 
@@ -34,6 +41,7 @@ NJPress.previewPost = function() {
     title: $('#title')[0].value,
     content: $('#content').val(),
     tags: $('#tags').val(),
+    md: $('input[name="md"]:checked').val()
   }, function(r) {
     $('#post_title_preview').html(r.title);
     $('#post_content_preview').html(r.content);
@@ -66,6 +74,7 @@ NJPress.submitPost = function() {
     title: $('#title')[0].value,
     content: $('#content').val(),
     tags: $('#tags').val(),
+    md: $('input[name="md"]:checked').val()
   }, function(r) {
     $('#title').val('');
     $('#content').val('');
@@ -84,11 +93,19 @@ This is the preview. You should login as administrator to submit it.
 if (localStorage.cache_title) $('#title').val(localStorage.cache_title);
 if (localStorage.cache_content) $('#content').val(localStorage.cache_content);
 if (localStorage.cache_tags) $('#tags').val(localStorage.cache_tags);
+if (localStorage.cache_md) {
+  $('input[name="md"]').each(function(i, e) {
+    if (e.value === localStorage.cache_md) {
+      e.checked = true;
+    }
+  })
+}
 
 $(window).unload(function() {
   localStorage.cache_title = $('#title').val();
   localStorage.cache_content = $('#content').val();
   localStorage.cache_tags = $('#tags').val();
+  localStorage.cache_md = $('input[name="md"]:checked').val();
 });
 </script>
 {% endif %}

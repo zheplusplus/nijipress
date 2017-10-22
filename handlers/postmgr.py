@@ -3,6 +3,7 @@ import async
 import utils.escape
 import models.post
 import models.admin
+import md
 
 @base.get('/c/newpost')
 def get(request):
@@ -18,9 +19,10 @@ class Preview(async.AsyncHandler):
         title = self.args['title']
         content = self.args['content']
         tags = self.args['tags']
+        markdown = self.args['md']
         return {
-            'title': utils.escape.esc_content(title),
-            'content': utils.escape.esc_content(content),
+            'title': md.process(title, markdown),
+            'content': md.process(content, markdown),
             'tags': [s.strip() for s in tags.split(',')],
         }
 
@@ -35,12 +37,12 @@ class Receiver(async.AsyncHandler):
             post_id = p.pid
         p.title = self.args['title']
         p.content = self.args['content']
-        p.markdown = self.args.get('md', 'nijitext')
+        p.markdown = self.args['md']
         models.post.put(p, [s.strip() for s in self.args['tags'].split(',')])
         return { 'id': post_id }
 
 @base.get('/c/posts')
-def get(request):
+def list_posts(request):
     p = request.get_of_type('page', int)
     request.put_page('list_posts.html', {
         'posts': utils.escape.client_posts(models.post.fetch(p)),

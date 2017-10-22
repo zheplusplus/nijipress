@@ -3,7 +3,7 @@ import md
 import md.nijitext.entire_doc as comment_md
 
 def esc_content(content):
-    return ''.join(comment_md.forge(content.split('\n')))
+    return ''.join(comment_md.forge(content))
 
 def head_title(post):
     markdown = md.get(post.markdown)

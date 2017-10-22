@@ -20,11 +20,11 @@ class BaseView(webapp.RequestHandler):
 
 def raise_not_found(handler):
     handler.error(404)
-    render.put_page(handler, 'notfound.html', dict())
+    render.put_page(handler, 'errors/not-found.html', {})
 
 def raise_forbidden(handler):
     handler.error(403)
-    render.put_page(handler, 'forbidden.html', dict())
+    render.put_page(handler, 'errors/forbidden.html', {})
 
 all_routes = []
 
