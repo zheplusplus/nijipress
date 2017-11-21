@@ -49,7 +49,6 @@ class CodeBlock(paragraph.Section):
         if self.numbered():
             idx = ctx.current_index()
             r += tags.CODE_BLOCK_CAPTION.format(
-                chapter=idx.chapter(),
                 section=idx.section(),
                 index=idx.next_code_index())
         return r + tags.CODE_BLOCK_BEGIN % self.lang

@@ -1,11 +1,10 @@
 application: bitfocusblog
-version: v1v0v4
+version: v1v0v6
 runtime: python27
 threadsafe: true
 api_version: 1
-basic_scaling:
-  max_instances: 2
-  idle_timeout: 5m
+automatic_scaling:
+  max_idle_instances: 1
 
 libraries:
 - name: jinja2

@@ -39,3 +39,11 @@ tt, code {
   float: right;
   display: inline;
 }
+
+.nt-code-snippet-caption {
+  text-align: center;
+}
+.nt-p {
+  text-indent: 2em;
+  margin-bottom: 0.4em;
+}
