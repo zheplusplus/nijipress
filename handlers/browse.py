@@ -25,9 +25,9 @@ def by_tag(request):
         'paging_on': models.post.count_pages_by_tag(tag) > 1,
     })
 
-def single_post(request):
+def single_post(request, post_id):
     try:
-        post = models.post.by_id(request.get('p'))
+        post = models.post.by_id(post_id)
         request.put_page('post.html', {
             'page_title': utils.escape.head_title(post),
             'post': utils.escape.client_post(post),
@@ -40,7 +40,11 @@ def index(request):
     if request.contains('feed'):
         return rss.make_rss(request)
     if request.contains('p'):
-        return single_post(request)
+        return single_post(request, request.get('p'))
     if request.contains('tag'):
         return by_tag(request)
     return index_page(request)
+
+@base.get('/p/([0-9]+)')
+def view_post(request, post_id):
+    return single_post(request, post_id)

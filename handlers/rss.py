@@ -7,8 +7,8 @@ import models
 RSS_ITEMS_COUNT = 16
 
 def rss_post(post, url):
-    post.plain_title = utils.escape.esc_title_plain(post.title)
-    post.ident = ''.join([url.scheme, '://', url.netloc, '/?p=', str(post.pid)])
+    post.plain_title = utils.escape.head_title(post)
+    post.ident = ''.join([url.scheme, '://', url.netloc, '/p/', str(post.pid)])
     post = utils.escape.client_post(post)
     return post
 

@@ -70,8 +70,8 @@ class Request(object):
 def get(url):
     def wrapper(f):
         class GetHandler(webapp.RequestHandler):
-            def get(self):
-                return f(Request(self))
+            def get(self, *args):
+                return f(Request(self), *args)
 
             def post(self):
                 self.error(405)
