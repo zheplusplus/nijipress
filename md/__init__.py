@@ -41,6 +41,7 @@ __zmark = MarkdownConvert(
 )
 
 __markmap = {
+    # Since v1.1.0
     None: __nijitext,
     'nijitext': __nijitext,
     'zmark': __zmark,

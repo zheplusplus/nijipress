@@ -11,6 +11,12 @@ class SiteConfiguration(db.Model):
     analytics_domain = db.StringProperty(multiline=False)
     post_html = db.TextProperty()
 
+    def fix_fields(self):
+        # Since v1.1.0
+        if self.rss_items_count is None:
+            self.rss_items_count = 0
+        return self
+
     @staticmethod
     def load_persist():
         conf = SiteConfiguration.all()
@@ -33,7 +39,7 @@ class SiteConfiguration(db.Model):
         if cache == None:
             cache = SiteConfiguration.load_persist()
             memcache.set('siteconf', cache)
-        return cache
+        return cache.fix_fields()
 
     @staticmethod
     def save(conf):

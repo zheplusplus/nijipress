@@ -33,9 +33,9 @@ class CodeBlock(paragraph.Section):
             lang_start = max(lang_start, head.find('!'))
 
         if lang_start == -1:
-            self.lang = head[3:].strip() or 'cpp'
+            self.lang = head[3:].strip()
         else:
-            self.lang = head[lang_start + 1:].strip() or 'cpp'
+            self.lang = head[lang_start + 1:].strip()
 
     def numbered(self):
         if self.no_number:
