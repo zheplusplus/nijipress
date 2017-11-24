@@ -13,9 +13,8 @@ def index_page(request):
         'paging_on': models.post.count_pages() > 1,
     })
 
-def by_tag(request):
+def by_tag(request, tag):
     p = request.get_of_type('page', int)
-    tag = request.get('tag')
     request.put_page('index.html', {
         'posts': utils.escape.client_posts(models.post.by_tag(tag, p)),
         'tags': models.tag.sort_by_count(),
@@ -42,9 +41,13 @@ def index(request):
     if request.contains('p'):
         return single_post(request, request.get('p'))
     if request.contains('tag'):
-        return by_tag(request)
+        return by_tag(request, request.get('tag'))
     return index_page(request)
 
 @base.get('/p/([0-9]+)')
 def view_post(request, post_id):
     return single_post(request, post_id)
+
+@base.get('/tag/(.+)')
+def list_by_tag(request, tag):
+    return by_tag(request, tag)

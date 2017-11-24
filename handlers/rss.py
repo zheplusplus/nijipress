@@ -2,9 +2,8 @@ from urlparse import urlparse
 
 import base
 import utils.escape
-import models
-
-RSS_ITEMS_COUNT = 16
+import models.post
+import models.admin
 
 def rss_post(post, url):
     post.plain_title = utils.escape.head_title(post)
@@ -16,10 +15,11 @@ def rss_posts(origin_posts, url):
     return map(lambda p: rss_post(p, url), origin_posts)
 
 def make_rss(request):
+    items_count = models.admin.SiteConfiguration.load().rss_items_count or 0
     url = urlparse(request.url())
     request.put_page('feed.xml', {
         'site_link': url.scheme + '://' + url.netloc,
-        'posts': rss_posts(models.post.fetch(0, RSS_ITEMS_COUNT), url),
+        'posts': rss_posts(models.post.fetch(0, items_count), url),
     })
 
 @base.get('/rss')

@@ -6,6 +6,7 @@ class SiteConfiguration(db.Model):
     style = db.StringProperty(multiline=False)
     rss_uri = db.StringProperty(multiline=False)
     rss_description = db.StringProperty(multiline=False)
+    rss_items_count = db.IntegerProperty()
     analytics_code = db.StringProperty(multiline=False)
     analytics_domain = db.StringProperty(multiline=False)
     post_html = db.TextProperty()
@@ -18,6 +19,7 @@ class SiteConfiguration(db.Model):
             conf.title = 'A NijiPress Site'
             conf.style = 'midnight'
             conf.rss_uri = '/rss'
+            conf.rss_items_count = 0
             conf.rss_description = ''
             conf.analytics_code = ''
             conf.analytics_domain = ''
