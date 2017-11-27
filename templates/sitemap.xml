@@ -8,7 +8,7 @@
     </url>
     {% for p in posts_ids %}
     <url>
-        <loc>{{ site_link }}/?p={{ p }}</loc>
+        <loc>{{ site_link }}/p/{{ p }}</loc>
         <lastmod>2012-01-01T00:00:00+08:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
@@ -16,7 +16,7 @@
     {% endfor %}
     {% for t in tags %}
     <url>
-        <loc>{{ site_link }}/?tag={{ t.name|urlencode }}</loc>
+        <loc>{{ site_link }}/tag/{{ t.name|urlencode }}</loc>
         <lastmod>2012-01-01T00:00:00+08:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>

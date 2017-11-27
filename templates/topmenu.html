@@ -7,7 +7,7 @@
             <li id='topmenu_tags' style='max-width: 600px;'>
                 <i>Post tags: </i>
                 {% for tag in global_tags %}
-                <a style='font-size: {{ (8 + 16 * tag.rate)|string + "px" }}' href='/?tag={{ tag.name|urlencode }}'>
+                <a style='font-size: {{ (8 + 16 * tag.rate)|string + "px" }}' href='/tag/{{ tag.name|urlencode }}'>
                     {{ tag.name|escape }}
                 </a>
                 {% endfor %}
@@ -37,7 +37,7 @@
         <ul>
             {% for rp in recent_posts %}
             <li>
-                <a href='/?p={{ rp.id }}'>
+                <a href='/p/{{ rp.id }}'>
                     {{ rp.title }}
                 </a>
             </li>

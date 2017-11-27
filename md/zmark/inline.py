@@ -25,7 +25,7 @@ class InlineForge(object):
         pass
 
     def render_page(self, page, text):
-        return self.render_link('/?p=' + page, text)
+        return self.render_link('/p/' + page, text)
 
     def render_link(self, uri, text):
         return ([html_tags.LINK_BEGIN % uri] + self.img(text) +

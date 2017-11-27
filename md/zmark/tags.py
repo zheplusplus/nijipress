@@ -28,7 +28,7 @@ MONOSPACE = '''<code class='codei'>%s</code>'''
 
 HEADING = u'''<h{lvl} id='{anchor}' class='h{lvl} hx'>{text}</h{lvl}>'''
 
-CODE_BLOCK_CAPTION = (u'''<div class='nt-code-snippet-caption'>代码清单 '''
+CODE_BLOCK_CAPTION = (u'''<div class='nt-code-snippet-caption'>Code Snippet '''
                       '''{section}-{index}</div><hr>''')
 CODE_BLOCK_BEGIN = ('''<div class='codeb'>'''
                     '''<code class='prettyprint lang-%s'>''')
