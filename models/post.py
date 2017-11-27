@@ -21,7 +21,7 @@ class Post(db.Model):
             self.date_update = self.date
         # Since v1.1.0
         if self.markdown is None:
-            self.markdown = 'nijipress'
+            self.markdown = 'nijitext'
         return self
 
 def new():
