@@ -45,7 +45,7 @@
                     <span>Page <b>{{ current_page }}</b></span>
                 {% else %}
                     {% if query_tag %}
-                        <a href='?tag={{ query_tag|urlencode }}&page={{ i }}'>{{ i }}</a>
+                        <a href='/tag/{{ query_tag|urlencode }}?page={{ i }}'>{{ i }}</a>
                     {% else %}
                         <a href='?page={{ i }}'>{{ i }}</a>
                     {% endif %}
