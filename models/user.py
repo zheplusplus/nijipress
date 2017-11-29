@@ -37,6 +37,13 @@ class User(db.Model):
             return User.new('')
         return u[0]
 
+    @staticmethod
+    def get_by_cookie_key(key):
+        u = db.Query(User).filter('session_key =', key)
+        if u.count() == 0:
+            return None
+        return u[0]
+
 def admin_only(f):
     def wrapper(handler):
         if not User.get_by_session(handler.request).admin:

@@ -1,6 +1,10 @@
+import functools
+import json
+from werkzeug.utils import cached_property
 from google.appengine.ext import webapp
 
 import render
+from models.user import User
 
 class BaseView(webapp.RequestHandler):
     def get(self):
@@ -47,6 +51,12 @@ class Request(object):
 
     def url(self):
         return self._req.url
+
+    def cookie(self, key):
+        return self._req.cookies.get(key, '')
+
+    def put_json(self, json_obj):
+        self._handler.response.out.write(json.dumps(json_obj))
         
     def put_page(self, template_file, template_values):
         render.put_page(self._handler, template_file, template_values)
@@ -67,6 +77,10 @@ class Request(object):
     def raise_forbidden(self):
         self.error_page(403, 'forbidden.html')
 
+    @cached_property
+    def user(self):
+        return User.get_by_cookie_key(request.cookie('skey'))
+
 def get(url):
     def wrapper(f):
         class GetHandler(webapp.RequestHandler):
@@ -80,3 +94,20 @@ def get(url):
         all_routes.append((url, GetHandler))
         return GetHandler
     return wrapper
+
+def return_json(f):
+    @functools.wraps(f)
+    def w(request, *arg, **kwargs):
+        j = f(request, *arg, **kwargs)
+        request.put_json(j)
+    return w
+
+def admin_only(f):
+    @functools.wraps(f)
+    def w(request, *arg, **kwargs):
+        if request.user is None:
+            return request.raise_no_auth()
+        if not request.user.admin:
+            return request.raise_forbidden()
+        return f(request, *arg, **kwargs)
+    return w
