@@ -85,7 +85,7 @@ def get(url):
     def wrapper(f):
         class GetHandler(webapp.RequestHandler):
             def get(self, *args):
-                return f(Request(self), *args)
+                return f(Request(self), *[unicode(a, 'utf-8') for a in args])
 
             def post(self):
                 self.error(405)
