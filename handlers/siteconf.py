@@ -1,6 +1,5 @@
 import base
 import async
-import models.post
 import models.admin
 import models.user
 
@@ -25,3 +24,5 @@ class DeleteBlogroll(async.AsyncHandler):
     def serve(self):
         models.admin.Blogroll.get_by_id(int(self.args['id'])).delete()
         return []
+
+base.page_render('/c/siteconf', 'siteconf.html')

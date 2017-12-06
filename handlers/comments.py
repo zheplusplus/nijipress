@@ -1,4 +1,5 @@
 import async
+import base
 import models.comment
 import models.user
 import utils.dumpjson
@@ -81,3 +82,6 @@ class Deleter(async.AsyncHandler):
     def serve(self):
         return deal_with_comments(self, models.comment.Comment,
                                   lambda c: c.delete())
+
+base.admin_page_render('/c/comments', 'approved_comments.html')
+base.admin_page_render('/c/pendingcomments', 'pending_comments.html')

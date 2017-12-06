@@ -111,3 +111,14 @@ def admin_only(f):
             return request.raise_forbidden()
         return f(request, *arg, **kwargs)
     return w
+
+def page_renderer(path, template_file):
+    @get(path)
+    def f(request):
+        return request.put_page(template_file, {})
+
+def admin_page_render(path, template_file):
+    @get(path)
+    @admin_only
+    def f(request):
+        return request.put_page(template_file, {})

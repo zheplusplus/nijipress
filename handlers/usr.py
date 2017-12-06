@@ -1,6 +1,7 @@
 from Cookie import BaseCookie
 
 import async
+import base
 import models.user
 import utils.hash
 
@@ -45,3 +46,7 @@ class UserLogin(async.AsyncHandler):
             return { 'result': 'fail', 'reason': 'invalid' }
         update_cookie(self.response, usr.session_key)
         return { 'result': 'ok' }
+
+base.page_renderer('/c/reg', 'register.html')
+base.page_renderer('/c/login', 'login.html')
+base.page_renderer('/c/init', 'init_admin.html')
