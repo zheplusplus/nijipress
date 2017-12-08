@@ -12,7 +12,6 @@ import handlers.siteconf
 modules = [
     'browse',
     'rss',
-    'sitemap',
     'postmgr',
     'misc',
 ]

@@ -24,6 +24,18 @@ class Post(db.Model):
             self.markdown = 'nijitext'
         return self
 
+    @classmethod
+    def post_id_time(cls):
+        cache = memcache.get('post_id_time')
+        if cache == None:
+            cache = [{
+                'pid': p.pid,
+                'date_update': p.fix_fieds().date_update,
+            } for p in db.Query(
+                cls, projection=('pid', 'date', 'date_update')).all())
+            memcache.set('post_id_time', cache)
+        return cache
+
 def new():
     p = Post()
     p.title = ''
@@ -96,6 +108,7 @@ def _invalidate_cache():
     memcache.delete('posts')
     memcache.delete('tags')
     memcache.delete('posts_ids')
+    memcache.delete('posts_id_time')
 
 def _load_posts_ids():
     cache = memcache.get('posts_ids')

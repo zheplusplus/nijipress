@@ -13,6 +13,18 @@ NJPress.request = function(url, args, success) {
   });
 };
 
+NJPress.api = function(api, args, callback) {
+  $.ajax({
+    type: 'GET',
+    url: '/api/' + api,
+    data: args,
+    success: function(r) {
+      callback(null, JSON.parse(r));
+    },
+    error: callback
+  });
+};
+
 NJPress.reqList = function(url, args, successMappingFunc) {
   NJPress.request(url, args, function(result) {
     result.map(successMappingFunc);
