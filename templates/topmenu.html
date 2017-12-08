@@ -5,12 +5,7 @@
         <ul>
             <li><a href='/'>Home</a></li>
             <li id='topmenu_tags' style='max-width: 600px;'>
-                <i>Post tags: </i>
-                {% for tag in global_tags %}
-                <a style='font-size: {{ (8 + 16 * tag.rate)|string + "px" }}' href='/tag/{{ tag.name|urlencode }}'>
-                    {{ tag.name|escape }}
-                </a>
-                {% endfor %}
+                <i id='loading-tags'>Loading tags...</i>
             </li>
         </ul>
     </label>
@@ -34,14 +29,8 @@
     <label class='menu'>
         <input type='checkbox'>  
         <span id='recent_posts'>Recent Posts</span>
-        <ul>
-            {% for rp in recent_posts %}
-            <li>
-                <a href='/p/{{ rp.id }}'>
-                    {{ rp.title }}
-                </a>
-            </li>
-            {% endfor %}
+        <ul id='recent-posts-list'>
+            <li id='loading-posts'><i>Loading tags...</i></li>
         </ul>
     </label>
     {% include 'admin_bar.html' %}

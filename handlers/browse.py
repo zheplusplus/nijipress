@@ -49,8 +49,8 @@ def list_by_tag(request, tag):
 def nav(request):
     return {
         'tags': models.tag.sort_by_count(),
-        'new_posts': [{
+        'posts': [{
             'id': p.pid,
-            'title': p.title,
-        } for p in utils.escape.client_posts(models.post.fetch(0, 6))],
+            'title': utils.escape.head_title(p),
+        } for p in models.post.fetch(0, 6)],
     }

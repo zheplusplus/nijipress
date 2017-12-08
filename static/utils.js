@@ -152,4 +152,26 @@ $(document).ready(function() {
   $('#top-menu').click(function(e) {
     e.stopPropagation();
   });
+
+  NJPress.api('/nav', {}, function(err, result) {
+    if (err) {
+      $('#loading-tags').text('Failed to load tags');
+      $('#loading-posts').text('Failed to load recent posts');
+      return console.error(err);
+    }
+
+    $('#loading-tags').text('Post tags: ');
+    for (var i = 0; i < result.tags.length; ++i) {
+      var tag = result.tags[i];
+      console.log('tag', tag);
+    }
+
+    $('#loading-posts').remove();
+    for (var i = 0; i < result.posts.length; ++i) {
+      var post = result.posts[i];
+      console.log('post', post);
+      $('#recent-posts-list').append($('<li>').append(
+        $('<a>').attr('href', '/p/' + post.id).html(p.title)));
+    }
+  });
 });
