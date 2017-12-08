@@ -2,6 +2,7 @@ import functools
 import json
 from werkzeug.utils import cached_property
 from google.appengine.ext import webapp
+from google.appengine.ext import webapp2
 
 import render
 from models.user import User
@@ -76,6 +77,9 @@ class Request(object):
 
     def raise_forbidden(self):
         self.error_page(403, 'forbidden.html')
+
+    def redirect(self, uri, permanent=True):
+        return webapp2.redirect(uri, permanent=permanent)
 
     @cached_property
     def user(self):
