@@ -186,11 +186,11 @@ $(document).ready(function() {
 
     var tagSizes = [];
     var max = 3;
-    var factor = 2.5;
+    var factor = 2.2;
     for (var i = 0; i < allTags.length; ++i) {
       tagSizes.push({
         tag: allTags[i],
-        size: max - factor * (maxCount - tags[allTags[i]]) / maxCount
+        size: max - factor * (maxCount - tags[allTags[i]] + 1) / maxCount
       });
     }
 
@@ -206,7 +206,9 @@ $(document).ready(function() {
 
     for (var i = 0; i < tagSizes.length; ++i) {
       var t = tagSizes[i];
-      element.append($('<a>').attr('href', '/tag/' + t.tag).text(t.tag).css('font-size', t.size.toFixed(2) + 'em'));
+      element.append($('<a>').attr('href', '/tag/' + t.tag)
+                             .text(t.tag)
+                             .css('font-size', t.size.toFixed(2) + 'em'));
     }
   }
 });

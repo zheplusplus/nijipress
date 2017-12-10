@@ -30,9 +30,8 @@ class Post(db.Model):
         if cache == None:
             cache = [{
                 'pid': p.pid,
-                'date_update': p.fix_fieds().date_update,
-            } for p in db.Query(
-                cls, projection=('pid', 'date', 'date_update')).all()]
+                'date_update': p.fix_fields().date_update,
+            } for p in cls.all()]
             memcache.set('post_id_time', cache)
         return cache
 
