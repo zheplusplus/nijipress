@@ -2,6 +2,7 @@ import base
 import rss
 import utils.escape
 import models.post
+from models.tag import TagPostR
 
 @base.get('/')
 def index(request):
@@ -48,7 +49,7 @@ def list_by_tag(request, tag):
 @base.return_json
 def nav(request):
     return {
-        'tags': models.tag.sort_by_count(),
+        'tags': TagPostR.count_tags_by_name(),
         'posts': [{
             'id': p.pid,
             'title': utils.escape.head_title(p),

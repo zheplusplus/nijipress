@@ -48,6 +48,12 @@ def deal_with_comments(handler, comment_class, action_mapper):
 def dump_comments(comments, dump_func):
     return [ dump_func(c) for c in utils.escape.client_comments(comments) ]
 
+@base.get('/api/comments_for/([0-9]+)')
+@base.return_json
+def comment_by(request, pid):
+    return dump_comments(models.comment.by_post_id(
+        int(pid)), utils.dumpjson.comment_view)
+
 class ByPostLoader(async.AsyncHandler):
     def serve(self):
         return dump_comments(models.comment.by_post_id(int(self.args['post'])),

@@ -32,7 +32,7 @@ class Post(db.Model):
                 'pid': p.pid,
                 'date_update': p.fix_fieds().date_update,
             } for p in db.Query(
-                cls, projection=('pid', 'date', 'date_update')).all())
+                cls, projection=('pid', 'date', 'date_update')).all()]
             memcache.set('post_id_time', cache)
         return cache
 
@@ -107,6 +107,7 @@ def posts_ids():
 def _invalidate_cache():
     memcache.delete('posts')
     memcache.delete('tags')
+    memcache.delete('tagns')
     memcache.delete('posts_ids')
     memcache.delete('posts_id_time')
 

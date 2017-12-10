@@ -47,6 +47,6 @@ class UserLogin(async.AsyncHandler):
         update_cookie(self.response, usr.session_key)
         return { 'result': 'ok' }
 
-base.page_renderer('/c/reg', 'register.html')
-base.page_renderer('/c/login', 'login.html')
-base.page_renderer('/c/init', 'init_admin.html')
+base.page_render('/c/reg', 'register.html')
+base.page_render('/c/login', 'login.html')
+base.page_render('/c/init', 'init_admin.html')

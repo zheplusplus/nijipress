@@ -2,7 +2,6 @@ import functools
 import json
 from werkzeug.utils import cached_property
 from google.appengine.ext import webapp
-from google.appengine.ext import webapp2
 
 import render
 from models.user import User
@@ -79,11 +78,11 @@ class Request(object):
         self.error_page(403, 'forbidden.html')
 
     def redirect(self, uri, permanent=True):
-        return webapp2.redirect(uri, permanent=permanent)
+        return webapp.redirect(uri, permanent=permanent)
 
     @cached_property
     def user(self):
-        return User.get_by_cookie_key(request.cookie('skey'))
+        return User.get_by_cookie_key(self.cookie('skey'))
 
 def get(url):
     def wrapper(f):
@@ -116,7 +115,7 @@ def admin_only(f):
         return f(request, *arg, **kwargs)
     return w
 
-def page_renderer(path, template_file):
+def page_render(path, template_file):
     @get(path)
     def f(request):
         return request.put_page(template_file, {})

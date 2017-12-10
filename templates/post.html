@@ -11,7 +11,12 @@
 {% block body %}
 <div style='vertical-align: middle; width: 800px; margin-left: auto; margin-right: auto;'>
 <h1 class='post_title'>{{ post.title|safe }}</h1>
-<p class='date post_date'>Posted at {{ post.date|strftime('%b %d %Y - %H:%M:%S') }}</p>
+<p class='date post_date'>
+Posted at {{ post.date|strftime('%Y-%m-%d %H:%M:%S') }}
+{% if post.date != post.date_update %}
+| Updated at {{ post.date_update|strftime('%Y-%m-%d %H:%M:%S') }}
+{% endif %}
+</p>
 <article class='post_content'>{{ post.content|safe }}</article>
 
 <p class='tags'>

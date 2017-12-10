@@ -34,7 +34,7 @@ NJPress.reqList = function(url, args, successMappingFunc) {
 NJPress.location = function() {
   var L = window.location;
   var port = (L.port == '80' || L.port == '') ? '' : (':' + L.port);
-  return L.protocol + '//' + L.hostname + port + L.pathname;
+  return L.protocol + '//' + L.hostname + port;
 };
 
 NJPress.pageArgs = function() {
@@ -99,10 +99,17 @@ NJPress.addComment = function(comment, commentsHead, commentsTable) {
   content.appendChild(contentBody);
 };
 
-NJPress.loadComments = function(postId, commentsHead, commentsTable) {
-  const URI = '/json/loadcomments';
-  NJPress.reqList(URI, { post: postId }, function(comment) {
-    NJPress.addComment(comment, commentsHead, commentsTable);
+NJPress.loadComments = function(commentsHead, commentsTable) {
+  var splits = location.pathname.split('/');
+  var postId = splits[splits.length - 1];
+  NJPress.api('comments_for/' + postId, '', function(error, comments) {
+    if (error) {
+        commentsHead.text('Failed to load comments');
+        return console.error(error);
+    }
+    for (var i = 0; i < comments.length; ++i) {
+        NJPress.addComment(comments[i], commentsHead, commentsTable);
+    }
   });
 };
 
@@ -153,25 +160,53 @@ $(document).ready(function() {
     e.stopPropagation();
   });
 
-  NJPress.api('/nav', {}, function(err, result) {
+  NJPress.api('nav', {}, function(err, result) {
     if (err) {
       $('#loading-tags').text('Failed to load tags');
       $('#loading-posts').text('Failed to load recent posts');
       return console.error(err);
     }
 
-    $('#loading-tags').text('Post tags: ');
-    for (var i = 0; i < result.tags.length; ++i) {
-      var tag = result.tags[i];
-      console.log('tag', tag);
-    }
+    processTags($('#loading-tags').text('Post tags: '), result.tags);
 
     $('#loading-posts').remove();
     for (var i = 0; i < result.posts.length; ++i) {
       var post = result.posts[i];
-      console.log('post', post);
       $('#recent-posts-list').append($('<li>').append(
-        $('<a>').attr('href', '/p/' + post.id).html(p.title)));
+        $('<a>').attr('href', '/p/' + post.id).html(post.title)));
     }
   });
+
+  function processTags(element, tags) {
+    var maxCount = 0;
+    var allTags = Object.keys(tags);
+    for (var i = 0; i < allTags.length; ++i) {
+      maxCount = Math.max(tags[allTags[i]], maxCount);
+    }
+
+    var tagSizes = [];
+    var max = 3;
+    var factor = 2.5;
+    for (var i = 0; i < allTags.length; ++i) {
+      tagSizes.push({
+        tag: allTags[i],
+        size: max - factor * (maxCount - tags[allTags[i]]) / maxCount
+      });
+    }
+
+    tagSizes.sort(function(a, b) {
+      if (a.tag > b.tag) {
+        return 1;
+      }
+      if (a.tag < b.tag) {
+        return -1;
+      }
+      return 0;
+    });
+
+    for (var i = 0; i < tagSizes.length; ++i) {
+      var t = tagSizes[i];
+      element.append($('<a>').attr('href', '/tag/' + t.tag).text(t.tag).css('font-size', t.size.toFixed(2) + 'em'));
+    }
+  }
 });

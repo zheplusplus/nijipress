@@ -1,9 +1,23 @@
+from collections import defaultdict
+
 from google.appengine.ext import db
 from google.appengine.api import memcache
 
 class TagPostR(db.Model):
     tag = db.StringProperty(multiline=False)
     post_id = db.IntegerProperty()
+
+    @classmethod
+    def count_tags_by_name(cls):
+        cache = memcache.get('tagns')
+        if cache is not None:
+            return cache
+
+        result = defaultdict(int)
+        for r in cls.all():
+            result[r.tag] += 1
+        memcache.set('tagns', result)
+        return result
 
 def _put_relation(tag, post_id):
     if db.Query(TagPostR).filter('tag =', tag
