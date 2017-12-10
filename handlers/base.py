@@ -1,6 +1,5 @@
 import functools
 import json
-from werkzeug.utils import cached_property
 from google.appengine.ext import webapp
 
 import render
@@ -80,7 +79,6 @@ class Request(object):
     def redirect(self, uri, permanent=True):
         return webapp.redirect(uri, permanent=permanent)
 
-    @cached_property
     def user(self):
         return User.get_by_cookie_key(self.cookie('skey'))
 
@@ -108,9 +106,10 @@ def return_json(f):
 def admin_only(f):
     @functools.wraps(f)
     def w(request, *arg, **kwargs):
-        if request.user is None:
+        u = request.user()
+        if u is None:
             return request.raise_no_auth()
-        if not request.user.admin:
+        if not u.admin:
             return request.raise_forbidden()
         return f(request, *arg, **kwargs)
     return w

@@ -1,6 +1,6 @@
+import importlib
 import wsgiref.handlers
 import webapp2
-import importlib
 
 import handlers.base
 import handlers.async
