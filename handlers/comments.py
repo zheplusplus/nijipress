@@ -54,11 +54,6 @@ def comment_by(request, pid):
     return dump_comments(models.comment.by_post_id(
         int(pid)), utils.dumpjson.comment_view)
 
-class ByPostLoader(async.AsyncHandler):
-    def serve(self):
-        return dump_comments(models.comment.by_post_id(int(self.args['post'])),
-                             utils.dumpjson.comment_view)
-
 class PendingLoader(async.AsyncHandler):
     @models.user.admin_only
     def serve(self):

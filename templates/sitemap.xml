@@ -16,7 +16,7 @@
     {% endfor %}
     {% for t in tags %}
     <url>
-        <loc>{{ site_link }}/tag/{{ t.name|urlencode }}</loc>
+        <loc>{{ site_link }}/tag/{{ t|urlencode }}</loc>
         <lastmod>{{ last_modified|strftime('%Y-%m-%dT%H:%M:%S') }}</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.9</priority>

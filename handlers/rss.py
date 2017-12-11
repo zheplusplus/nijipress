@@ -3,7 +3,8 @@ from urlparse import urlparse
 import base
 import utils.escape
 import models.post
-import models.admin
+from models.caching import cache
+from models.admin import SiteConfiguration
 
 def rss_post(post, url):
     post.plain_title = utils.escape.head_title(post)
@@ -11,6 +12,7 @@ def rss_post(post, url):
     post = utils.escape.client_post(post)
     return post
 
+@cache('rss_posts')
 def rss_posts(origin_posts, url):
     return map(lambda p: rss_post(p, url), origin_posts)
 

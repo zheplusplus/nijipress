@@ -22,7 +22,6 @@ def main():
 
     app = webapp2.WSGIApplication(handlers.base.all_routes + [
         ('/json/loadpostbyid', handlers.async.LoadPostById),
-        ('/json/loadcomments', handlers.comments.ByPostLoader),
         ('/json/leavecomment', handlers.comments.Receiver),
         ('/json/loadpendingcomments', handlers.comments.PendingLoader),
         ('/json/approvecomments', handlers.comments.Approve),

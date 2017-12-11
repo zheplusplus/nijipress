@@ -1,7 +1,9 @@
 from google.appengine.ext import db
 from google.appengine.api import memcache
+
 import util
 import tag
+import caching
 
 class Post(db.Model):
     pid = db.IntegerProperty(indexed=True)
@@ -25,15 +27,12 @@ class Post(db.Model):
         return self
 
     @classmethod
+    @caching.cache('post_id_time')
     def post_id_time(cls):
-        cache = memcache.get('post_id_time')
-        if cache == None:
-            cache = [{
-                'pid': p.pid,
-                'date_update': p.fix_fields().date_update,
-            } for p in cls.all()]
-            memcache.set('post_id_time', cache)
-        return cache
+        return [{
+            'pid': p.pid,
+            'date_update': p.fix_fields().date_update,
+        } for p in cls.all()]
 
 def new():
     p = Post()
@@ -105,14 +104,8 @@ def posts_ids():
 
 def _invalidate_cache():
     memcache.delete('posts')
-    memcache.delete('tags')
-    memcache.delete('tagns')
-    memcache.delete('posts_ids')
-    memcache.delete('posts_id_time')
+    caching.flush_all()
 
+@caching.cache('posts_ids')
 def _load_posts_ids():
-    cache = memcache.get('posts_ids')
-    if cache == None:
-        cache = map(lambda p: p.pid, Post.all())
-        memcache.set('posts_ids', cache)
-    return cache
+    return [p.pid for p in Post.all()]

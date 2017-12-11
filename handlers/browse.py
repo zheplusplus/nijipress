@@ -16,7 +16,6 @@ def index(request):
     p = request.get_of_type('page', int)
     request.put_page('index.html', {
         'posts': utils.escape.client_posts(models.post.fetch(p)),
-        'tags': models.tag.sort_by_count(),
         'current_page': p,
         'page_count': xrange(models.post.count_pages()),
         'paging_on': models.post.count_pages() > 1,
@@ -38,7 +37,6 @@ def list_by_tag(request, tag):
     p = request.get_of_type('page', int)
     request.put_page('index.html', {
         'posts': utils.escape.client_posts(models.post.by_tag(tag, p)),
-        'tags': models.tag.sort_by_count(),
         'current_page': p,
         'page_count': xrange(models.post.count_pages_by_tag(tag)),
         'query_tag': tag,
