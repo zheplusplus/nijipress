@@ -1,11 +1,11 @@
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 import handlers.base
 
-class User(db.Model):
-    name = db.StringProperty(multiline=False)
-    passwd = db.StringProperty(multiline=False)
-    session_key = db.StringProperty(multiline=False)
-    admin = db.BooleanProperty()
+class User(ndb.Model):
+    name = ndb.StringProperty()
+    passwd = ndb.StringProperty()
+    session_key = ndb.StringProperty()
+    admin = ndb.BooleanProperty()
 
     @staticmethod
     def new(name):
@@ -17,32 +17,23 @@ class User(db.Model):
 
     @staticmethod
     def get_by_name(name):
-        u = db.Query(User).filter('name =', name)
-        if u.count() == 0:
-            return None
-        return u[0]
+        return User.query(User.name == name).get()
 
     @staticmethod
     def get_admin():
-        u = db.Query(User).filter('admin =', True)
-        if u.count() == 0:
-            return None
-        return u[0]
+        return User.query(User.admin == True).get()
 
     @staticmethod
     def get_by_session(request):
         key = request.cookies['skey'] if 'skey' in request.cookies else ''
-        u = db.Query(User).filter('session_key =', key)
-        if u.count() == 0:
+        u = User.query(User.session_key == key).get()
+        if u is None:
             return User.new('')
-        return u[0]
+        return u
 
     @staticmethod
     def get_by_cookie_key(key):
-        u = db.Query(User).filter('session_key =', key)
-        if u.count() == 0:
-            return None
-        return u[0]
+        return User.query(User.session_key == key).get()
 
 def admin_only(f):
     def wrapper(handler):

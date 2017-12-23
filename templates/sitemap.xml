@@ -6,7 +6,7 @@
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
-    {% for p in posts_ids %}
+    {% for p in posts_id_time %}
     <url>
         <loc>{{ site_link }}/p/{{ p.pid }}</loc>
         <lastmod>{{ p.date_update|strftime('%Y-%m-%dT%H:%M:%S') }}</lastmod>

@@ -1,6 +1,11 @@
+import urllib
 import hashlib
+
 import md
 import md.nijitext.entire_doc as comment_md
+
+def urlencode(s):
+    return urllib.quote(s.encode('utf8'))
 
 def esc_content(content):
     return ''.join(comment_md.forge(content))

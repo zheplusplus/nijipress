@@ -11,7 +11,7 @@ def index(request):
     if request.contains('p'):
         return request.redirect('/p/%s' % request.get('p'))
     if request.contains('tag'):
-        return request.redirect('/tag/%s' % request.get('tag'))
+        return request.redirect('/tag/%s' % utils.escape.urlencode(request.get('tag')))
 
     p = request.get_of_type('page', int)
     request.put_page('index.html', {

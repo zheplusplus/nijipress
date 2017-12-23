@@ -1,5 +1,5 @@
 application: bitfocusblog
-version: v1v0v111
+version: v1v0v112
 runtime: python27
 threadsafe: true
 api_version: 1
