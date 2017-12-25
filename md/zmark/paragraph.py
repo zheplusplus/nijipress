@@ -1,8 +1,8 @@
 import re
-import cgi
 import bisect
 
 import tags
+from md import html
 from inline import LINK_RE, PAGE_RE, INLINE_EXPR_RE
 
 
@@ -201,9 +201,8 @@ class AsciiArtBase(Section):
         return tags.AA_END
 
     def body(self, ctx):
-        return tags.BR.join([
-            cgi.escape(line, quote=True).replace(' ', tags.SPACE)
-            for line in self.lines])
+        return tags.BR.join([html.escape(line).replace(' ', tags.SPACE)
+                             for line in self.lines])
 
 
 class AsciiArtMarkEach(AsciiArtBase):

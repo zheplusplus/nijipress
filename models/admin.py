@@ -1,15 +1,15 @@
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 from google.appengine.api import memcache
 
 class SiteConfiguration(db.Model):
-    title = db.StringProperty(multiline=False)
-    style = db.StringProperty(multiline=False)
-    rss_uri = db.StringProperty(multiline=False)
-    rss_description = db.StringProperty(multiline=False)
-    rss_items_count = db.IntegerProperty()
-    analytics_code = db.StringProperty(multiline=False)
-    analytics_domain = db.StringProperty(multiline=False)
-    post_html = db.TextProperty()
+    title = ndb.StringProperty()
+    style = ndb.StringProperty()
+    rss_uri = ndb.StringProperty()
+    rss_description = ndb.StringProperty()
+    rss_items_count = ndb.IntegerProperty()
+    analytics_code = ndb.StringProperty()
+    analytics_domain = ndb.StringProperty()
+    post_html = ndb.TextProperty()
 
     def fix_fields(self):
         # Since v1.1.0
@@ -19,8 +19,8 @@ class SiteConfiguration(db.Model):
 
     @staticmethod
     def load_persist():
-        conf = SiteConfiguration.all()
-        if conf.count() == 0:
+        conf = SiteConfiguration.query().get()
+        if conf is None:
             conf = SiteConfiguration()
             conf.title = 'A NijiPress Site'
             conf.style = 'midnight'
@@ -30,8 +30,7 @@ class SiteConfiguration(db.Model):
             conf.analytics_code = ''
             conf.analytics_domain = ''
             conf.post_html = ''
-            return conf
-        return conf[0]
+        return conf
 
     @staticmethod
     def load():
@@ -49,9 +48,9 @@ class SiteConfiguration(db.Model):
     def blogrolls(self):
         return Blogroll.load()
 
-class Blogroll(db.Model):
-    uri = db.StringProperty(multiline=False)
-    text = db.StringProperty(multiline=False)
+class Blogroll(ndb.Model):
+    uri = ndb.StringProperty()
+    text = ndb.StringProperty()
 
     @staticmethod
     def add_by_text(text):
