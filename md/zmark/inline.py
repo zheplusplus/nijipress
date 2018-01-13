@@ -84,7 +84,7 @@ class InlineForge(object):
                                     text)
 
         return [esc_back_slash(monospace(stroke(bold(italic(
-            html.escape(text))))))]
+            html.h_escape(text))))))]
 
     def forge(self, text, ctx):
         return ''.join(self.page(text))
@@ -102,7 +102,7 @@ def plain_text(text):
     def monospace(text):
         return MONOSPACE_RE.sub(lambda m: m.group('ms'), text)
 
-    return esc_back_slash(monospace(bold(italic(html.escape(text)))))
+    return esc_back_slash(monospace(bold(italic(html.h_escape(text)))))
 
 def display_title(text):
     def esc_back_slash(text):
@@ -117,4 +117,4 @@ def display_title(text):
     def monospace(text):
         return MONOSPACE_RE.sub(lambda m: tags.MONOSPACE % m.group('ms'), text)
 
-    return esc_back_slash(monospace(bold(italic(html.escape(text)))))
+    return esc_back_slash(monospace(bold(italic(html.h_escape(text)))))

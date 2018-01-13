@@ -1,7 +1,7 @@
 from google.appengine.ext import ndb
 from google.appengine.api import memcache
 
-class SiteConfiguration(db.Model):
+class SiteConfiguration(ndb.Model):
     title = ndb.StringProperty()
     style = ndb.StringProperty()
     rss_uri = ndb.StringProperty()
@@ -69,6 +69,6 @@ class Blogroll(ndb.Model):
     def load():
         cache = memcache.get('blogrolls')
         if cache == None:
-            cache = Blogroll.all()
+            cache = list(Blogroll.query())
             memcache.set('blogrolls', cache)
         return cache

@@ -201,7 +201,7 @@ class AsciiArtBase(Section):
         return tags.AA_END
 
     def body(self, ctx):
-        return tags.BR.join([html.escape(line).replace(' ', tags.SPACE)
+        return tags.BR.join([html.h_escape(line).replace(' ', tags.SPACE)
                              for line in self.lines])
 
 

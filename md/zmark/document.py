@@ -20,7 +20,7 @@ class CodeBlock(paragraph.Section):
             self.inline_forge = self.inline.forge
             lang_start = plus_pos
         else:
-            self.inline_forge = lambda x, ctx: md.html.escape(x)
+            self.inline_forge = lambda x, ctx: md.html.h_escape(x)
 
         self.no_number = False
         self.require_number = False

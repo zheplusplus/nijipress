@@ -7,10 +7,10 @@ from models.user import User
 
 class BaseView(webapp.RequestHandler):
     def get(self):
-        raise_not_found(self)
+        raise_not_allowed(self)
 
     def post(self):
-        raise_not_found(self)
+        raise_not_allowed(self)
 
     def request_value(self, key, wanted_type):
         try:
@@ -21,9 +21,9 @@ class BaseView(webapp.RequestHandler):
     def put_page(self, template_file, template_values):
         render.put_page(self, template_file, template_values)
 
-def raise_not_found(handler):
-    handler.error(404)
-    render.put_page(handler, 'errors/not-found.html', {})
+def raise_not_allowed(handler):
+    handler.error(405)
+    render.put_page(handler, 'errors/method-not-allowed.html', {})
 
 def raise_forbidden(handler):
     handler.error(403)
