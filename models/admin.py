@@ -1,6 +1,9 @@
 from google.appengine.ext import ndb
 from google.appengine.api import memcache
 
+SITECONF_CACHE_KEY = 'siteconf_v110'
+BLOGROLL_CACHE_KEY = 'blogrool_v110'
+
 class SiteConfiguration(ndb.Model):
     title = ndb.StringProperty()
     style = ndb.StringProperty()
@@ -34,15 +37,15 @@ class SiteConfiguration(ndb.Model):
 
     @staticmethod
     def load():
-        cache = memcache.get('siteconf')
+        cache = memcache.get(SITECONF_CACHE_KEY)
         if cache == None:
             cache = SiteConfiguration.load_persist()
-            memcache.set('siteconf', cache)
+            memcache.set(SITECONF_CACHE_KEY, cache)
         return cache.fix_fields()
 
     @staticmethod
     def save(conf):
-        memcache.set('siteconf', conf)
+        memcache.set(SITECONF_CACHE_KEY, conf)
         conf.put()
 
     def blogrolls(self):
@@ -63,12 +66,12 @@ class Blogroll(ndb.Model):
             blogroll.uri = r[0].strip()
             blogroll.text = r[2].strip()
             blogroll.put()
-        memcache.delete('blogrolls')
+        memcache.delete(BLOGROLL_CACHE_KEY)
 
     @staticmethod
     def load():
-        cache = memcache.get('blogrolls')
+        cache = memcache.get(BLOGROLL_CACHE_KEY)
         if cache == None:
             cache = list(Blogroll.query())
-            memcache.set('blogrolls', cache)
+            memcache.set(BLOGROLL_CACHE_KEY, cache)
         return cache
