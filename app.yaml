@@ -1,4 +1,4 @@
-application: bitfocusblog
+application: bitfocusiblog
 version: v1x1x1
 runtime: python27
 threadsafe: true
