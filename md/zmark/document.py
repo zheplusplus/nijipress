@@ -78,7 +78,7 @@ class Index(object):
         return self.heading_indices[1]
 
     def next_heading(self):
-        r = '%d.%d.%d ' % tuple(self.heading_indices)
+        r = '%d. ' % (self.heading_indices[2],)
         self.heading_indices[2] += 1
         return r
 

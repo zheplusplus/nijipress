@@ -1,13 +1,9 @@
 import os
+import json
 import jinja2
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import template
 
 import models.user
 import models.admin
-import models.tag
-import models.post
-import utils.dumpjson
 import utils.escape
 
 def strftime(dt, fmt):
@@ -19,6 +15,7 @@ templ_env = jinja2.Environment(loader=jinja2.FileSystemLoader(
                         os.path.join(os.path.dirname(__file__), 'templates')))
 templ_env.filters['strftime'] = strftime
 templ_env.filters['urlencode'] = utils.escape.urlencode
+templ_env.filters['tojson'] = json.dumps
 
 def render(request, filename, kwargs):
     kwargs['usr'] = models.user.User.get_by_session(request)

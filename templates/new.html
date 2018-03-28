@@ -10,6 +10,7 @@
 
 {% block head_extra %}
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/input.css'>
+<link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/index.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/post.css'>
 <link rel='stylesheet' type='text/css' href='/static/{{ conf.style }}/libs/prettify.css'>
 {% endblock %}
@@ -28,7 +29,7 @@
 <tr>
     <td>Markdown</td>
     <td>
-        <label><input type='radio' name='md' value='nijitext' checked='checked'>Nijitext</label>
+        <label><input type='radio' name='md' value='nijitext'>Nijitext</label>
         <label><input type='radio' name='md' value='zmark'>ZMark</label>
     </td>
 </tr>
@@ -36,6 +37,16 @@
 </table>
 
 <script>
+$(function() {
+    var markdown = {{ markdown|tojson }};
+    $('input[name="md"]').each(function(i, e) {
+        var self = $(e);
+        if (self.val() === markdown) {
+            self.prop('checked', true);
+        }
+    });
+});
+
 NJPress.previewPost = function() {
   NJPress.request('/json/previewpost', {
     title: $('#title')[0].value,
@@ -58,9 +69,9 @@ NJPress.previewPost = function() {
 };
 </script>
 
-<div id='preview_area' style='display: none;'>
+<div id='preview_area' style='display: none;' class='post_arena'>
 <hr>
-<p class='post_title' id='post_title_preview'></p>
+<h1 id='post_title_preview'></h1>
 <div class='post_content' id='post_content_preview'></div>
 <table class='admin_list tags'><tr id='tags_preview'></tr></table>
 {% if usr.admin %}
