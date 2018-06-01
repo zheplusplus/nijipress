@@ -22,7 +22,7 @@ class Save(base.BaseView):
 class DeleteBlogroll(async.AsyncHandler):
     @models.user.admin_only
     def serve(self):
-        models.admin.Blogroll.get_by_id(int(self.args['id'])).delete()
+        models.admin.Blogroll.get_by_id(int(self.args['id'])).key.delete()
         return []
 
 base.page_render('/c/siteconf', 'siteconf.html')

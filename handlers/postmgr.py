@@ -2,7 +2,6 @@ import base
 import async
 import utils.escape
 import models.post
-import models.admin
 import md
 
 @base.get('/c/newpost')
@@ -12,6 +11,7 @@ def get(request):
         'title': '',
         'content': '',
         'tags': '',
+        'markdown': 'nijipress',
     })
 
 class Preview(async.AsyncHandler):
